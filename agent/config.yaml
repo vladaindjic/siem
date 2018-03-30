@@ -1,0 +1,35 @@
+general:
+  patterns:
+    - '^a'
+    - '.*c.*'
+    - 'b+$'
+    - '^\.+'
+  interval: 0.5
+specific:
+  directories:
+    - directory:
+        path: '.'
+        patterns:
+          - '^d'
+          - '.*e.*'
+          - 'f+$'
+          - '^\.+'
+        interval: 1
+        only_specified_files: True
+        files:
+          - file:
+              path: 'log.txt'
+              patterns:
+                - '^g'
+                - '.*h.*'
+                - 'i+$'
+                - '^\.+'
+              interval: 2
+          - file:
+              path: 'log1.txt'
+              patterns:
+                - '^j'
+                - '.*k.*'
+                - 'l+$'
+                - '^\.+'
+              interval: 4
