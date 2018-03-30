@@ -1,4 +1,82 @@
-.idea/
+.idea
 .properties
 *.class
+__pycache__/
+*.pyc
+
+
+# izvuceno iz center direktorijuma gde je spring
+center/target/
+center/!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+center/.apt_generated
+center/.classpath
+center/.factorypath
+center/.project
+center/.settings
+center/.springBeans
+center/.sts4-cache
+
+### IntelliJ IDEA ###
+center/.idea
+center/*.iws
+center/*.iml
+center/*.ipr
+
+### NetBeans ###
+center/nbproject/private/
+center/build/
+center/nbbuild/
+center/dist/
+center/nbdist/
+center/.nb-gradle/
+
+
+
+### Eclipse ###
+center/.project
+
+center/test-output/
+
+
+
+
+
+### Ako ti jos nesto zatreba
+# kopirano
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+spring-boot-server-KTS-NVT/.apt_generated
+spring-boot-server-KTS-NVT/.classpath
+spring-boot-server-KTS-NVT/.factorypath
+spring-boot-server-KTS-NVT/.project
+spring-boot-server-KTS-NVT/.settings
+spring-boot-server-KTS-NVT/.springBeans
+
+### IntelliJ IDEA ###
+spring-boot-server-KTS-NVT/.idea
+spring-boot-server-KTS-NVT/*.iws
+spring-boot-server-KTS-NVT/*.iml
+spring-boot-server-KTS-NVT/*.ipr
+
+### NetBeans ###
+spring-boot-server-KTS-NVT/nbproject/private/
+spring-boot-server-KTS-NVT/build/
+spring-boot-server-KTS-NVT/nbbuild/
+spring-boot-server-KTS-NVT/dist/
+spring-boot-server-KTS-NVT/nbdist/
+spring-boot-server-KTS-NVT/.nb-gradle/
+
+### Eclipse ###
+spring-boot-server-KTS-NVT/.project
+
+spring-boot-server-KTS-NVT/test-output/
+
+# beleske
+kts-notes.txt
+
+spring-boot-server-KTS-NVT/target
 

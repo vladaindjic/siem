@@ -1,5 +1,6 @@
 import re
 from time import sleep
+from http_communication import send_log_line
 
 
 class Agent(object):
@@ -18,6 +19,7 @@ class Agent(object):
         # da li ima poklapanja sa nekim regularnim izrazom
         if any([re.match(pattern, line) for pattern in self.patterns]):
             print("Sending line to server: %s" % line)
+            send_log_line(line)
 
     def do_something(self):
         self.file = open(self.file_path, 'r')
