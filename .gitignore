@@ -41,7 +41,7 @@ center/test-output/
 
 mongo-data/
 
-
+logGeneratorAgent/web_app_log*.log
 
 ### Ako ti jos nesto zatreba
 # kopirano

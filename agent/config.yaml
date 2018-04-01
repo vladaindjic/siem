@@ -1,9 +1,9 @@
 general:
-  patterns:
-    - '^a'
-    - '.*c.*'
-    - 'b+$'
-    - '^\.+'
+#  patterns:
+#    - '^a'
+#    - '.*c.*'
+#    - 'b+$'
+#    - '^\.+'
   interval: 0.5
 specific:
   directories:
@@ -33,3 +33,13 @@ specific:
                 - 'l+$'
                 - '^\.+'
               interval: 4
+    - directory:
+        path: '../logGeneratorAgent'
+        patterns:
+          - '.*POST.*'
+          - '.*DELETE.*'
+        interval: 1
+        only_specified_files: True
+        files:
+          - file:
+              path: 'web_app_log20180401-025505.log'

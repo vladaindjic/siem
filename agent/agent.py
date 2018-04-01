@@ -65,9 +65,9 @@ def run_agents(file_agents):
 def main():
     from collections import defaultdict
     configuration = read_configuration('config.yaml')
-    general_conf = configuration['general']
-    patterns = general_conf['patterns']
-    interval = general_conf['interval']
+    general_conf = configuration['general'] if 'general' in configuration else {}
+    patterns = general_conf['patterns'] if 'patterns' in general_conf else []
+    interval = general_conf['interval'] if 'interval' in general_conf else []
     specific_conf = configuration['specific']
     # prolazimo kroz sve direktorijume
     for directory in specific_conf['directories']:
@@ -97,11 +97,11 @@ def main():
 
             if file_path in file_agents:
                 agent = file_agents[file_path]
-                agent.file_path = file_path
+                agent.file_path = os.path.join(dir_path, file_path)
                 agent.patterns = file_patterns
                 agent.interval = file_interval
             else:
-                agent = Agent(file_path, file_patterns, file_interval)
+                agent = Agent(os.path.join(dir_path, file_path), file_patterns, file_interval)
                 file_agents[file_path] = agent
 
         run_agents(file_agents)
