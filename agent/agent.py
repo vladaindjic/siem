@@ -1,11 +1,11 @@
 import re
 from time import sleep
 from threading import Thread
-from http_communication import send_log_line
+import http_communication
 import yaml
 import sys
 import os
-
+import udp_communication
 
 
 class Agent(object):
@@ -23,10 +23,12 @@ class Agent(object):
             self.file.close()
 
     def check_and_send(self, line):
+        line = line.strip()
         # da li ima poklapanja sa nekim regularnim izrazom
         if any([re.match(pattern, line) for pattern in self.patterns]):
             print("Sending line to server: %s" % line)
-            send_log_line(line)
+            http_communication.send_log_line(line)
+            # udp_communication.send_log_line(line)
 
     def run(self):
         self.thread.start()
