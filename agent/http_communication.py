@@ -1,7 +1,7 @@
 import requests
 
 
-API_ENDPOINT = "http://localhost:8080/logger"
+API_ENDPOINT = "http://192.168.0.18:8080/logger"
 
 
 def send_log_line(line):

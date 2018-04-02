@@ -4,6 +4,7 @@ from threading import Thread
 import time
 import datetime
 import yaml
+import platform
 from event import Event
 # from udp_communication import send_log_line
 from http_communication import send_log_line
@@ -34,7 +35,7 @@ class WinAgent(object):
             # print(out)
             out = re.sub(r'\s+', ' ', out)
             events = get_events(parse(out),out)
-            # print(len(events))
+            print(len(events))
             #Ako postoje patterni za filtriranje onda cemo da fltriramo listu eventa inace saljemo citavu
             if self._patterns:
                 send_events(self._filter_events(events))
@@ -132,8 +133,17 @@ def get_events(index,string):
 
     return ret_val
 
+def check_os():
+    if(platform.system()!="Windows"):
+        return False
+    return True
 
 def main():
+
+    if(not check_os()):
+        raise Exception("Ovaj agent radi samo na Windowsu")
+        exit(-1)
+
     log_agents =[]
     config = read_configuration("./windowsAgentConfig.yaml")
     if(config['logs']==None):

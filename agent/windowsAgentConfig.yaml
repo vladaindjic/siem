@@ -1,13 +1,13 @@
 logs:
     - log:
         name: 'Application'
-        interval: 5
+        interval: 10
 #        patterns:
 #          - '.*Disk.*'
 #          - '.*Battery.*'
     - log:
         name: 'System'
-        interval: 3
-#    - log:
-#        name: 'Security'
-#        interval: 2
+        interval: 15
+    - log:
+        name: 'Security'
+        interval: 5
