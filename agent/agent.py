@@ -157,11 +157,22 @@ class LinuxBinaryAgent(Agent):
 
         return False
 
+    # check and send
+    def check_and_send(self, line):
+        line = line.strip()
+        if line == "":
+            return
+        # print(line)
+        # da li ima poklapanja sa nekim regularnim izrazom
+        if self.read_all or any([re.match(pattern, line) for pattern in self.patterns]):
+            http_communication.send_log_line(line)
+            # udp_communication.send_log_line(line)
+
     def monitor_log(self):
         while True:
             table = self.call_bash()
             while self.next_line(table):
-                super().check_and_send(self.current_line)
+                self.check_and_send(self.current_line)
             sleep(self.interval)
 
     def call_bash(self):
@@ -185,6 +196,14 @@ class LastlogAgent(LinuxBinaryAgent):
         self.cmd = "lastlog".format(self.file_path)
         self.footer_lines_num = 0
         self.header_lines_num = 1
+
+
+class FailLogAgent(LinuxBinaryAgent):
+    def __init__(self, agent):
+        super().__init__(agent)
+        self.cmd = "faillog -a"
+        self.footer_lines_num = 0
+        self.header_lines_num = 2
 
 
 def read_configuration(config_path):
@@ -217,7 +236,7 @@ def is_file_linux(file_path):
     if os.path.isdir(file_path):
         print("Ovo je direktorijum" + file_path)
         return False
-    elif tarfile.is_tarfile(file_path) and ('lastlog' not in file_path) and ('btmp' not in file_path):
+    elif tarfile.is_tarfile(file_path) and ('lastlog' not in file_path) and ('btmp' not in file_path) and ('faillog' not in file_path):
         print('STA JE SVE TARFILE: %s' % file_path)
         # print("Ovo je Tar file")
         return False
@@ -247,6 +266,8 @@ def run_linux_agents(file_agents):
                 # da li je za lastlog
                 if 'lastlog' in file_path:
                     LastlogAgent(lin_agent).run()
+                elif 'faillog' in file_path:
+                    FailLogAgent(lin_agent).run()
                 else:
                     UWBTmpAgent(lin_agent).run()
                 # print("Ovo je tekstualni file: %s" % file_path)
@@ -359,7 +380,7 @@ def read_specific_configuration(specific_conf, patterns, interval, read_all, onl
                 file_agents[file_path] = Agent(os.path.join(dir_path, file_path), [].extend(dir_patterns), dir_interval, dir_read_all)
 
         # prolazak kroz sve eksplicitno specificirane fajlove
-        for file in directory['files']:
+        for file in get_value_or_default_from_dict(directory, 'files', []):
             file = file['file']
             file_path = file['path']
             # file_patterns = file['patterns'] if 'patterns' in file else []

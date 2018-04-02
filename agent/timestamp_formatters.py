@@ -13,7 +13,7 @@ wrap_RFC3339_TIMESTAMP = r".*%s.*" % RFC3339_TIMESTAMP
 
 
 # koji fajlovi imaju ovaj timestamp
-RFC3164_log_files = [r'apport', r'kern\.log', r'syslog']
+RFC3164_log_files = [r'apport', r'kern\.log', r'syslog', r'ufw\.log']
 RFC3164_logs_path_patterns = [r'.*%s.*' % file_name for file_name in RFC3164_log_files]
 # koji fajlovi imaju ovaj timestamp
 RFC3339_log_files = [r'alternatives', r'apport', r'kern\.log', r'syslog', r'dpkg\.log']

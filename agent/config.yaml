@@ -42,40 +42,45 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180403-004848.log'
-              read_all: True
+              path: 'web_app_log20180403-014354.log'
+              read_all: False
 os:
   linux:
-    only_specified_files: True
+    only_specified_files: False
     read_all: True
     interval: 1
     directories:
       - directory:
           path: '/var/log/'
           files:
-#              - file:
-#                  path: 'syslog'
-#              - file:
-#                  path: 'kern.log'
-#               - file:
-#                  path: 'alternatives.log'
-#               - file:
-#                  path: 'alternatives.log.1'
-#                - file:
-#                    path: 'apport.log'
-#                - file:
-#                    path: 'apport.log.1'
-#                - file:
-#                    path: 'dpkg.log'
-#              - file:
-#                  path: 'wtmp.1'
-#              - file:
-#                  path: 'lastlog'
-#              - file:
-#                  path: 'btmp'  # problem sa permission denied
-#      - directory:
-#          path: '/var/run/'
-#          files:
-#              - file:
-#                  path: 'utmp'
+              - file:
+                  path: 'faillog'
+              - file:
+                  path: 'ufw.log'
+              - file:
+                  path: 'syslog'
+              - file:
+                  path: 'kern.log'
+              - file:
+                  path: 'alternatives.log'
+              - file:
+                  path: 'alternatives.log.1'
+              - file:
+                  path: 'apport.log'
+              - file:
+                  path: 'apport.log.1'
+              - file:
+                  path: 'dpkg.log'
+              - file:
+                  path: 'wtmp.1'
+              - file:
+                  path: 'lastlog'
+              - file:
+                  path: 'btmp'  # problem sa permission denied
+      - directory:
+          path: '/var/run/'
+          only_specified_files: True
+          files:
+              - file:
+                  path: 'utmp'
 
