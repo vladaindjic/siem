@@ -18,14 +18,17 @@ level = ["Info", "Notice", "Debug", "Error", "Warning", "Critical"]
 
 # Http Header
 resources = ["/list", "/wp-content", "/wp-admin", "/explore", "/search/tag/list", "/app/main/posts",
-             "/posts/posts/explore", "/apps/cart.jsp?appID="]
+             "/posts/posts/explore", "/apps/cart.jsp?appID=", "/login"]
 verb = ["GET", "POST", "DELETE", "PUT"]
 # Http Message
 response = ["200", "404", "500", "301"]
 ualist = [faker.firefox, faker.chrome, faker.safari, faker.internet_explorer, faker.opera]
 
 flag = True
+counter = 0
 while flag:
+    counter += 1
+
     increment = datetime.timedelta(seconds=random.randint(1, 5))
     otime += increment
 
@@ -46,7 +49,10 @@ while flag:
     referer = faker.uri()
     useragent = numpy.random.choice(ualist, p=[0.3, 0.5, 0.1, 0.05, 0.05])()
 
-    f.write('%s FakeWebServer.%s %s "%s %s HTTP/1.0" %s %s "%s"\n' % (
+    if counter % 3 == 0:
+        f.write('%s FakeWebApp.%s %s "%s %s HTTP/1.0" %s %s "%s"\n' % (
+            dt, "Info", "192.34.238.24 ", "POST", "/login", "503", byt, useragent))
+    f.write('%s FakeWebApp.%s %s "%s %s HTTP/1.0" %s %s "%s"\n' % (
         dt, logLevel, ip, vrb, uri, resp, byt, useragent))
     f.flush()
 
