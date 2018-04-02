@@ -7,39 +7,80 @@ general:
   interval: 0.5
 specific:
   directories:
-    - directory:
-        path: '.'
-        patterns:
-          - '^d'
-          - '.*e.*'
-          - 'f+$'
-          - '^\.+'
-        interval: 1
-        only_specified_files: True
-        files:
-          - file:
-              path: 'log.txt'
-              patterns:
-                - '^g'
-                - '.*h.*'
-                - 'i+$'
-                - '^\.+'
-              interval: 2
-          - file:
-              path: 'log1.txt'
-              patterns:
-                - '^j'
-                - '.*k.*'
-                - 'l+$'
-                - '^\.+'
-              interval: 4
+#    - directory:
+#        path: '.'
+#        patterns:
+#          - '^d'
+#          - '.*e.*'
+#          - 'f+$'
+#          - '^\.+'
+#        interval: 1
+#        only_specified_files: True
+#        files:
+#          - file:
+#              path: 'log.txt'
+#              patterns:
+#                - '^g'
+#                - '.*h.*'
+#                - 'i+$'
+#                - '^\.+'
+#              interval: 2
+#          - file:
+#              path: 'log1.txt'
+#              patterns:
+#                - '^j'
+#                - '.*k.*'
+#                - 'l+$'
+#                - '^\.+'
+#              interval: 4
     - directory:
         path: '../logGeneratorAgent'
         patterns:
           - '.*POST.*'
           - '.*DELETE.*'
-        interval: 1
+        interval: 0.5
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180401-025505.log'
+              path: 'web_app_log20180403-014354.log'
+              read_all: False
+os:
+  linux:
+    only_specified_files: False
+    read_all: True
+    interval: 1
+    directories:
+      - directory:
+          path: '/var/log/'
+          files:
+              - file:
+                  path: 'faillog'
+              - file:
+                  path: 'ufw.log'
+              - file:
+                  path: 'syslog'
+              - file:
+                  path: 'kern.log'
+              - file:
+                  path: 'alternatives.log'
+              - file:
+                  path: 'alternatives.log.1'
+              - file:
+                  path: 'apport.log'
+              - file:
+                  path: 'apport.log.1'
+              - file:
+                  path: 'dpkg.log'
+              - file:
+                  path: 'wtmp.1'
+              - file:
+                  path: 'lastlog'
+              - file:
+                  path: 'btmp'  # problem sa permission denied
+      - directory:
+          path: '/var/run/'
+          only_specified_files: True
+          files:
+              - file:
+                  path: 'utmp'
+
