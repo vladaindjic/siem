@@ -12,6 +12,7 @@ import zipfile
 import mimetypes
 from binaryornot.check import is_binary
 import subprocess
+import timestamp_formatters
 
 
 class Agent(object):
@@ -25,6 +26,12 @@ class Agent(object):
         self.encoding = encoding
 
         self.thread = Thread(target=self.monitor_log)
+        self.new_line_pattern = timestamp_formatters.get_new_line_patterns(self.file_path)
+        print("File path: %s\t New line pattern: %s" % (self.file_path, self.new_line_pattern))
+
+        self.current_line = ""
+
+        self.line_num = 0
         # self.file_position = 0
 
     def __del__(self):
@@ -32,15 +39,48 @@ class Agent(object):
             print("Closing file")
             self.file.close()
 
-    def check_and_send(self, line):
-        line = line.strip()
-        if line == "":
+    def get_new_line(self):
+        """
+            Returns next line
+        :return:
+        """
+        return self.file.readline()
+
+    def send_line(self, line):
+        if line.strip() == "":
             return
+
+        # cpy_line = "%s" % line
+        #
+        # cpy_line = cpy_line.replace('\s+', ' ')
+
         # print(line)
         # da li ima poklapanja sa nekim regularnim izrazom
         if self.read_all or any([re.match(pattern, line) for pattern in self.patterns]):
             http_communication.send_log_line(line)
             # udp_communication.send_log_line(line)
+            # print("Sending: %s" % line)
+            self.line_num += 1
+
+    def check_and_send(self, line):
+        # da li je nova linija loga
+        if timestamp_formatters.is_new_log_line(line, self.new_line_pattern):
+            # ako trenutna linija nije prazna, saljemo je
+            if self.current_line != "" and self.current_line != line:
+                self.send_line(self.current_line)
+            # postavljamo novu trenutnu liniju
+            self.current_line = line
+        # ako nije nova linija loga
+        else:
+            # dodajemo je na trenutnu
+            self.current_line += line
+        # da li smo stigli do kraja file-a
+        new_read = self.get_new_line()
+        if not new_read:
+            if self.current_line != "":
+                self.send_line(self.current_line)
+            print("KRAJ")
+        return new_read
 
     def run(self):
         self.thread.start()
@@ -51,18 +91,22 @@ class Agent(object):
         self.file = open(self.file_path, 'r', encoding=self.encoding)
         while True:
             # ucitaj liniju
-            line = self.file.readline()
+            # line = self.check_and_send(self.current_line)
             # dokle god ih ima iscitavaj linije
+            line = self.file.readline()
             while line:
                 # try:
-                    self.check_and_send(line)
-                    line = self.file.readline()
+                    line = self.check_and_send(line)
+                    # line = self.file.readline()
                 # except Exception as e:
                 #     print("Greska u fileu: %s\t%s\t%s" % (self.file_path, line, str(e)))
                 #     self.file.close()
                 #     return
             # kada ih nema, sacekaj odredjeni interval
             sleep(self.interval)
+            self.current_line = ""
+            # print(self.line_num)
+            # print(len(self.current_line.encode(self.encoding)))
 
 
 class LinuxBinaryAgent(Agent):
