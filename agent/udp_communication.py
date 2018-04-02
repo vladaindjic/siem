@@ -3,10 +3,10 @@ import socket
 
 UDP_IP = "192.168.0.18"
 UDP_PORT = 5555
-MESSAGE = 'Hello, world'
-print("UDP target IP:", UDP_IP)
-print("UDP target port:", UDP_PORT)
-print("message:", MESSAGE)
+# MESSAGE = 'Hello, world'
+# print("UDP target IP:", UDP_IP)
+# print("UDP target port:", UDP_PORT)
+# print("message:", MESSAGE)
 
 
 def send_log_line(message):

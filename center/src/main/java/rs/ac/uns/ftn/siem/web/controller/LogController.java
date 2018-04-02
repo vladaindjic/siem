@@ -32,7 +32,7 @@ public class LogController {
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
     public String postLogLine(@RequestBody String logLine){
-        System.out.println(String.format("We get log line: %s", logLine));
+//        System.out.println(String.format("We get log line: %s", logLine));
         // TODO: odraditi pametno cuvanje u bazu radi brzog pretrazivanja
 
         Log l = new Log();
