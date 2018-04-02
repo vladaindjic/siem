@@ -11,10 +11,11 @@ from http_communication import send_log_line
 
 class WinAgent(object):
 
-    def __init__(self,name,interval):
+    def __init__(self,name,interval,patterns):
         self._name = name
         self._interval = interval
         self._date = ""
+        self._patterns = patterns
         self._thread = Thread(target=self.monitor_log)
 
     def run(self):
@@ -23,21 +24,39 @@ class WinAgent(object):
     def monitor_log(self):
         self._date = get_date()
         while True:
-            print("##############################################################")
+            # print("##############################################################")
             p = subprocess.Popen(["powershell.exe","./getEvents.ps1","-logFile",self._name,"-datum",self._date],
                       stdout=subprocess.PIPE) #PIPE za cuvanje u stringu /sys.stdout
 
             out = p.communicate()[0]
             self._date = get_date()
             out = out.decode('utf-8')
-            print(out)
+            # print(out)
             out = re.sub(r'\s+', ' ', out)
             events = get_events(parse(out),out)
-            print(len(events))
-            send_events(events)
-            print("##############################################################")
+            # print(len(events))
+            #Ako postoje patterni za filtriranje onda cemo da fltriramo listu eventa inace saljemo citavu
+            if self._patterns:
+                send_events(self._filter_events(events))
+            else:
+                send_events(events)
+            # print("##############################################################")
             p.kill()
             time.sleep(60*self._interval)
+
+    def _filter_events(self,events_list):
+        events = []
+        for pattern in self._patterns:
+            for event in events_list:
+                if(re.match(pattern,str(event))):
+                    events.append(event)
+        #
+        # for event in events_list:
+        #     if any([[re.match(pattern, str(event)) for pattern in self._patterns]]):
+        #         events.append(event)
+
+        # print("ovdije sam",len(events))
+        return events
 
 
 def get_date():
@@ -123,7 +142,8 @@ def main():
     #prolazimo kroz sve logove koje zelimo da pratimo
     for log_config in config['logs']:
         # print(log_config)
-        agent = WinAgent(log_config['log']['name'],log_config['log']['interval'])
+        patterns = log_config['log']['patterns'] if 'patterns' in log_config['log'] else []
+        agent = WinAgent(log_config['log']['name'],log_config['log']['interval'],patterns)
         log_agents.append(agent)
 
     run_agents(log_agents)
