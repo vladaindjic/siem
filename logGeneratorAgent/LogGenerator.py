@@ -32,7 +32,7 @@ while flag:
     increment = datetime.timedelta(seconds=random.randint(1, 5))
     otime += increment
 
-    dt = otime.strftime('%d/%b/%Y:%H:%M:%S')
+    dt = otime.strftime('%Y-%m-%dT%H:%M:%S.0Z')
     tz = datetime.datetime.now(local).strftime('%z')
 
     logLevel = numpy.random.choice(level, p=[0.5, 0.1, 0.3, 0.02, 0.01, 0.07])
@@ -57,4 +57,4 @@ while flag:
     f.flush()
 
     if increment:
-        time.sleep(0.5)
+        time.sleep(1)
