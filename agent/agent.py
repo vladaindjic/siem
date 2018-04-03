@@ -63,11 +63,10 @@ class Agent(object):
         if not new_read:
             if self.current_line != "":
                 self.send_line(self.current_line)
-            print("KRAJ")
         return new_read
 
     def run(self):
-        print("Pratimo log: %s" % self.file_path)
+        print("Pratimo log: %s putem klase: %s" % (self.file_path, self.__class__.__name__))
         self.thread.start()
 
     def monitor_log(self):

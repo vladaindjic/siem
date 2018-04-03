@@ -36,7 +36,8 @@ def is_file_linux(file_path):
     if os.path.isdir(file_path):
         return False
     # kompresovan file
-    elif tarfile.is_tarfile(file_path) and ('lastlog' not in file_path) and ('btmp' not in file_path) and ('faillog' not in file_path):
+    elif tarfile.is_tarfile(file_path) and ('lastlog' not in file_path) and ('btmp' not in file_path) and \
+            ('faillog' not in file_path) and ('tallylog' not in file_path):
         return False
     elif zipfile.is_zipfile(file_path) and ('btmp' not in file_path):
         return False
@@ -51,7 +52,8 @@ def run_linux_agents(file_agents):
     for file_path, lin_agent in file_agents.items():
         if is_file_linux(file_path):
             # u pitanju je tekstualni parser
-            if not is_binary(file_path) and 'btmp' not in file_path:
+            if not is_binary(file_path) and ('btmp' not in file_path) and ('tallylog' not in file_path)\
+                    and ('wtmp' not in file_path) and ('utmp' not in file_path) and ('lastlog' not in file_path):
                 lin_agent.run()
             else:
                 # da li je za lastlog
@@ -60,6 +62,9 @@ def run_linux_agents(file_agents):
                 # faillog
                 elif 'faillog' in file_path:
                     FailLogAgent(lin_agent).run()
+                # tallylog
+                elif 'tallylog' in file_path:
+                    TallyLogAgent(lin_agent).run()
                 # utmp, wtmp, btmp
                 else:
                     UWBTmpAgent(lin_agent).run()

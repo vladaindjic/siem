@@ -54,6 +54,8 @@ os:
           path: '/var/log/'
           files:
               - file:
+                  path: 'tallylog'
+              - file:
                   path: 'faillog'
               - file:
                   path: 'ufw.log'
