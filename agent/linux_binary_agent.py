@@ -108,3 +108,14 @@ class TallyLogAgent(LinuxBinaryAgent):
         self.cmd = "sudo pam_tally2"
         self.footer_lines_num = 0
         self.header_lines_num = 0
+
+
+# TODO: wtmp i btmp imaju neki normalan format (user, terminal, from, timestamp pocetka - timestamp kraja,
+        # uzrok, trajanje)
+# TODO: faillog (username, failures, maximum, timestamp-latest)
+# TODO: lastlog (username, port, from, timestamp-latest)
+# TODO: ufw log ima identican format kao standardan linuxov syslog
+# TODO: tallylog (broj neuspesne pokusaje, prazan mi je i nemam format)
+
+# TODO: provide hostname if missing to all binary format
+# TODO: provide hostname where needed

@@ -8,6 +8,7 @@ import yaml
 from binaryornot.check import is_binary
 
 from linux_binary_agent import *
+from parse_log import LinuxStandardSyslogParser
 
 
 def read_configuration(config_path):
@@ -48,7 +49,7 @@ def is_file_linux(file_path):
 
 
 def run_linux_agents(file_agents):
-    print(file_agents)
+    # print(file_agents)
     for file_path, lin_agent in file_agents.items():
         if is_file_linux(file_path):
             # u pitanju je tekstualni parser
@@ -76,6 +77,8 @@ def get_value_or_default_from_dict(dictionary, key, default_value):
 
 def read_linux_configuration(linux_conf, patterns, interval, read_all, only_specified_files):
     print("Reading linux configuration")
+    if not 'linux' in linux_conf:
+        return
     linux_conf = linux_conf['linux']
     linux_interval = get_value_or_default_from_dict(linux_conf, 'interval', interval)
     linux_patterns = get_value_or_default_from_dict(linux_conf, 'patterns', patterns)
@@ -100,7 +103,7 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
             for file_path in os.listdir(dir_path):
                 full_path = os.path.join(dir_path, file_path)
                 file_agents[full_path] = Agent(os.path.join(dir_path, file_path), [].extend(dir_patterns), dir_interval,
-                                               dir_read_all)
+                                               dir_read_all, log_parser=LinuxStandardSyslogParser(""))
 
         if 'files' in directory and directory['files'] is not None:
             # prolazak kroz sve eksplicitno specificirane fajlove
@@ -125,12 +128,13 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
                     agent.interval = file_interval
                     agent.read_all = file_read_all
                 else:
-                    agent = Agent(os.path.join(dir_path, file_path), file_patterns, file_interval, file_read_all)
+                    agent = Agent(os.path.join(dir_path, file_path), file_patterns, file_interval, file_read_all,
+                                  log_parser=LinuxStandardSyslogParser(""))
                     file_agents[full_path] = agent
 
         run_linux_agents(file_agents)
 
-    print(linux_conf)
+    # print(linux_conf)
 
 
 def read_windows_configuration(windows_conf, patterns, interval, read_all, only_specified_files):

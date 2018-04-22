@@ -5,11 +5,13 @@ from time import sleep
 
 import http_communication
 import timestamp_formatters
+from parse_log import SyslogRFC5424Parser, LinuxStandardSyslogParser
 
 
 class Agent(object):
     # cp855
-    def __init__(self, file_path, patterns, interval=1, read_all=True, encoding='cp855'):
+    def __init__(self, file_path, patterns, interval=1, read_all=True, encoding='cp855',
+                 log_parser=SyslogRFC5424Parser("")):
         self.file_path = file_path
         self.patterns = patterns
         self.file = None
@@ -22,6 +24,8 @@ class Agent(object):
 
         self.current_line = ""
         self.line_num = 0
+        self.syslog_parser = log_parser
+        print("File path: %s and parser: %s" % (self.file_path, type(self.syslog_parser)))
 
     def __del__(self):
         if self.file is not None:
@@ -41,7 +45,9 @@ class Agent(object):
 
         # da li ima poklapanja sa nekim regularnim izrazom
         if self.read_all or any([re.match(pattern, line) for pattern in self.patterns]):
-            http_communication.send_log_line(line)
+            self.syslog_parser.set_line(line)
+            self.syslog_parser.parse()
+            http_communication.send_json_log(self.syslog_parser.to_json())
             # udp_communication.send_log_line(line)
             # print("Sending: %s" % line)
             self.line_num += 1

@@ -1,13 +1,16 @@
 
 # Mmm dd hh:mm:ss
-day = '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
-RFC3164_TIMESTAMP = r"%s\s+\d+\s+\d{2}\:\d{2}\:\d{2}" % day
+month = '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
+RFC3164_TIMESTAMP = r"%s\s+\d+\s+\d{2}\:\d{2}\:\d{2}" % month
 wrap_RFC3164_TIMESTAMP = r".*%s.*" % RFC3164_TIMESTAMP
 # print(RFC3164_TIMESTAMP)
 
 # 1985-04-12T23:20:50.52Z - this one is real
 # 2018-03-31 15:15:45
-RFC3339_TIMESTAMP = r'\d{4}\-\d{2}\-\d{2}(T|\s+)\d{2}\:\d{2}\:\d{2}(\.\d+Z)?'
+RFC3339_TIMESTAMP = r'\d{4}\-\d{2}\-\d{2}(T|\s+)\d{2}\:\d{2}\:\d{2}(\.\d+)?((Z)|((\+|\-)\d{2}\:\d{2}))?'
+# ("+" / "-") TIME-HOUR ":" TIME-MINUTE
+
+
 wrap_RFC3339_TIMESTAMP = r".*%s.*" % RFC3339_TIMESTAMP
 # print(RFC3339_TIMESTAMP)
 
