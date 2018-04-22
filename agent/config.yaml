@@ -42,7 +42,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180403-031029.log'
+              path: 'web_app_log20180423-005841.log'
               read_all: False
 os:
   linux:
@@ -85,4 +85,17 @@ os:
           files:
               - file:
                   path: 'utmp'
-
+  windows:
+    logs:
+    - log:
+        name: 'Application'
+        interval: 10
+#        patterns:
+#          - '.*Disk.*'
+#          - '.*Battery.*'
+    - log:
+        name: 'System'
+        interval: 15
+    - log:
+        name: 'Security'
+        interval: 5

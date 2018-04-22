@@ -6,7 +6,7 @@ import zipfile
 
 import yaml
 from binaryornot.check import is_binary
-
+from windows_agent import WinAgent
 from linux_binary_agent import *
 
 
@@ -132,9 +132,29 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
 
     print(linux_conf)
 
+def run_windows_agents(windows_agents):
+    for agent in windows_agents:
+        print("Windows agent,pratim log: ",agent._name)
+        agent.run()
+
 
 def read_windows_configuration(windows_conf, patterns, interval, read_all, only_specified_files):
     print("Reading windows configuration configuration")
+    windows_conf = windows_conf['windows']
+    windows_agents = []
+
+    if (windows_conf['logs'] == None):
+        raise Exception("Mora postojati bar jedan log koji zelimo da pratimo")
+
+        # prolazimo kroz sve logove koje zelimo da pratimo
+    for log_config in windows_conf['logs']:
+        # print(log_config)
+        patterns = log_config['log']['patterns'] if 'patterns' in log_config['log'] else []
+        agent = WinAgent(log_config['log']['name'], log_config['log']['interval'], patterns)
+        windows_agents.append(agent)
+
+    run_windows_agents(windows_agents)
+    # print(windows_conf)
 
 
 def read_os_configuration(configuration, patterns, interval, read_all, only_specified_files):
