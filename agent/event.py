@@ -27,5 +27,5 @@ class Event:
             format(self.event_id,self.machine_name,self.data,self.index,self.category,self.category_number,self.entry_type,self.message,self.source,
                    self.replacement_strings,self.instance_id,self.time_generated,self.time_written,self.user_name,self.site,self.container)
 
-        return str
+        # return str
 

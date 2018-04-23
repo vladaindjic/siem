@@ -33,17 +33,17 @@ specific:
 #                - 'l+$'
 #                - '^\.+'
 #              interval: 4
-#    - directory:
-#        path: '../logGeneratorAgent'
-#        patterns:
-#          - '.*POST.*'
-#          - '.*DELETE.*'
-#        interval: 0.5
-#        only_specified_files: True
-#        files:
-#          - file:
-#              path: 'web_app_log20180403-035836.log'
-#              read_all: False
+    - directory:
+        path: '../logGeneratorAgent'
+        patterns:
+          - '.*POST.*'
+          - '.*DELETE.*'
+        interval: 0.5
+        only_specified_files: True
+        files:
+          - file:
+              path: 'web_app_log20180423-215901.log'
+              read_all: False
 os:
   linux:
     only_specified_files: True
@@ -57,8 +57,8 @@ os:
 #                  path: 'tallylog'
 #              - file:
 #                  path: 'faillog'
-              - file:
-                  path: 'ufw.log.1'
+#              - file:
+#                  path: 'ufw.log.1'
 #              - file:
 #                  path: 'syslog'
 #              - file:
@@ -85,4 +85,17 @@ os:
 #          files:
 #              - file:
 #                  path: 'utmp'
-
+  windows:
+    logs:
+    - log:
+        name: 'Application'
+        interval: 10
+#        patterns:
+#          - '.*Disk.*'
+#          - '.*Battery.*'
+    - log:
+        name: 'System'
+        interval: 15
+    - log:
+        name: 'Security'
+        interval: 5

@@ -138,25 +138,25 @@ def check_os():
         return False
     return True
 
-def main():
-
-    if(not check_os()):
-        raise Exception("Ovaj agent radi samo na Windowsu")
-        exit(-1)
-
-    log_agents =[]
-    config = read_configuration("./windowsAgentConfig.yaml")
-    if(config['logs']==None):
-        raise Exception("Mora postojati bar jedan log koji zelimo da pratimo")
-
-    #prolazimo kroz sve logove koje zelimo da pratimo
-    for log_config in config['logs']:
-        # print(log_config)
-        patterns = log_config['log']['patterns'] if 'patterns' in log_config['log'] else []
-        agent = WinAgent(log_config['log']['name'],log_config['log']['interval'],patterns)
-        log_agents.append(agent)
-
-    run_agents(log_agents)
-
-if __name__ == '__main__':
-    main()
+# def main():
+#
+#     if(not check_os()):
+#         raise Exception("Ovaj agent radi samo na Windowsu")
+#         exit(-1)
+#
+#     log_agents =[]
+#     config = read_configuration("./windowsAgentConfig.yaml")
+#     if(config['logs']==None):
+#         raise Exception("Mora postojati bar jedan log koji zelimo da pratimo")
+#
+#     #prolazimo kroz sve logove koje zelimo da pratimo
+#     for log_config in config['logs']:
+#         # print(log_config)
+#         patterns = log_config['log']['patterns'] if 'patterns' in log_config['log'] else []
+#         agent = WinAgent(log_config['log']['name'],log_config['log']['interval'],patterns)
+#         log_agents.append(agent)
+#
+#     run_agents(log_agents)
+#
+# if __name__ == '__main__':
+#     main()
