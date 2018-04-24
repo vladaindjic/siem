@@ -14,3 +14,4 @@ def send_log_line(line):
 
 def send_json_log(json_log):
     print(json_log)
+    # pass

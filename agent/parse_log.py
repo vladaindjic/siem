@@ -118,6 +118,14 @@ class SyslogParser(object):
     def parse(self):
         self.parse_header()
 
+    def find_timestamp(self):
+        m = re.search(SyslogParser.timestamp_formats, self.line)
+        if m:
+            self.timestamp = m.group(0)
+        else:
+            self.timestamp = self.provide_timestamp()
+        return self.timestamp
+
     def provide_timestamp(self):
         timestamp = time.time()
         dt = datetime.datetime.fromtimestamp(timestamp)
@@ -146,11 +154,21 @@ class SyslogParser(object):
         if self.rest_line.startswith(":"):
             self.rest_line = self.rest_line[1:]
 
+    def add_nil(self, pattern):
+        return r"(%s|-)" % pattern
+
+    def is_nil(self, match):
+        return match.group(0) == "-" if match else False
+
     def parse_pri(self):
         # facility and severity
-        pri_pattern = r"<\d{1,3}>"
+        pri_pattern = self.add_nil(r"<\d{1,3}>")
         m = re.match(pri_pattern, self.rest_line)
         if not m:
+            return
+        elif self.is_nil(m):
+            print("PRIAAAAAAAA NEMA: " + m.group(0))
+            self.cut_beginning(len(m.group(0)))
             return
         pri_code = int(re.search(r"\d{1,3}", m.group(0)).group(0))
         self.facility_code = pri_code // 8
@@ -159,19 +177,26 @@ class SyslogParser(object):
         self.cut_beginning(len(m.group(0)))
 
     def parse_syslog_version(self):
-        syslog_version_pattern = r"\d+"
+        syslog_version_pattern = self.add_nil(r"\d+")
         m = re.match(syslog_version_pattern, self.rest_line)
         if not m:
+            return
+        elif self.is_nil(m):
+            print("SYSLOG VERSION NEMA: " + m.group(0))
+            self.cut_beginning(len(m.group(0)))
             return
         self.syslog_version = int(m.group(0))
         self.cut_beginning(len(m.group(0)))
         print("Syslog version: %d" % self.syslog_version)
 
     def parse_timestamp(self):
-        m = re.match(SyslogParser.timestamp_formats, self.rest_line)
-        if not m:
+        m = re.match(self.add_nil(SyslogParser.timestamp_formats), self.rest_line)
+        if not m or self.is_nil(m):
             # TODO: provide the date
             self.provide_timestamp()
+            # da secnemo -
+            if self.is_nil(m):
+                self.cut_beginning(len(m.group(0)))
             return
         self.timestamp = m.group(0)
         self.cut_beginning(len(m.group(0)))
@@ -179,19 +204,25 @@ class SyslogParser(object):
         print("Time stamp: %s" % self.timestamp)
 
     def parse_hostname(self):
-        m = re.match(r"[!-~]+", self.rest_line)
-        if not m:
+        m = re.match(self.add_nil(r"[!-~]+"), self.rest_line)
+        if not m or self.is_nil(m):
             # TODO: provide hostmachine
             self.provide_hostname()
+            if self.is_nil(m):
+                self.cut_beginning(len(m.group(0)))
+                return
             raise Exception("Format error, no hostname %s &&& and %s" % (self.line, self.rest_line))
         self.hostname = m.group(0)
         print("Hostname: %s" % self.hostname)
         self.cut_beginning(len(self.hostname))
 
     def parse_app_name(self):
-        m = re.match(r"[!-~]+", self.rest_line)
+        m = re.match(self.add_nil(r"[!-~]+"), self.rest_line)
         if not m:
             raise Exception("Format error, no process id")
+        elif self.is_nil(m):
+            self.cut_beginning(len(m.group(0)))
+            return
         self.app_name = m.group(0)
         self.cut_beginning(len(self.app_name))
         print("Application name: %s" % self.app_name)
@@ -205,7 +236,8 @@ class SyslogParser(object):
         pass
 
     def to_json(self):
-        return json.dumps(self.__dict__)
+        from build_and_crypt import build_json_dto
+        return build_json_dto(self)
 
 
 class SyslogRFC5424Parser(SyslogParser):
@@ -223,9 +255,12 @@ class SyslogRFC5424Parser(SyslogParser):
         self.parse_message_id()
 
     def parse_process_id(self):
-        m = re.match(r"[!-~]+", self.rest_line)
+        m = re.match(self.add_nil(r"[!-~]+"), self.rest_line)
         if not m:
             raise Exception("Format error, no process id")
+        elif self.is_nil(m):
+            self.cut_beginning(len(m.group(0)))
+            return
         self.process_id_str = m.group(0)
         print("Process id str: %s" % self.process_id_str)
         self.cut_beginning(len(m.group(0)))
@@ -239,17 +274,23 @@ class SyslogRFC5424Parser(SyslogParser):
         print("Process id: %d" % self.process_id)
 
     def parse_message_id(self):
-        m = re.match(r"[!-~]+", self.rest_line)
+        m = re.match(self.add_nil(r"[!-~]+"), self.rest_line)
         if not m:
             raise Exception("Format error, no message id")
+        elif self.is_nil(m):
+            self.cut_beginning(len(m.group(0)))
+            return
         self.message_id = m.group(0)
         self.cut_beginning(len(self.message_id))
         print("Message id: %s" % self.message_id)
 
     def parse_sd_elements(self):
         while True:
-            m = re.match("\[[^\[\]]+\]", self.rest_line)
+            m = re.match(self.add_nil("\[[^\[\]]+\]"), self.rest_line)
             if not m:
+                break
+            elif self.is_nil(m):
+                self.cut_beginning(len(m.group(0)))
                 break
             self.sd_elements.append(m.group(0))
             self.cut_beginning(len(m.group(0)))
@@ -301,6 +342,59 @@ class LinuxStandardSyslogParser(SyslogParser):
         print("Linux system time: %s" % self.linux_system_time)
 
 
+class UWBTmpParser(SyslogParser):
+    def __init__(self, full_line, type="wtmp"):
+        super().__init__(full_line)
+        self.type = type
+
+    def parse(self):
+        self.find_timestamp()
+        self.hostname = self.provide_hostname()
+        self.message = "%s: %s" % (self.type, self.line)
+
+
+class FaillogParser(SyslogParser):
+    def __init__(self, full_line):
+        super().__init__(full_line)
+
+    def parse(self):
+        # ima 5 kolona, u 4 se nalazi timestamp
+        temp = re.sub('\s+', ' ', self.line)
+        temp = temp.split(' ')
+        # TODO: sredit eventualno format
+        self.timestamp = " ".join(temp[3:6])
+        self.hostname = self.provide_hostname()
+        self.message = 'faillog: %s' % self.line
+
+
+class LastlogParser(SyslogParser):
+    def __init__(self, full_line):
+        super().__init__(full_line)
+
+    def parse(self):
+        # ima 5 kolona, u 4 se nalazi timestamp
+        if 'NEVER' in self.line.upper():
+            self.timestamp = self.provide_timestamp()
+        else:
+            temp = re.sub('\s+', ' ', self.line)
+            temp = temp.split(' ')
+            # TODO: ako mozes na neki nacin sa latinice u cirilicu da promenis i onda promenis format
+            self.timestamp = " ".join(temp[3:])
+        self.hostname = self.provide_hostname()
+        self.message = 'lastlog: %s' % self.line
+
+
+class DummyParser(SyslogParser):
+    def __init__(self, full_line):
+        super().__init__(full_line)
+
+    def parse(self):
+        self.find_timestamp()
+        self.hostname = self.provide_hostname()
+        self.message = self.line
+
+# TODO: resi sa Tallylog, ali prvo skontaj kako izgleda
+
 def main():
     line1 = "Apr 19 00:47:57 vi3-Inspiron-5737 dbus[846]: [system] Activating via systemd: service name='org.freedesktop.PolicyKit1' unit='polkitd.service'"
     line2 = """
@@ -323,6 +417,25 @@ def main():
     print(lin_log.to_json())
     print(lin_log.provide_timestamp())
     print(lin_log.provide_hostname())
+
+    print("GLEDAJ MEEEEEEEEEEE\n\n\n")
+    line10 = """
+        <165>1 2003-08-24T05:14:15.000003-07:00 192.0.2.1
+         myproc 8710 MSG123 - %% It's time to make the do-nuts.
+    """
+
+    log = SyslogRFC5424Parser(line10)
+    log.parse()
+    print(log.to_json())
+
+    print("A SADA MENE\n\n\n")
+    line11 = """
+        -- - -
+         - - - - %% It's time to make the do-nuts.
+    """
+    log = SyslogRFC5424Parser(line11)
+    log.parse()
+    print(log.to_json())
 
 
 if __name__ == '__main__':

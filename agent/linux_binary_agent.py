@@ -1,8 +1,10 @@
 from agent import Agent
 import http_communication
 import re
-from time import sleep
+from time import sleep, time
 import subprocess
+from parse_log import UWBTmpParser, FaillogParser, LastlogParser
+import datetime
 
 
 class LinuxBinaryAgent(Agent):
@@ -61,7 +63,10 @@ class LinuxBinaryAgent(Agent):
         # print(line)
         # da li ima poklapanja sa nekim regularnim izrazom
         if self.read_all or any([re.match(pattern, line) for pattern in self.patterns]):
-            http_communication.send_log_line(line)
+            self.syslog_parser.set_line(line)
+            self.syslog_parser.parse()
+            http_communication.send_json_log(self.syslog_parser.to_json())
+            # http_communication.send_log_line(line)
             # udp_communication.send_log_line(line)
 
     def monitor_log(self):
@@ -79,27 +84,40 @@ class LinuxBinaryAgent(Agent):
 
 
 class UWBTmpAgent(LinuxBinaryAgent):
-    def __init__(self, agent):
+    def __init__(self, agent, type='wtmp'):
         super().__init__(agent)
-        self.cmd = "last -F -f {}".format(self.file_path)
+        # FIXME: privremeno resenje, trazimo samo odavde da ti prikazuje, s obzirom na to da ga ima malo, nece biti problema
+        current_time = time()
+        self.start_time = current_time
+        print(current_time)
+
+        # YYYY-MM-DD hh: mm:ss
+        current_time = datetime.datetime.strftime(datetime.datetime.fromtimestamp(current_time), "%Y%m%d%H%M%S")
+        print(current_time)
+
+        self.cmd = "last -f %s --time-format=iso -s %s" % (self.file_path, current_time)
+        print(self.cmd)
         self.footer_lines_num = 2
         self.header_lines_num = 0
+        self.syslog_parser = UWBTmpParser("", type)
 
 
 class LastlogAgent(LinuxBinaryAgent):
     def __init__(self, agent):
         super().__init__(agent)
-        self.cmd = "lastlog".format(self.file_path)
+        self.cmd = "lastlog -t +1".format(self.file_path)
         self.footer_lines_num = 0
         self.header_lines_num = 1
+        self.syslog_parser = LastlogParser("")
 
 
 class FailLogAgent(LinuxBinaryAgent):
     def __init__(self, agent):
         super().__init__(agent)
-        self.cmd = "faillog -a"
+        self.cmd = "faillog -a -t +1"
         self.footer_lines_num = 0
         self.header_lines_num = 2
+        self.syslog_parser = FaillogParser("")
 
 
 class TallyLogAgent(LinuxBinaryAgent):

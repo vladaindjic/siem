@@ -42,8 +42,9 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180423-215901.log'
+              path: 'web_app_log20180424-222550.log'
               read_all: False
+              parser_type: 'SyslogRFC5424Parser'
 os:
   linux:
     only_specified_files: True
@@ -57,8 +58,9 @@ os:
 #                  path: 'tallylog'
 #              - file:
 #                  path: 'faillog'
-#              - file:
-#                  path: 'ufw.log.1'
+              - file:
+                  path: 'ufw.log.1'
+                  parser_type: 'LinuxStandardSyslogParser'
 #              - file:
 #                  path: 'syslog'
 #              - file:
@@ -74,7 +76,7 @@ os:
 #              - file:
 #                  path: 'dpkg.log'         --- da li uopste treba da se gleda
 #              - file:
-#                  path: 'wtmp.1'
+#                  path: 'wtmp'
 #              - file:
 #                  path: 'lastlog'
 #              - file:

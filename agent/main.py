@@ -8,7 +8,19 @@ import yaml
 from binaryornot.check import is_binary
 from windows_agent import WinAgent
 from linux_binary_agent import *
-from parse_log import LinuxStandardSyslogParser
+from parse_log import LinuxStandardSyslogParser, SyslogRFC5424Parser, DummyParser
+
+
+def initialize_parser(parser_type):
+    if parser_type == 'SyslogRFC5424Parser':
+        print('SyslogRFC5424Parser')
+        return SyslogRFC5424Parser("")
+    elif parser_type == 'LinuxStandardSyslogParser':
+        print('LinuxStandardSyslogParser')
+        return LinuxStandardSyslogParser("")
+    else:
+        print('DummyParser')
+        return DummyParser("")
 
 
 def read_configuration(config_path):
@@ -68,7 +80,12 @@ def run_linux_agents(file_agents):
                     TallyLogAgent(lin_agent).run()
                 # utmp, wtmp, btmp
                 else:
-                    UWBTmpAgent(lin_agent).run()
+                    type = 'wtmp'
+                    if 'utmp' in file_path:
+                        type = 'utmp'
+                    elif 'btmp' in file_path:
+                        type = 'btmp'
+                    UWBTmpAgent(lin_agent, type).run()
 
 
 def get_value_or_default_from_dict(dictionary, key, default_value):
@@ -131,6 +148,11 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
                     agent = Agent(os.path.join(dir_path, file_path), file_patterns, file_interval, file_read_all,
                                   log_parser=LinuxStandardSyslogParser(""))
                     file_agents[full_path] = agent
+
+                # eventualna promena parsera
+                parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
+                if parser_type:
+                    agent.syslog_parser = initialize_parser(parser_type)
 
         run_linux_agents(file_agents)
 
@@ -209,6 +231,10 @@ def read_specific_configuration(specific_conf, patterns, interval, read_all, onl
             else:
                 agent = Agent(os.path.join(dir_path, file_path), file_patterns, file_interval, file_read_all)
                 file_agents[file_path] = agent
+
+            parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
+            if parser_type:
+                agent.syslog_parser = initialize_parser(parser_type)
 
         run_agents(file_agents)
 

@@ -79,6 +79,8 @@ class Agent(object):
         if not os.path.exists(self.file_path):
             raise FileExistsError("File: {} not exist: ".format(self.file_path))
         self.file = open(self.file_path, 'r', encoding=self.encoding)
+        # pozicioniramo se na kraj fajla
+        self.file.readlines()
         while True:
             line = self.file.readline()
             while line:

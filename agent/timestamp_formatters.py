@@ -7,7 +7,7 @@ wrap_RFC3164_TIMESTAMP = r".*%s.*" % RFC3164_TIMESTAMP
 
 # 1985-04-12T23:20:50.52Z - this one is real
 # 2018-03-31 15:15:45
-RFC3339_TIMESTAMP = r'\d{4}\-\d{2}\-\d{2}(T|\s+)\d{2}\:\d{2}\:\d{2}(\.\d+)?((Z)|((\+|\-)\d{2}\:\d{2}))?'
+RFC3339_TIMESTAMP = r'\d{4}\-\d{2}\-\d{2}(T|\s+)\d{2}\:\d{2}\:\d{2}(\.\d+)?((Z)|((\+|\-)\d{2}(\:)?\d{2}))?'
 # ("+" / "-") TIME-HOUR ":" TIME-MINUTE
 
 
