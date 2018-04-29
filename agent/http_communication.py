@@ -1,7 +1,11 @@
 import requests
+import json
 
 
-API_ENDPOINT = "http://192.168.0.18:8080/logger"
+API_ENDPOINT = "http://localhost:8080/logger"
+
+line_num = 0
+lines = set()
 
 
 def send_log_line(line):
@@ -13,5 +17,16 @@ def send_log_line(line):
 
 
 def send_json_log(json_log):
-    print(json_log)
-    # pass
+    # Debug info
+    # global line_num
+    # line_num +=1
+    # lines.add(json_log['line'])
+    #
+    # if line_num >= 50:
+    #     print("Line number: %d and set size: %d" % (line_num, len(lines)))
+
+    r = requests.post(API_ENDPOINT, data=json.dumps(json_log).encode('utf-8'), headers={'content-type': 'application/json'})
+    if r.status_code != 201:
+        print(r)
+        print("Ova linija ne valja: %s" % json_log)
+    pass
