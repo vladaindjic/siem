@@ -4,6 +4,7 @@ import threading
 # import thread module
 from _thread import *
 from sysql import SysqlMongoParser
+import ssl
 
 print_lock = threading.Lock()
 
@@ -37,7 +38,8 @@ def start_server():
     # can be anything
     port = 33333
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+    s = ssl.wrap_socket(s, keyfile="certs/sysqo-parser.key", certfile="certs/sysqo_parser.crt",
+                        server_side=True, cert_reqs=ssl.CERT_REQUIRED, ca_certs="certs/ca.crt")
     s.bind((host, port))
     print("socket binded to post", port)
 

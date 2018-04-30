@@ -80,3 +80,15 @@ kts-notes.txt
 
 spring-boot-server-KTS-NVT/target
 
+
+
+# sertifikati
+client-cert/
+mongo-admin-cert/
+mongo-client-cert/
+mongod-certs/
+mini_parser/certs
+
+center/src/main/resources/mongodbTrustStore
+center/src/main/resources/springkeystore.jks
+

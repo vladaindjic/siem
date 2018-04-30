@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.siem.sysql;
 
+import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +14,8 @@ public class SysqlParserAdapter {
     public SysqlParserAdapter(){}
 
     private Socket takeSocket() throws IOException{
-        return new Socket(ip, port);
+        return ((SSLSocketFactory)SSLSocketFactory.getDefault()).createSocket(ip, port);
+//        return new Socket(ip, port);
     }
 
     private void putbackSocket(Socket socket) throws IOException{
