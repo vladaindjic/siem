@@ -3,12 +3,12 @@ import socket
 import threading
 # import thread module
 from _thread import *
-from sysql import SysqlMongoParser
+from sysql import SysqlMongoCompiler
 import ssl
 
 print_lock = threading.Lock()
 
-sysql_mongo_parser = SysqlMongoParser()
+sysql_mongo_compiler = SysqlMongoCompiler()
 MAX_MESSAGE_SIZE = 4096
 
 
@@ -18,7 +18,7 @@ def threaded(c):
         sysql_bytes = c.recv(MAX_MESSAGE_SIZE)
         sysql_str = sysql_bytes.decode('utf-8')
         print("Parse: %s" % sysql_str)
-        mongo_query = sysql_mongo_parser.parse(sysql_str)
+        mongo_query = sysql_mongo_compiler.compile(sysql_str)
         print("Mongo query: %s" % mongo_query)
         mongo_query_bytes = mongo_query.encode("utf-8")
         # send back reversed string to client

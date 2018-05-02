@@ -1,5 +1,5 @@
 from parglare import Grammar, Parser
-from mongo_backend import mongo_actions
+from ir import ir_actions
 
 
 def build_grammar(file_path):
@@ -19,30 +19,82 @@ def parse_sysql(sysql):
     mongo_query = template % p.parse(sysql)
     return mongo_query
 
-# parser = Parser(g, debug=True)
-# result = parser.parse('facility >= 1 or severity<2 and appname=\"Vlado,\" majstore\" or hostname=/cao, vladimire/')
-# result = parser.parse('before(2013-01-20 10:11:15) and after(2020-01-25) or before(2015-02)')
-# result = parser.parse('at(2013-01-20)')
 
-
-result = parse_sysql('not (last(1Y 2M 3D 1h 2m 3s)) or last(1Y)')
-print(result)
-
-# print("db.log.find(%s)" % result)
+# class SysqlMongoParser(object):
+#     def __init__(self, actions=mongo_actions):
+#         self.grammar = build_grammar('sysql.pg')
+#         self.parser = build_parser(self.grammar, actions)
 #
-# t = time_parser.parse("2016-01-01T10:11:15+02:00")
-#
-# print(t)
-# print(t + relativedelta(months=1))
+#     def parse(self, sysql_str):
+#         try:
+#             return self.parser.parse(sysql_str)
+#         except:
+#             return None
 
 
-class SysqlMongoParser(object):
+class SysqlMongoCompiler(object):
     def __init__(self):
-        self.grammar = build_grammar('sysql.pg')
-        self.parser = build_parser(self.grammar, mongo_actions)
+        self.grammar = self.build_grammar('sysql.pg')
+        self.parser = build_parser(self.grammar, ir_actions)
 
-    def parse(self, sysql_str):
-        try:
-            return self.parser.parse(sysql_str)
-        except:
-            return None
+    def build_grammar(self, grammar_file_path):
+        grammar = Grammar.from_file(grammar_file_path)
+        return grammar
+
+    def build_parser(self, grammar, actions):
+        parser = Parser(grammar, actions=actions)
+        return parser
+
+    def parse(self, query):
+        return self.parser.parse(query)
+
+    def remove_not(self, ir_representation):
+        return ir_representation.remove_not()
+
+    def optimize(self, without_not_ir):
+        return without_not_ir.optimize()
+
+    def str_mongo(self, optimized_ir):
+        return optimized_ir.str_mongo()
+
+    def compile(self, query):
+        print("Sysql query      : %s" % query)
+        ir_representation = self.parse(query)
+        print("IR reprezentation: %s" % ir_representation)
+        without_not_ir = self.remove_not(ir_representation)
+        print("Not removed      : %s" % without_not_ir)
+        optimized_ir = self.optimize(without_not_ir)
+        print("Optimized IR     : %s" % optimized_ir)
+        str_mongo_query = self.str_mongo(optimized_ir)
+        print("Mongo query      : %s" % str_mongo_query)
+        return str_mongo_query
+
+# sysqo = SysqlMongoCompiler()
+# # result = sysqo.parse('not (last(1Y 2M 3D 1h 2m 3s)) or last(1Y)')
+# # result = sysqo.parse('severity > 10')
+# # result = sysqo.parse('severity >= 10 and facility = 15')
+#
+# # query = "version = 1 and (severity=2 and not(facility=3 or (appname=\"nivica\" and hostname=\"vlada\")))"
+#
+# # query = 'appname=/nivica/ and hostname ="vlada"'
+# #
+# query = 'appname = "nivica" or hostname="vlada" and (severity=3 and facility=4)'
+#
+# # query = 'appname=/nivica/ and not (appname=/nivica/)'
+#
+# result = sysqo.parse(query)
+# print("With Not          : %s" % result)
+# result = result.find_not()
+# print("without not       : %s" % result)
+# result = result.optimize()
+# print("After otpimization: %s" % result)
+# result = result.str_mongo()
+# print("Mongo query       : %s" % result)
+
+# query = "not (last(1Y 2M 3D 1h 2m 3s)) or last(1Y)"
+# query = "version = 1 and (severity=2 and not(facility=3 or (appname=\"nivica\" and hostname=\"vlada\")))"
+# query = 'appname=/nivica/ and hostname ="vlada"'
+# query = 'appname = "nivica" or hostname="vlada" and (severity=3 and facility=4)'
+# query = 'appname=/nivica/ and not (appname=/nivica/)'
+
+# mongo_query = sysqo.compile(query)

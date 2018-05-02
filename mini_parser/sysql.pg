@@ -142,11 +142,13 @@ INT:
 ;
 
 STRING:
-    /\".*\"/
+    // Old version /\".*\"/
+    /\"[^\"]*\"/    // FIXME: find better solution for this
 ;
 
 REG_EXPR:
-    /\/.*\//
+    // Old version /\/.*\//
+    /\/[^\/]*\//   // FIXME: find better solution for this
 ;
 
 

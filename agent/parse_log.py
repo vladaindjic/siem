@@ -173,7 +173,7 @@ class SyslogParser(object):
         pri_code = int(re.search(r"\d{1,3}", m.group(0)).group(0))
         self.facility_code = pri_code // 8
         self.severity_code = pri_code % 8
-        print("Facility code: %d\nSeverity code:%d" % (self.facility_code, self.severity_code))
+        # print("Facility code: %d\nSeverity code:%d" % (self.facility_code, self.severity_code))
         self.cut_beginning(len(m.group(0)))
 
     def parse_syslog_version(self):
@@ -182,12 +182,12 @@ class SyslogParser(object):
         if not m:
             return
         elif self.is_nil(m):
-            print("SYSLOG VERSION NEMA: " + m.group(0))
+            # print("SYSLOG VERSION NEMA: " + m.group(0))
             self.cut_beginning(len(m.group(0)))
             return
         self.syslog_version = int(m.group(0))
         self.cut_beginning(len(m.group(0)))
-        print("Syslog version: %d" % self.syslog_version)
+        # print("Syslog version: %d" % self.syslog_version)
 
     def parse_timestamp(self):
         m = re.match(self.add_nil(SyslogParser.timestamp_formats), self.rest_line)
@@ -201,7 +201,7 @@ class SyslogParser(object):
         self.timestamp = m.group(0)
         self.cut_beginning(len(m.group(0)))
         self.convert_timestamp()
-        print("Time stamp: %s" % self.timestamp)
+        # print("Time stamp: %s" % self.timestamp)
 
     def parse_hostname(self):
         m = re.match(self.add_nil(r"[!-~]+"), self.rest_line)
@@ -213,7 +213,7 @@ class SyslogParser(object):
                 return
             raise Exception("Format error, no hostname %s &&& and %s" % (self.line, self.rest_line))
         self.hostname = m.group(0)
-        print("Hostname: %s" % self.hostname)
+        # print("Hostname: %s" % self.hostname)
         self.cut_beginning(len(self.hostname))
 
     def parse_app_name(self):
@@ -225,12 +225,12 @@ class SyslogParser(object):
             return
         self.app_name = m.group(0)
         self.cut_beginning(len(self.app_name))
-        print("Application name: %s" % self.app_name)
+        # print("Application name: %s" % self.app_name)
 
     def parse_message(self):
         self.message = self.rest_line[:]
         self.cut_beginning(len(self.message))
-        print("Message: %s" % self.message)
+        # print("Message: %s" % self.message)
 
     def parse_process_id(self):
         pass
@@ -282,7 +282,7 @@ class SyslogRFC5424Parser(SyslogParser):
             return
         self.message_id = m.group(0)
         self.cut_beginning(len(self.message_id))
-        print("Message id: %s" % self.message_id)
+        # print("Message id: %s" % self.message_id)
 
     def parse_sd_elements(self):
         while True:
@@ -294,7 +294,7 @@ class SyslogRFC5424Parser(SyslogParser):
                 break
             self.sd_elements.append(m.group(0))
             self.cut_beginning(len(m.group(0)))
-        print("SD Elements: %s" % self.sd_elements)
+        # print("SD Elements: %s" % self.sd_elements)
 
 
 class LinuxStandardSyslogParser(SyslogParser):

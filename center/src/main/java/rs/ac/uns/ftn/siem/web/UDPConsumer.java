@@ -11,12 +11,12 @@ public class UDPConsumer {
 
     @ServiceActivator
     public void consume(byte[] message){
-
+        System.out.println("Kako jebeno nikad ne dolaziiiiiiiiiiiis!!!");
         String logLine = new String(message);
 
-        Log l = new Log();
-        l.setLine(logLine);
-        this.logRepository.save(l);
+//        Log l = new Log();
+//        l.setLine(logLine);
+//        this.logRepository.save(l);
 
 
         System.out.println(logLine);

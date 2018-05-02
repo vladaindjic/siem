@@ -6,6 +6,7 @@ from time import sleep
 import http_communication
 import timestamp_formatters
 from parse_log import SyslogRFC5424Parser, LinuxStandardSyslogParser
+import udp_communication
 
 
 class Agent(object):
