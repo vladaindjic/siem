@@ -1,3 +1,45 @@
+SysQuery:
+    Query
+    | Query SEMICOLON Header
+;
+
+Header:
+    HeaderExpr
+    | Header COMMA HeaderExpr
+;
+
+HeaderExpr:
+    LimitExpr
+    | PageExpr
+    | SortExpr
+;
+
+LimitExpr:
+    LIMIT LPAREN INT RPAREN
+;
+
+PageExpr:
+    PAGE LPAREN INT RPAREN
+;
+
+SortExpr:
+    SORT LPAREN SortParams RPAREN
+;
+
+SortParams:
+    SortParam
+    | SortParams COMMA SortParam
+;
+
+SortParam:
+    Property COLON SortDir
+;
+
+SortDir:
+    ASC
+    | DESC
+;
+
 Query:
     Expr
     | Query or_op Expr
@@ -71,6 +113,12 @@ RHSStrExpr:
     | REG_EXPR
 ;
 
+Property:
+    RelProperty
+    | StrProperty
+    | TimeProperty
+;
+
 RelProperty:
     FACILITY
     | SEVERITY
@@ -83,6 +131,10 @@ StrProperty:
     | PROCID
     | MSGID
     | MSG
+;
+
+TimeProperty:
+    TIMESTAMP
 ;
 
 and_op:
@@ -234,4 +286,40 @@ YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
 
 TIME_OFFSET:
     /(\d+(y|Y)(\s+)?)?(\d+M(\s+)?)?(\d+(d|D)(\s+)?)?(\d+(h|H)(\s+)?)?(\d+m(\s+)?)?(\d+(s|S))?/
+;
+
+SEMICOLON:
+    ';'
+;
+
+LIMIT:
+    'limit'
+;
+
+PAGE:
+    'page'
+;
+
+SORT:
+    'sort'
+;
+
+TIMESTAMP:
+    'timestamp'
+;
+
+COLON:
+    ':'
+;
+
+ASC:
+    'asc'
+;
+
+DESC:
+    'desc'
+;
+
+COMMA:
+    ','
 ;

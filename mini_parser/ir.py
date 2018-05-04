@@ -2,6 +2,9 @@ from collections import OrderedDict
 from sysqo_time_util import *
 
 
+# deo koji se tice Headera
+
+# Medjukod koji je potreban za Query
 class IRObject(object):
     def inv(self):
         return self
@@ -366,7 +369,159 @@ class CompoundExpr(IRObject):
         return string
 
 
+# Header
+class SysQuery(IRObject):
+    def __init__(self, query, header=None):
+        print("Ja sam breee")
+        self.query = query
+        self.header = header
+
+
+class Header(IRObject):
+    def __init__(self, first_header_expression=None):
+        self.header_expressions = OrderedDict()
+        if first_header_expression is not None:
+            self.header_expressions[first_header_expression.get_type()] = first_header_expression
+
+    def add_header_expression(self, header_expression):
+        if header_expression.get_type() not in self.header_expressions:
+            self.header_expressions[header_expression.get_type()] = header_expression
+            return self
+        else:
+            raise KeyError("Header expression '%s' already exists." % header_expression.get_type())
+
+    def __str__(self):
+        string = "Header("
+        for k, v in self.header_expressions.items():
+            string += str(v)
+            string += ", "
+        if len(string) > 7:
+            string = string[:-2]
+        string += ")"
+        return string
+
+    def str_mongo(self):
+        string = ""
+        limit_str = self.header_expressions["limit"].str_mongo() if "limit" in self.header_expressions else ""
+        page_str = self.header_expressions["page"].str_mongo() if "page" in self.header_expressions else ""
+        sort_str = self.header_expressions["sort"].str_mongo() if "sort" in self.header_expressions else ""
+        # da li treba da se dodaju limit i page
+        if limit_str and page_str:
+            string += "%s;%s" % (limit_str, page_str)
+        elif limit_str or page_str:
+            raise ValueError("Both limit and page must be specified")
+        # da li treba da se doda nacin za sortiranje
+        if sort_str:
+            # da li je vec nesto upisano
+            if string:
+                string += ";"
+            string += sort_str
+        return string
+
+
+class SortParam(IRObject):
+    def __init__(self, property, sort_dir):
+        self.property = property
+        self.sort_dir = sort_dir
+
+    def __str__(self):
+        return "%s:%d" % (self.property, self.sort_dir)
+
+    def str_mongo(self):
+        return str(self)
+
+
+class SortParams(IRObject):
+    def __init__(self, first_param=None):
+        self.sort_params = OrderedDict()
+        if first_param is not None:
+            self.sort_params[first_param.property.name] = first_param
+
+    def add_param(self, param):
+        if param.property.name not in self.sort_params:
+            self.sort_params[param.property.name] = param
+            return self
+        else:
+            raise KeyError("Sort param for property: %s already specified" % param.property.name)
+
+    def __str__(self):
+        string = ""
+        for k, v in self.sort_params.items():
+            string += str(v)
+            string += ", "
+        if len(string) >= 1:
+            string = string[:-2]
+        return string
+
+    def str_mongo(self):
+        return str(self)
+
+
+class HeaderExpr(IRObject):
+    def get_type(self):
+        return ""
+
+
+class SortExpr(HeaderExpr):
+    def __init__(self, sort_params):
+        self.sort_params = sort_params
+
+    def get_type(self):
+        return "sort"
+
+    def __str__(self):
+        return "sort(%s)" % str(self.sort_params)
+
+    def str_mongo(self):
+        return "sort={%s}" % self.sort_params.str_mongo()
+
+
+class LimitExpr(HeaderExpr):
+    def __init__(self, limit):
+        self.limit = limit
+
+    def get_type(self):
+        return "limit"
+
+    def __str__(self):
+        return "limit(%s)" % self.limit
+
+    def str_mongo(self):
+        return "limit=%s" % self.limit
+
+
+class PageExpr(HeaderExpr):
+    def __init__(self, page):
+        self.page = page
+
+    def get_type(self):
+        return "page"
+
+    def __str__(self):
+        return "page(%s)" % self.page
+
+    def str_mongo(self):
+        return "page=%s" % self.page
+
+
 ir_actions = {
+    "SysQuery": [
+        lambda _, nodes: SysQuery(nodes[0]),
+        lambda _, nodes: SysQuery(nodes[0], nodes[2])
+    ],
+    "Header": [
+        lambda _, nodes: Header(nodes[0]),
+        lambda _, nodes: nodes[0].add_header_expression(nodes[2]),
+    ],
+    "HeaderExpr": lambda _, nodes: nodes[0],
+    "LimitExpr": lambda _, nodes: LimitExpr(nodes[2]),
+    "PageExpr": lambda _, nodes: PageExpr(nodes[2]),
+    "SortExpr": lambda _, nodes: SortExpr(nodes[2]),
+    "SortParams": [
+        lambda _, nodes: SortParams(nodes[0]),
+        lambda _, nodes: nodes[0].add_param(nodes[2])
+    ],
+    "SortParam": lambda _, nodes: SortParam(nodes[0], nodes[2]),
     "Query": [
         lambda _, nodes: nodes[0],
         lambda _, nodes: Or(nodes[0], nodes[2])
@@ -393,8 +548,10 @@ ir_actions = {
     ],
     "RHSStrExpr": lambda _, nodes: nodes[0],
     "TimestampExpr": lambda _, nodes: nodes[0],
+    "Property": lambda _, nodes: Property(nodes[0]),
     "RelProperty": lambda _, nodes: nodes[0],
     "StrProperty": lambda _, nodes: nodes[0],
+    "TimeProperty": lambda _, nodes: nodes[0],
     "BeforeExpr": lambda _, nodes: Lt(Property("timestamp"), DateVal(nodes[2][0])),
     "AfterExpr": lambda _, nodes: Gt(Property("timestamp"), DateVal(nodes[2][0])),
     "AtExpr": lambda _, nodes: And(
@@ -431,7 +588,9 @@ ir_actions = {
     "YEAR_MONTH_DAY_HOUR": lambda _, value: MonthInterval("%s:00:00%s" % (re.sub("\s+", "T", value), get_local_timezone())),
     "YEAR_MONTH_DAY_HOUR_MINUTE": lambda _, value: MinuteInterval("%s:00%s" % (re.sub("\s+", "T", value), get_local_timezone())),
     "YEAR_MONTH_DAY_HOUR_MINUTE_SECOND": lambda _, value: SecondInterval("%s%s" % (re.sub("\s+", "T", value), get_local_timezone())),
-    "TIME_OFFSET": lambda _, value: calculate_offset(value)
+    "TIME_OFFSET": lambda _, value: calculate_offset(value),
+    "ASC": lambda _, value: 1,
+    "DESC": lambda _, value: -1
 }
 
 

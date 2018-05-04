@@ -92,3 +92,6 @@ mini_parser/certs
 center/src/main/resources/mongodbTrustStore
 center/src/main/resources/springkeystore.jks
 
+*.p12
+*.jks
+*.pk12

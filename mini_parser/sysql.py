@@ -57,19 +57,29 @@ class SysqlMongoCompiler(object):
     def str_mongo(self, optimized_ir):
         return optimized_ir.str_mongo()
 
+    def prepare_header(self, header):
+        if header is None:
+            return ""
+        return header.str_mongo()
+
     def compile(self, query):
         print("Sysql query      : %s" % query)
-        ir_representation = self.parse(query)
+        ir_representation_and_header = self.parse(query)
+        ir_representation = ir_representation_and_header.query
+        header = ir_representation_and_header.header
         print("IR reprezentation: %s" % ir_representation)
         without_not_ir = self.remove_not(ir_representation)
         print("Not removed      : %s" % without_not_ir)
         optimized_ir = self.optimize(without_not_ir)
         print("Optimized IR     : %s" % optimized_ir)
         str_mongo_query = self.str_mongo(optimized_ir)
+        str_header = self.prepare_header(header)
         print("Mongo query      : %s" % str_mongo_query)
-        return str_mongo_query
+        full_query = str_mongo_query + ";" + str_header if str_header else str_mongo_query
+        print("Response: %s" % full_query)
+        return full_query
 
-# sysqo = SysqlMongoCompiler()
+sysqo = SysqlMongoCompiler()
 # # result = sysqo.parse('not (last(1Y 2M 3D 1h 2m 3s)) or last(1Y)')
 # # result = sysqo.parse('severity > 10')
 # # result = sysqo.parse('severity >= 10 and facility = 15')
@@ -95,6 +105,6 @@ class SysqlMongoCompiler(object):
 # query = "version = 1 and (severity=2 and not(facility=3 or (appname=\"nivica\" and hostname=\"vlada\")))"
 # query = 'appname=/nivica/ and hostname ="vlada"'
 # query = 'appname = "nivica" or hostname="vlada" and (severity=3 and facility=4)'
-# query = 'appname=/nivica/ and not (appname=/nivica/)'
-
-# mongo_query = sysqo.compile(query)
+# query = 'appname=/nivica/ and not (appname=/nivica/); limit(3), page(2), sort(hostname:asc, appname:desc)'
+query = "before(2014-11-12) and not severity<10; page(3), limit(5), sort(hostname:asc, appname:desc)";
+mongo_query = sysqo.compile(query)

@@ -14,7 +14,8 @@ def get_current_local_time():
 def get_local_timezone():
     local = get_localzone()
     tz = get_current_local_time().strftime('%z')
-    tz = "%s:%s" % (tz[:3], tz[3:])
+    # FIXME: Mongo ne prihava dve tacke u casovnoj zoni
+    # tz = "%s:%s" % (tz[:3], tz[3:])
     return tz
 
 
@@ -49,6 +50,18 @@ def calculate_offset(offset_str):
     return rfc3339.rfc3339(offset_time)
 
 
+def removo_colon_from_rfc3339_time_format(rfc3339_str):
+    # da li ima casovne zone
+    if "+" not in rfc3339_str:
+        return rfc3339
+    # delimo na vreme i casovnu zonu
+    t, tz = rfc3339_str.strip().split("+")
+    # uklanjamo dve tacke iz casovne zone
+    tz = re.sub(r":", "", tz)
+    # spajamo vreme i casovnu zonu
+    return "%s+%s" % (t, tz)
+
+
 class DateTimeInterval(object):
     def __init__(self, datetime_str):
         self.start_time = time_parser.parse(datetime_str)
@@ -56,9 +69,10 @@ class DateTimeInterval(object):
 
     def __getitem__(self, item):
         if item == 0:
-            return rfc3339.rfc3339(self.start_time)
+            # da izbacimo :
+            return removo_colon_from_rfc3339_time_format(rfc3339.rfc3339(self.start_time))
         elif item == 1:
-            return rfc3339.rfc3339(self.end_time)
+            return removo_colon_from_rfc3339_time_format(rfc3339.rfc3339(self.end_time))
         else:
             return None
 

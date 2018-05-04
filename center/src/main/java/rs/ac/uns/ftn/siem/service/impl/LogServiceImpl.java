@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.siem.service.impl;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -30,7 +31,7 @@ public class LogServiceImpl implements LogService{
     public Log save(Log log) {
         System.out.println("Cuva se");
         Log l =  this.logRepository.save(log);
-        System.out.println("Sacuvano: " + l.getId());
+        System.out.println("Sacuvano: " + l.getHostname());
         return l;
     }
 
@@ -41,14 +42,17 @@ public class LogServiceImpl implements LogService{
 
     @Override
     public Collection<Log> search(String query) {
-        System.out.println("Trazi picko serviska" + query);
-        String jsonQuery = this.sysqlParserAdapter.parse(query);
-        BasicQuery basicQuery = new BasicQuery(jsonQuery);
-        List<Log> logs = mongoTemplate.find(basicQuery, Log.class, LOG_COLLECTION);
-        System.out.println("Evo koliko ima logova: " + logs.size());
+        try {
+            System.out.println("Trazi picko serviska" + query);
+            BasicQuery basicQuery = this.sysqlParserAdapter.buildMongoQuery(query);
 
-        //        String mongo_query = String.format("db.log.find(%s)", this.sysqlParserAdapter.parse(query));
-//        System.out.println(mongo_query);
-        return logs;
+            List<Log> logs = mongoTemplate.find(basicQuery, Log.class, LOG_COLLECTION);
+            System.out.println("Evo koliko ima logova: " + logs.size());
+            return logs;
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
 }
