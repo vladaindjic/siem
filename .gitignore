@@ -3,7 +3,7 @@
 *.class
 __pycache__/
 *.pyc
-
+*.p12
 
 # izvuceno iz center direktorijuma gde je spring
 center/target/
