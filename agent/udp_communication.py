@@ -35,7 +35,3 @@ def send_log_line(message):
 #         sock.send(bytes(message, 'utf-8'))
 #     # except Exception:
 #     #     print(Exception)
-
-
-if __name__ == '__main__':
-    main()

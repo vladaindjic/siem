@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import rs.ac.uns.ftn.siem.repository.LogRepository;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
 
@@ -21,16 +22,34 @@ public class MongoDBConfig {
 //        };
 //    }
 
+    @Value("${spring.data.mongodb.host}")
+    private String host;
+
+    @Value("${spring.data.mongodb.port}")
+    private int port;
+
+    @Value("${spring.data.mongodb.database}")
+    private String database;
+
+    @Value("${spring.data.mongodb.username}")
+    private String username;
+
+    @Value("${spring.data.mongodb.password}")
+    private String password;
+
+    @Value("${spring.data.mongodb.repositories.enabled}")
+    private boolean enabled;
+
     @Bean
     public MongoClient mongoClient() {
-        System.setProperty("javax.net.ssl.trustStore", "/home/vi3/Faks/Bezbednost/siem/mongo-client-cert/mongodbTrustStore");
+        System.setProperty("javax.net.ssl.trustStore", "/home/zarko/Fax/Bezbednost/Siem/siem/mongo-client-cert/mongodbTrustStore");
         System.setProperty("javax.net.ssl.trustStorePassword", "vladimir");
 
-        System.setProperty("javax.net.ssl.keyStore", "/home/vi3/Faks/Bezbednost/siem/mongo-client-cert/springkeystore.jks");
+        System.setProperty("javax.net.ssl.keyStore", "/home/zarko/Fax/Bezbednost/Siem/siem/mongo-client-cert/springkeystore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "vladimir");
 
-
-        MongoClientURI uri = new MongoClientURI("mongodb://siem:siem_center123@localhost:27017/?authSource=log-mongo&ssl=true");
+        MongoClientURI uri = new MongoClientURI("mongodb://" + username + ":" + password +
+                "@" + host + ":" + port + "/?authSource=" + database + "&ssl=" + enabled);
         return new MongoClient(uri);
     }
 
