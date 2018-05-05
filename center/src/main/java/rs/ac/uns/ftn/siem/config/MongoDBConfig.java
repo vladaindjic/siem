@@ -45,7 +45,7 @@ public class MongoDBConfig {
         System.setProperty("javax.net.ssl.trustStore", "src/main/resources/siem_truststore");
         System.setProperty("javax.net.ssl.trustStorePassword", "siem123");
 
-        System.setProperty("javax.net.ssl.keyStore", "src/main/resources/siem.p12");
+        System.setProperty("javax.net.ssl.keyStore", "src/main/resources/jebi_se.p12");
         System.setProperty("javax.net.ssl.keyStorePassword", "siem");
 
         MongoClientURI uri = new MongoClientURI("mongodb://" + username + ":" + password +
