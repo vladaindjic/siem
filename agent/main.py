@@ -10,6 +10,8 @@ from windows_agent import WinAgent
 from linux_binary_agent import *
 from parse_log import LinuxStandardSyslogParser, SyslogRFC5424Parser, DummyParser
 
+from http_communication import sec_channel
+
 
 def initialize_parser(parser_type):
     if parser_type == 'SyslogRFC5424Parser':
@@ -158,6 +160,7 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
 
     # print(linux_conf)
 
+
 def run_windows_agents(windows_agents):
     for agent in windows_agents:
         print("Windows agent,pratim log: ",agent._name)
@@ -239,8 +242,20 @@ def read_specific_configuration(specific_conf, patterns, interval, read_all, onl
         run_agents(file_agents)
 
 
+def read_security_config(sec_config):
+    key_path = sec_config['key']
+    cert_path = sec_config['cert']
+    ca_path = sec_config['ca']
+    API_ENDPOINT = sec_config['API_ENDPOINT']
+    interval = sec_config['interval']
+    # inicijalizacija komunikacija i pokretanje niti
+    sec_channel.initialize_communication(key_path, cert_path, ca_path, API_ENDPOINT, interval)
+
+
 def main():
     configuration = read_configuration('config.yaml')
+    # provo citamo security configuration
+    read_security_config(configuration['security'])
     general_conf = get_value_or_default_from_dict(configuration, 'general', {})
     patterns = get_value_or_default_from_dict(general_conf, 'patterns', [])
     interval = get_value_or_default_from_dict(general_conf, 'interval', [])

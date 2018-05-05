@@ -43,11 +43,9 @@ public class LogServiceImpl implements LogService{
     @Override
     public Collection<Log> search(String query) {
         try {
-            System.out.println("Trazi picko serviska" + query);
             BasicQuery basicQuery = this.sysqlParserAdapter.buildMongoQuery(query);
 
             List<Log> logs = mongoTemplate.find(basicQuery, Log.class, LOG_COLLECTION);
-            System.out.println("Evo koliko ima logova: " + logs.size());
             return logs;
 
         }catch (Exception ex){

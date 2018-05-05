@@ -1,6 +1,8 @@
 import requests
 import json
+from security_communication import SecurityChannel
 
+sec_channel = SecurityChannel()
 
 API_ENDPOINT = "https://localhost:8443/logger"
 
@@ -17,6 +19,8 @@ def send_log_line(line):
 
 
 def send_json_log(json_log):
+    sec_channel.send_message(json.dumps(json_log).encode('utf-8'))
+
     # Debug info
     # global line_num
     # line_num +=1
@@ -24,10 +28,10 @@ def send_json_log(json_log):
     #
     # if line_num >= 50:
     #     print("Line number: %d and set size: %d" % (line_num, len(lines)))
-    print("Salje se: %s" % json_log)
-    r = requests.post(API_ENDPOINT, data=json.dumps(json_log).encode('utf-8'), headers={'content-type': 'application/json'},
-                      cert=('certs/agent.vlada.crt', 'certs/agent.vlada.key'), verify='certs/myCA.pem')
-    if r.status_code != 201:
-        print(r)
-        print("Ova linija ne valja: %s" % json_log)
-    pass
+    # print("Salje se: %s" % json_log)
+    # r = requests.post(API_ENDPOINT, data=json.dumps(json_log).encode('utf-8'), headers={'content-type': 'application/json'},
+    #                   cert=('certs/agent.vlada.crt', 'certs/agent.vlada.key'), verify='certs/myCA.pem')
+    # if r.status_code != 201:
+    #     print(r)
+    #     print("Ova linija ne valja: %s" % json_log)
+    # pass

@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json --ssl true",
+    "start": "ng serve --proxy-config proxy.conf.json --ssl true --ssl-key 'ssl/angclient2.key' --ssl-cert 'ssl/anglient.crt'",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",

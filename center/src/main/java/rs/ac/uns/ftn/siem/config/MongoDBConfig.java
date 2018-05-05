@@ -42,11 +42,11 @@ public class MongoDBConfig {
 
     @Bean
     public MongoClient mongoClient() {
-        System.setProperty("javax.net.ssl.trustStore", "/home/zarko/Fax/Bezbednost/Siem/siem/mongo-client-cert/mongodbTrustStore");
-        System.setProperty("javax.net.ssl.trustStorePassword", "vladimir");
+        System.setProperty("javax.net.ssl.trustStore", "src/main/resources/siem_truststore");
+        System.setProperty("javax.net.ssl.trustStorePassword", "siem123");
 
-        System.setProperty("javax.net.ssl.keyStore", "/home/zarko/Fax/Bezbednost/Siem/siem/mongo-client-cert/springkeystore.jks");
-        System.setProperty("javax.net.ssl.keyStorePassword", "vladimir");
+        System.setProperty("javax.net.ssl.keyStore", "src/main/resources/siem.p12");
+        System.setProperty("javax.net.ssl.keyStorePassword", "siem");
 
         MongoClientURI uri = new MongoClientURI("mongodb://" + username + ":" + password +
                 "@" + host + ":" + port + "/?authSource=" + database + "&ssl=" + enabled);
