@@ -19,7 +19,7 @@ def send_log_line(line):
 
 
 def send_json_log(json_log):
-    sec_channel.send_message(json.dumps(json_log).encode('utf-8'))
+    sec_channel.send_message(json.dumps(json_log))
 
     # Debug info
     # global line_num

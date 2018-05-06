@@ -4,6 +4,9 @@ security:
   ca: 'certs/ca.crt'
   interval: 1
   API_ENDPOINT: 'https://192.168.1.2:8443/logger'
+  HOST: '192.168.1.2'
+  PORT: 55555
+  communication_protocol: 'TCP'
 general:
 #  patterns:
 #    - '^a'
@@ -48,7 +51,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180505-213108.log'
+              path: 'web_app_log20180506-042114.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 os:

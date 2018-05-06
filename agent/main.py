@@ -247,9 +247,12 @@ def read_security_config(sec_config):
     cert_path = sec_config['cert']
     ca_path = sec_config['ca']
     API_ENDPOINT = sec_config['API_ENDPOINT']
+    HOST = sec_config['HOST']
+    PORT = sec_config['PORT']
+    communication_protocol = sec_config['communication_protocol']
     interval = sec_config['interval']
     # inicijalizacija komunikacija i pokretanje niti
-    sec_channel.initialize_communication(key_path, cert_path, ca_path, API_ENDPOINT, interval)
+    sec_channel.initialize_communication(key_path, cert_path, ca_path, API_ENDPOINT, interval, HOST, PORT, communication_protocol)
 
 
 def main():
