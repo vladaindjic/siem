@@ -95,3 +95,6 @@ center/src/main/resources/springkeystore.jks
 *.p12
 *.jks
 *.pk12
+
+
+center/log

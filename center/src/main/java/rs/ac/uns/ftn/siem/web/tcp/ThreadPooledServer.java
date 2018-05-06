@@ -20,6 +20,7 @@ public class ThreadPooledServer implements Runnable{
     @Autowired
     LogService logService;
 
+
     protected int          serverPort   = 55555;
     protected ServerSocket serverSocket = null;
     protected boolean      isStopped    = false;
@@ -115,7 +116,7 @@ public class ThreadPooledServer implements Runnable{
             this.serverSocket = ssf.createServerSocket(this.serverPort);
 
 
-            System.out.println("Uspesno sam ga kreirao");
+            System.out.println("Uspesno sam ga kreirao na portu: " + serverPort);
         } catch (IOException e) {
             throw new RuntimeException("Cannot open port 8080", e);
         }

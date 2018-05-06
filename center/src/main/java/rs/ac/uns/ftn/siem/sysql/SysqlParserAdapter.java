@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.siem.sysql;
 
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.stereotype.Component;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
@@ -10,14 +12,21 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+@Component
 public class SysqlParserAdapter {
-    private static final String ip = "localhost";
-    private static final int port = 33333;
+
+    @Value("${mini-parser-ip}")
+    private String parserIp;
+    @Value("${port-for-parser}")
+    private int parserPort;
+
+//    private static final String ip = "localhost";
+//    private static final int port = 33333;
 
     public SysqlParserAdapter(){}
 
     private Socket takeSocket() throws IOException{
-        return ((SSLSocketFactory)SSLSocketFactory.getDefault()).createSocket(ip, port);
+        return ((SSLSocketFactory)SSLSocketFactory.getDefault()).createSocket(parserIp, parserPort);
 //        return new Socket(ip, port);
     }
 

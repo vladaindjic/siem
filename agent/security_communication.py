@@ -78,6 +78,7 @@ class SecurityChannel(object):
     def send_message(self, message):
         self._acquire_lock()
         self.messages.append(message)
+        # print("TO SEND: %s" % message)
         self._release_lock()
 
     def take_message(self):

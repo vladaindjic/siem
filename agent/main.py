@@ -13,7 +13,7 @@ from parse_log import LinuxStandardSyslogParser, SyslogRFC5424Parser, DummyParse
 from http_communication import sec_channel
 
 
-def initialize_parser(parser_type):
+def initialize_parser(parser_type, file_path=""):
     if parser_type == 'SyslogRFC5424Parser':
         print('SyslogRFC5424Parser')
         return SyslogRFC5424Parser("")
@@ -154,7 +154,8 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
                 # eventualna promena parsera
                 parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
                 if parser_type:
-                    agent.syslog_parser = initialize_parser(parser_type)
+                    print("OVAJ TIP PARSERA ZA LINUX file %s: %s" % (file_path, parser_type))
+                    agent.syslog_parser = initialize_parser(parser_type, file_path)
 
         run_linux_agents(file_agents)
 
@@ -237,7 +238,8 @@ def read_specific_configuration(specific_conf, patterns, interval, read_all, onl
 
             parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
             if parser_type:
-                agent.syslog_parser = initialize_parser(parser_type)
+                print("OVAJ TIP PARSERA ZA SPECIFIC file %s: %s" % (file_path, parser_type))
+                agent.syslog_parser = initialize_parser(parser_type, file_path)
 
         run_agents(file_agents)
 
