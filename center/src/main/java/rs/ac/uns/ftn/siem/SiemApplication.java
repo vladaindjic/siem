@@ -22,11 +22,11 @@ public class SiemApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = SpringApplication.run(SiemApplication.class, args);
-		ThreadPooledServer server = new ThreadPooledServer(55555);
-		new Thread(server).start();
 
+		ThreadPooledServer server = new ThreadPooledServer(55555);
 		AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();
 		factory.autowireBean(server);
+		new Thread(server).start();
 
 	}
 }

@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.siem.web.tcp;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import rs.ac.uns.ftn.siem.service.LogService;
 
@@ -25,6 +26,22 @@ public class ThreadPooledServer implements Runnable{
     protected Thread       runningThread= null;
     protected ExecutorService threadPool =
             Executors.newFixedThreadPool(10);
+
+
+    @Value("${key-store-path}")
+    private String keyStore;
+
+    @Value("${server.ssl.key-store-password}")
+    private String keyStorePassword;
+
+    @Value("${trust-store-path}")
+    private String trustStore;
+
+    @Value("${server.ssl.trust-store-password}")
+    private String trustStorePassword;
+
+
+
 
     public ThreadPooledServer(){
     }
@@ -79,12 +96,14 @@ public class ThreadPooledServer implements Runnable{
     private void openServerSocket() throws Exception{
         try {
             KeyStore ks = KeyStore.getInstance("PKCS12");
-            ks.load(new FileInputStream("src/main/resources/jebi_se.p12"), "siem".toCharArray());
+            ks.load(new FileInputStream(keyStore), keyStorePassword.toCharArray());
+
             KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
             kmf.init(ks, "siem".toCharArray());
 
             KeyStore ts = KeyStore.getInstance("JKS");
-            ts.load(new FileInputStream("src/main/resources/siem_truststore"), "siem123".toCharArray());
+            ts.load(new FileInputStream(trustStore), trustStorePassword.toCharArray());
+
             TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
             tmf.init(ts);
 
