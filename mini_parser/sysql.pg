@@ -193,14 +193,17 @@ INT:
     /\d+/
 ;
 
+// Old version /\".*\"/
+// Middle version/\"[^\"]*\"/    // FIXME: find better solution for this
+// FIXME: check if this is now the right version
 STRING:
-    // Old version /\".*\"/
-    /\"[^\"]*\"/    // FIXME: find better solution for this
+    /\"((\\\")|[^\"])*\"/
 ;
 
+// Old version /\/.*\//
+// Middle version /\/[^\/]*\//   // FIXME: find better solution for this
 REG_EXPR:
-    // Old version /\/.*\//
-    /\/[^\/]*\//   // FIXME: find better solution for this
+    /\/((\\\/)|[^\/])*\//
 ;
 
 

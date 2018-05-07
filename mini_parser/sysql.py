@@ -110,5 +110,8 @@ sysqo = SysqlMongoCompiler()
 
 query = "last(1s) and appname=/.*Fa.*/; limit(5), page(0)"
 # query = "msg=/$from.*/"
-query = "last(1d); sort(hostname:asc)"
+query = r'appname="asda\"sd\"asd" and hostname="cao \" kako si" and appname=/\/\/asdasd\// and hostname=/ovo ide\/ovo ne ide/'
 mongo_query = sysqo.compile(query)
+
+import re
+re.match(r'\"(\\\")*\"', "")
