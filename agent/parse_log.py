@@ -95,7 +95,7 @@ class SyslogParser(object):
         
         
     '''
-    def __init__(self, full_line):
+    def __init__(self, full_line, file_path=""):
         self.line = re.sub(r"\s+", " ", full_line.strip())
         self.timestamp = None
         self.facility_code = None
@@ -110,6 +110,8 @@ class SyslogParser(object):
         self.message = None
         self.linux_system_time = None
         self.severity_symbol = None
+        # naknadno pridodato
+        self.file_path = file_path
 
     def set_line(self, full_line):
         self.line = re.sub(r"\s+", " ", full_line.strip())
@@ -241,8 +243,8 @@ class SyslogParser(object):
 
 
 class SyslogRFC5424Parser(SyslogParser):
-    def __init__(self, full_line):
-        super().__init__(full_line)
+    def __init__(self, full_line, file_path=""):
+        super().__init__(full_line, file_path)
         self.sd_elements = []
 
     def parse(self):
@@ -298,8 +300,8 @@ class SyslogRFC5424Parser(SyslogParser):
 
 
 class LinuxStandardSyslogParser(SyslogParser):
-    def __init__(self, full_line):
-        super().__init__(full_line)
+    def __init__(self, full_line, file_path=""):
+        super().__init__(full_line, file_path)
 
     def parse(self):
         super().parse()
@@ -344,18 +346,19 @@ class LinuxStandardSyslogParser(SyslogParser):
 
 class UWBTmpParser(SyslogParser):
     def __init__(self, full_line, type="wtmp"):
-        super().__init__(full_line)
+        super().__init__(full_line, type)
         self.type = type
 
     def parse(self):
         self.find_timestamp()
         self.hostname = self.provide_hostname()
         self.message = "%s: %s" % (self.type, self.line)
+        self.app_name = self.file_path
 
 
 class FaillogParser(SyslogParser):
     def __init__(self, full_line):
-        super().__init__(full_line)
+        super().__init__(full_line, "faillog")
 
     def parse(self):
         # ima 5 kolona, u 4 se nalazi timestamp
@@ -365,11 +368,12 @@ class FaillogParser(SyslogParser):
         self.timestamp = " ".join(temp[3:6])
         self.hostname = self.provide_hostname()
         self.message = 'faillog: %s' % self.line
+        self.app_name = self.file_path
 
 
 class LastlogParser(SyslogParser):
     def __init__(self, full_line):
-        super().__init__(full_line)
+        super().__init__(full_line, "lastlog")
 
     def parse(self):
         # ima 5 kolona, u 4 se nalazi timestamp
@@ -382,16 +386,18 @@ class LastlogParser(SyslogParser):
             self.timestamp = " ".join(temp[3:])
         self.hostname = self.provide_hostname()
         self.message = 'lastlog: %s' % self.line
+        self.app_name = self.file_path
 
 
 class DummyParser(SyslogParser):
-    def __init__(self, full_line):
-        super().__init__(full_line)
+    def __init__(self, full_line, file_path=""):
+        super().__init__(full_line, file_path)
 
     def parse(self):
         self.find_timestamp()
         self.hostname = self.provide_hostname()
         self.message = self.line
+        self.app_name = self.file_path
 
 # TODO: resi sa Tallylog, ali prvo skontaj kako izgleda
 

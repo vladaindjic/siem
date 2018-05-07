@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SearchComponent } from './components/search/search.component';
 import { LogService } from './services/log.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ToastrModule } from 'ngx-toastr';
@@ -57,7 +57,12 @@ const appRoutes: Routes = [
   providers: [
     LogService,
     TokenInterceptorService,
-    AuthenticationService
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -47,7 +47,7 @@ def calculate_offset(offset_str):
                                  hours=hour_offset, minutes=minute_offset, seconds=second_offset)
 
     offset_time = current_time - offset_delta
-    return rfc3339.rfc3339(offset_time)
+    return removo_colon_from_rfc3339_time_format(rfc3339.rfc3339(offset_time))
 
 
 def removo_colon_from_rfc3339_time_format(rfc3339_str):

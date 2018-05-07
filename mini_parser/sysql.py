@@ -106,5 +106,9 @@ sysqo = SysqlMongoCompiler()
 # query = 'appname=/nivica/ and hostname ="vlada"'
 # query = 'appname = "nivica" or hostname="vlada" and (severity=3 and facility=4)'
 # query = 'appname=/nivica/ and not (appname=/nivica/); limit(3), page(2), sort(hostname:asc, appname:desc)'
-query = "before(2014-11-12) and not severity<10; page(3), limit(5), sort(hostname:asc, appname:desc)";
+# query = "before(2014-11-12) and not severity<10; page(3), limit(5), sort(hostname:asc, appname:desc)"
+
+query = "last(1s) and appname=/.*Fa.*/; limit(5), page(0)"
+# query = "msg=/$from.*/"
+query = "last(1d); sort(hostname:asc)"
 mongo_query = sysqo.compile(query)

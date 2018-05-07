@@ -1,3 +1,12 @@
+security:
+  key: 'certs/agent_vlada2.key'
+  cert: 'certs/agent_vlada.crt'
+  ca: 'certs/ca.crt'
+  interval: 1
+  API_ENDPOINT: 'https://192.168.1.8:8443/logger'
+  HOST: '192.168.1.8'
+  PORT: 55555
+  communication_protocol: 'TCP'
 general:
 #  patterns:
 #    - '^a'
@@ -33,6 +42,8 @@ specific:
 #                - 'l+$'
 #                - '^\.+'
 #              interval: 4
+
+
     - directory:
         path: '../logGeneratorAgent'
         patterns:
@@ -42,9 +53,30 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180503-004000.log'
+              path: 'web_app_log20180507-010928.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
+
+    - directory:
+        path: '/home/vi3/Faks/Bezbednost/siem/center/log'
+        interval: 3
+        only_specified_files: True
+        files:
+          - file:
+              path: 'siem-application.log'
+              read_all: True
+              parser_type: 'LinuxStandardSyslogParser'
+    - directory:
+        path: '/var/log/mongodb/'
+        interval: 3
+        only_specified_files: True
+        files:
+          - file:
+              path: 'mongod.log'
+              read_all: True
+              parser_type: 'DummyParser'
+
+
 os:
   linux:
     only_specified_files: True

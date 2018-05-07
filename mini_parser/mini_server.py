@@ -38,7 +38,7 @@ def start_server():
     # can be anything
     port = 33333
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s = ssl.wrap_socket(s, keyfile="certs/sysqo-parser.key", certfile="certs/sysqo_parser.crt",
+    s = ssl.wrap_socket(s, keyfile="certs/sysqo2.key", certfile="certs/sysqo.crt",
                         server_side=True, cert_reqs=ssl.CERT_REQUIRED, ca_certs="certs/ca.crt")
     s.bind((host, port))
     print("socket binded to post", port)

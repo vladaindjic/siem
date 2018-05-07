@@ -2,28 +2,34 @@ package rs.ac.uns.ftn.siem.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 @Document
 @CompoundIndexes({
-        @CompoundIndex(def = "{'timestamp':-1, 'hostname':1}", background = true, name = "time_host_ind")
+        @CompoundIndex(def = "{'timestamp':-1, 'hostname':1, 'appname':1}", background = true, name = "time_host_appname_ind")
 })
 public class Log {
 
     @Id
     private String id;
+    // enumeracija koja nemaju nikakvu svrhu da se indeksiraju zbog selektivnosti
     private int facility;
     private int severity;
     private int version;
     private Date timestamp;
+    // ovde odvojen
+    @Indexed(name = "hostname_ind", direction = IndexDirection.ASCENDING, background = true)
     private String hostname;
+    // ovde odvojen
+    @Indexed(name = "appname_ind", direction = IndexDirection.ASCENDING, background = true)
     private String appname;
     private String procid;
     private String msgid;
+    // tekstualni indeks
+    @TextIndexed
     private String msg;
     private String line;
 

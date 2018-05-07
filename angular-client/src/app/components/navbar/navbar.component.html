@@ -11,16 +11,16 @@
         </div>
       </form>
       <li class="nav-item">
-        <a id="alarms" class="nav-link" (click)="logout()" routerLink="/alarms" style="color: black">Alarms</a>
+        <a id="alarms" class="nav-link"  routerLink="/alarms" style="color: black" *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]']">Alarms</a>
       </li>
       <li class="nav-item">
-        <a id="alarm_add" class="nav-link" (click)="logout()" routerLink="/create_alarm" style="color: black">Create Alarm</a>
+        <a id="alarm_add" class="nav-link"  routerLink="/create_alarm" *ngxPermissionsOnly="['[ADMIN]']" style="color: black">Create Alarm</a>
       </li>
       <li class="nav-item">
-        <a id="logout" class="nav-link" (click)="logout()" routerLink="/login" style="color: black">Logout</a>
+        <a id="logout" class="nav-link" (click)="logout()" routerLink="/login" style="color: black" *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]']">Logout</a>
       </li>
       <li class="nav-item">
-        <a id="sing-in-link" class="nav-link" routerLink="/login"  style="color: black">Sign in</a>
+        <a id="sing-in-link" class="nav-link" routerLink="/login" *ngxPermissionsExcept="['[ADMIN]', '[OPERATOR]']" style="color: black">Sign in</a>
       </li>
     </ul>
   </div>

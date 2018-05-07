@@ -1,3 +1,17 @@
+severity_mapper = {
+    "EMERGENCY": 0,
+    "ALERT": 1,
+    "CRITICAL": 2,
+    "ERROR": 3,
+    "WARNING": 4,
+    "WARN": 4,
+    "NOTICE": 5,
+    "INFO": 6,
+    "DEBUG": 7,
+    "TRACE": 8  # FIXME: ovo je nepostojece, ali ima u Springu
+}
+
+
 def add_attr(attr_name, from_dict, to_dict):
     new_attr_name = attr_name
     if new_attr_name == 'severity_code':
@@ -14,11 +28,16 @@ def add_attr(attr_name, from_dict, to_dict):
         new_attr_name = 'msgid'
     elif new_attr_name == 'message':
         new_attr_name = 'msg'
+    elif new_attr_name == 'severity_symbol':
+        new_attr_name = 'severity'
 
     if attr_name in from_dict:
         if from_dict[attr_name]:
             if from_dict[attr_name] != '-':
                 to_dict[new_attr_name] = from_dict[attr_name] if attr_name != 'process_id' else str(from_dict[attr_name])
+                # FIXME: Dodao mapiranje, reogranizuj
+                if attr_name == 'severity_symbol':
+                    to_dict[new_attr_name] = severity_mapper[from_dict[attr_name].upper()]
 
 
 def build_json_dto(parsed_object):
@@ -46,5 +65,8 @@ def build_json_dto(parsed_object):
     add_attr('message', attributes, dto)
     # full line
     add_attr('line', attributes, dto)
+    # severity symbol and convert
+    add_attr('severity_symbol', attributes, dto)
+
     # FIXME: Not process for now SD_elements
     return dto

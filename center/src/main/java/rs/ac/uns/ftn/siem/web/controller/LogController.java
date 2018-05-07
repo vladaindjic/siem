@@ -1,19 +1,14 @@
 package rs.ac.uns.ftn.siem.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.siem.model.Log;
-import rs.ac.uns.ftn.siem.repository.LogRepository;
 import rs.ac.uns.ftn.siem.service.LogService;
-import rs.ac.uns.ftn.siem.web.dto.LogLine;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 @RestController
 @RequestMapping(value = "/logger")

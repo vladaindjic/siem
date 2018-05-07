@@ -40,13 +40,26 @@ public class MongoDBConfig {
     @Value("${spring.data.mongodb.repositories.enabled}")
     private boolean enabled;
 
+    @Value("${key-store-path}")
+    private String keyStore;
+
+    @Value("${server.ssl.key-store-password}")
+    private String keyStorePassword;
+
+    @Value("${trust-store-path}")
+    private String trustStore;
+
+    @Value("${server.ssl.trust-store-password}")
+    private String trustStorePassword;
+
     @Bean
     public MongoClient mongoClient() {
-        System.setProperty("javax.net.ssl.trustStore", "/home/zarko/Fax/Bezbednost/Siem/siem/mongo-client-cert/mongodbTrustStore");
-        System.setProperty("javax.net.ssl.trustStorePassword", "vladimir");
 
-        System.setProperty("javax.net.ssl.keyStore", "/home/zarko/Fax/Bezbednost/Siem/siem/mongo-client-cert/springkeystore.jks");
-        System.setProperty("javax.net.ssl.keyStorePassword", "vladimir");
+        System.setProperty("javax.net.ssl.trustStore", trustStore);
+        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+
+        System.setProperty("javax.net.ssl.keyStore", keyStore);
+        System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassword);
 
         MongoClientURI uri = new MongoClientURI("mongodb://" + username + ":" + password +
                 "@" + host + ":" + port + "/?authSource=" + database + "&ssl=" + enabled);

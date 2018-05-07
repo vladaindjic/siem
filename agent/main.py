@@ -10,8 +10,10 @@ from windows_agent import WinAgent
 from linux_binary_agent import *
 from parse_log import LinuxStandardSyslogParser, SyslogRFC5424Parser, DummyParser
 
+from http_communication import sec_channel
 
-def initialize_parser(parser_type):
+
+def initialize_parser(parser_type, file_path=""):
     if parser_type == 'SyslogRFC5424Parser':
         print('SyslogRFC5424Parser')
         return SyslogRFC5424Parser("")
@@ -152,11 +154,13 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
                 # eventualna promena parsera
                 parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
                 if parser_type:
-                    agent.syslog_parser = initialize_parser(parser_type)
+                    print("OVAJ TIP PARSERA ZA LINUX file %s: %s" % (file_path, parser_type))
+                    agent.syslog_parser = initialize_parser(parser_type, file_path)
 
         run_linux_agents(file_agents)
 
     # print(linux_conf)
+
 
 def run_windows_agents(windows_agents):
     for agent in windows_agents:
@@ -234,13 +238,29 @@ def read_specific_configuration(specific_conf, patterns, interval, read_all, onl
 
             parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
             if parser_type:
-                agent.syslog_parser = initialize_parser(parser_type)
+                print("OVAJ TIP PARSERA ZA SPECIFIC file %s: %s" % (file_path, parser_type))
+                agent.syslog_parser = initialize_parser(parser_type, file_path)
 
         run_agents(file_agents)
 
 
+def read_security_config(sec_config):
+    key_path = sec_config['key']
+    cert_path = sec_config['cert']
+    ca_path = sec_config['ca']
+    API_ENDPOINT = sec_config['API_ENDPOINT']
+    HOST = sec_config['HOST']
+    PORT = sec_config['PORT']
+    communication_protocol = sec_config['communication_protocol']
+    interval = sec_config['interval']
+    # inicijalizacija komunikacija i pokretanje niti
+    sec_channel.initialize_communication(key_path, cert_path, ca_path, API_ENDPOINT, interval, HOST, PORT, communication_protocol)
+
+
 def main():
     configuration = read_configuration('config.yaml')
+    # provo citamo security configuration
+    read_security_config(configuration['security'])
     general_conf = get_value_or_default_from_dict(configuration, 'general', {})
     patterns = get_value_or_default_from_dict(general_conf, 'patterns', [])
     interval = get_value_or_default_from_dict(general_conf, 'interval', [])
