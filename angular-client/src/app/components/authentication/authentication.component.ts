@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-
-import {NgxPermissionsService} from 'ngx-permissions';
-import {ToastrService} from 'ngx-toastr';
-
-import {AuthenticationService} from '../../services/authentication/authentication.service';
-import {LoggedUtils} from '../../utils/logged-utils';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { LoggedUtils } from '../../utils/logged-utils';
+import { IUser } from '../../model/IUser';
 
 
 @Component({
@@ -35,8 +34,9 @@ export class AuthenticationComponent implements OnInit {
     });
   }
 
-  authenticate(loginForm) {
-    this.autheticationService.authenticateUser(Object.values(loginForm)[0], Object.values(loginForm)[1]).subscribe(
+  authenticate() {
+    const credentials: IUser = this.loginForm.value;
+    this.autheticationService.authenticateUser(credentials).subscribe(
       data => {
         localStorage.setItem('loggedUser', JSON.stringify(data)),
           this.router.navigate(['/home']);

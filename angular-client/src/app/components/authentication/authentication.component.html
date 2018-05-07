@@ -1,3 +1,27 @@
-<p>
-  authentication works!
-</p>
+<div id="loginDiv" class="mainContainer d-flex justify-content-center">
+  <div class="card my_card">
+    <div class="col-md-12 col-md-offset-3" id="logreg">
+      <form id="loginform" class="form-horizontal" role="form" [formGroup]="loginForm" (ngSubmit)=authenticate(loginForm.value)>
+        <div style="margin-bottom: 25px" class="input-group">
+          <span class="input-group-addon my_span">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+          </span>
+          <input id="login-username" type="text" class="form-control my_input" name="username" formControlName="username" formControlName="username"
+            value="" placeholder="Username">
+        </div>
+        <div style="margin-bottom: 25px" class="input-group">
+          <span class="input-group-addon my_span">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+          <input id="login-password" type="password" class="form-control my_input" name="password" formControlName="password" formControlName="password"
+            placeholder="Password">
+        </div>
+        <div style="margin-top:10px" class="form-group align-self-right">
+          <div class="col-sm-12 controls">
+            <input id='login-button' type="submit" class="btn btn-primary" [disabled]="!loginForm.valid" value="Login">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,10 @@ import { SearchComponent } from './components/search/search.component';
 import { LogService } from './services/log.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 const appRoutes: Routes = [
   {
@@ -39,17 +43,21 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(
       appRoutes,
     ),
+    ToastrModule.forRoot(),
+    NgxPermissionsModule.forRoot(),
     HttpClientModule
   ],
   providers: [
     LogService,
-    TokenInterceptorService
+    TokenInterceptorService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
