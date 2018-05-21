@@ -1,6 +1,6 @@
 from parglare import Grammar, Parser
 from ir import ir_actions
-
+from mongo_backend import mongo_actions
 
 def build_grammar(file_path):
     grammar = Grammar.from_file(file_path)
@@ -20,16 +20,16 @@ def parse_sysql(sysql):
     return mongo_query
 
 
-# class SysqlMongoParser(object):
-#     def __init__(self, actions=mongo_actions):
-#         self.grammar = build_grammar('sysql.pg')
-#         self.parser = build_parser(self.grammar, actions)
-#
-#     def parse(self, sysql_str):
-#         try:
-#             return self.parser.parse(sysql_str)
-#         except:
-#             return None
+class SysqlMongoParser(object):
+    def __init__(self, actions=mongo_actions):
+        self.grammar = build_grammar('sysql.pg')
+        self.parser = build_parser(self.grammar, actions)
+
+    def parse(self, sysql_str):
+        try:
+            return self.parser.parse(sysql_str)
+        except:
+            return None
 
 
 class SysqlMongoCompiler(object):
@@ -80,6 +80,7 @@ class SysqlMongoCompiler(object):
         return full_query
 
 sysqo = SysqlMongoCompiler()
+brt = SysqlMongoParser()
 # # result = sysqo.parse('not (last(1Y 2M 3D 1h 2m 3s)) or last(1Y)')
 # # result = sysqo.parse('severity > 10')
 # # result = sysqo.parse('severity >= 10 and facility = 15')
@@ -108,10 +109,17 @@ sysqo = SysqlMongoCompiler()
 # query = 'appname=/nivica/ and not (appname=/nivica/); limit(3), page(2), sort(hostname:asc, appname:desc)'
 # query = "before(2014-11-12) and not severity<10; page(3), limit(5), sort(hostname:asc, appname:desc)"
 
-query = "last(1s) and appname=/.*Fa.*/; limit(5), page(0)"
+# query = "last(1s) and appname=/.*Fa.*/; limit(5), page(0)"
 # query = "msg=/$from.*/"
-query = r'appname="asda\"sd\"asd" and hostname="cao \" kako si" and appname=/\/\/asdasd\// and hostname=/ovo ide\/ovo ne ide/'
+# query = r'appname="asda\"sd\"asd" and hostname="cao \" kako si" and appname=/\/\/asdasd\// and hostname=/ovo ide\/ovo ne ide/'
+query =r'not(severity!=1 or facility!=2) and hostname="machine1" and appname="app3"'
+
+res = brt.parse(query)
+print(res)
+
 mongo_query = sysqo.compile(query)
+
+
 
 import re
 re.match(r'\"(\\\")*\"', "")

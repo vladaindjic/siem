@@ -1,0 +1,122 @@
+security:
+  key: 'certs/agent_vlada2.key'
+  cert: 'certs/agent_vlada.crt'
+  ca: 'certs/ca.crt'
+  interval: 1
+  API_ENDPOINT: 'https://172.20.10.3:8443/logger'
+  HOST: '172.20.10.3'
+  PORT: 55555
+  communication_protocol: 'TCP'
+general:
+  patterns:
+    - '^a'
+    - '.*c.*'
+    - 'b+$'
+    - '^\.+'
+  interval: 0.5
+specific:
+  directories:
+    - directory:
+        path: '.'
+        patterns:
+          - '^d'
+          - '.*e.*'
+          - 'f+$'
+          - '^\.+'
+        interval: 1
+        only_specified_files: True
+        files:
+          - file:
+              path: 'log.txt'
+              patterns:
+                - '^g'
+                - '.*h.*'
+                - 'i+$'
+                - '^\.+'
+              interval: 2
+          - file:
+              path: 'log1.txt'
+              patterns:
+                - '^j'
+                - '.*k.*'
+                - 'l+$'
+                - '^\.+'
+              interval: 4
+    - directory:
+        path: '../logGeneratorAgent'
+        patterns:
+          - '.*POST.*'
+          - '.*DELETE.*'
+        interval: 3
+        only_specified_files: True
+        files:
+          - file:
+              path: 'web_app_log20180508-155143.log'
+              read_all: False
+              parser_type: 'SyslogRFC5424Parser'
+
+    - directory:
+        path: '/home/vi3/Faks/Bezbednost/siem/center/log'
+        interval: 3
+        only_specified_files: True
+        files:
+          - file:
+              path: 'siem-application.log'
+              read_all: True
+              parser_type: 'LinuxStandardSyslogParser'
+    - directory:
+        path: '/var/log/mongodb/'
+        interval: 3
+        only_specified_files: True
+        files:
+          - file:
+              path: 'mongod.log'
+              read_all: True
+              parser_type: 'DummyParser'
+
+os:
+  linux:
+    only_specified_files: True
+    read_all: True
+    interval: 1
+    directories:
+      - directory:
+          path: '/var/log/'
+          files:
+              - file:
+                  path: 'tallylog'
+              - file:
+                  path: 'faillog'
+              - file:
+                  path: 'ufw.log'
+                  parser_type: 'LinuxStandardSyslogParser'
+              - file:
+                  path: 'syslog'
+              - file:
+                  path: 'kern.log'
+              - file:
+                  path: 'wtmp'
+              - file:
+                  path: 'lastlog'
+              - file:
+                  path: 'btmp'
+      - directory:
+          path: '/var/run/'
+          only_specified_files: True
+          files:
+              - file:
+                  path: 'utmp'
+  windows:
+    logs:
+    - log:
+        name: 'Application'
+        interval: 10
+        patterns:
+          - '.*Disk.*'
+          - '.*Battery.*'
+    - log:
+        name: 'System'
+        interval: 15
+    - log:
+        name: 'Security'
+        interval: 5

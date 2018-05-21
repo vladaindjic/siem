@@ -3,8 +3,8 @@ security:
   cert: 'certs/agent_vlada.crt'
   ca: 'certs/ca.crt'
   interval: 1
-  API_ENDPOINT: 'https://192.168.1.8:8443/logger'
-  HOST: '192.168.1.8'
+  API_ENDPOINT: 'https://172.20.10.3:8443/logger'
+  HOST: '172.20.10.3'
   PORT: 55555
   communication_protocol: 'TCP'
 general:
@@ -53,7 +53,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180507-010928.log'
+              path: 'web_app_log20180508-155143.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 

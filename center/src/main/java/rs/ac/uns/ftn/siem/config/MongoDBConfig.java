@@ -22,6 +22,7 @@ public class MongoDBConfig {
 //        };
 //    }
 
+
     @Value("${spring.data.mongodb.host}")
     private String host;
 
