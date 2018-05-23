@@ -50,6 +50,28 @@ def calculate_offset(offset_str):
     return removo_colon_from_rfc3339_time_format(rfc3339.rfc3339(offset_time))
 
 
+def calculate_timedelta_offset(offset_str):
+    # FIXME: resi sa ove dve funkcije, ali budi siguran da dobro rade u oba slucaja
+    year_offset = get_numeric_offset(offset_str, "\d+(y|Y)")
+    # print("Year: %d" % year_offset)
+    month_offset = get_numeric_offset(offset_str, "\d+M")
+    # print("Month: %d" % month_offset)
+    day_offset = get_numeric_offset(offset_str, "\d+(d|D)")
+    # print("Day: %d" % day_offset)
+
+    hour_offset = get_numeric_offset(offset_str, "\d+(h|H)")
+    # print("Hour: %d" % hour_offset)
+    minute_offset = get_numeric_offset(offset_str, "\d+m")
+    # print("Minute: %d" % minute_offset)
+    second_offset = get_numeric_offset(offset_str, "\d+(s|S)")
+    # print("Second: %d" % second_offset)
+
+    offset_delta = relativedelta(years=year_offset, months=month_offset, days=day_offset,
+                                 hours=hour_offset, minutes=minute_offset, seconds=second_offset)
+
+    return offset_delta
+
+
 def removo_colon_from_rfc3339_time_format(rfc3339_str):
     # da li ima casovne zone
     if "+" not in rfc3339_str:
@@ -60,6 +82,18 @@ def removo_colon_from_rfc3339_time_format(rfc3339_str):
     tz = re.sub(r":", "", tz)
     # spajamo vreme i casovnu zonu
     return "%s+%s" % (t, tz)
+
+
+def convert_rfc3339str_to_datetime(rfc3339_str):
+    # FIXME: only support if timezone is present
+    # FIXME: dodaj eventualno u loggeru milisekunde
+    rfc3339_str = removo_colon_from_rfc3339_time_format(rfc3339_str)
+    try:
+        # pokusavamo sa milisekundama
+        return datetime.datetime.strptime(rfc3339_str, '%Y-%m-%dT%H:%M:%S.%f%z')
+    except:
+        # ali i bez njih
+        return datetime.datetime.strptime(rfc3339_str, '%Y-%m-%dT%H:%M:%S%z')
 
 
 class DateTimeInterval(object):

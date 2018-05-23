@@ -1,5 +1,12 @@
 from collections import OrderedDict
 from sysqo_time_util import *
+# FIXME: nedostaje tip za pattern
+retype = type(re.compile("pattern"))
+
+
+class Log(object):
+    def __init__(self, dictionary):
+        vars(self).update(dictionary)
 
 
 # deo koji se tice Headera
@@ -18,6 +25,15 @@ class IRObject(object):
     def str_mongo(self):
         return ""
 
+    def eval(self, log=None):
+        return False
+
+    def has_timestamp(self):
+        return False
+
+    def find_category_resolver(self):
+        return None
+
 
 class Not(IRObject):
     def __init__(self, term):
@@ -31,6 +47,15 @@ class Not(IRObject):
 
     def remove_not(self):
         return self.inv()
+
+    def eval(self, log=None):
+        return not self.term.eval(log)
+
+    def has_timestamp(self):
+        return self.term.has_timestamp()
+
+    def find_category_resolver(self):
+        return self.term.find_category_resolver()
 
 
 class And(IRObject):
@@ -131,6 +156,21 @@ class And(IRObject):
     def str_mongo(self):
         return "{$and: [%s, %s]}" % (self.left.str_mongo(), self.right.str_mongo())
 
+    def eval(self, log=None):
+        return self.left.eval(log) and self.right.eval(log)
+
+    def has_timestamp(self):
+        return self.left.has_timestamp() or self.right.has_timestamp()
+
+    def find_category_resolver(self):
+        left_res = self.left.find_category_resolver()
+        right_res = self.right.find_category_resolver()
+
+        if left_res is not None and right_res is not None:
+            raise ValueError("Multiple category resolver not supported")
+
+        return left_res if left_res is not None else right_res if right_res is not None else None
+
 
 class Or(IRObject):
     def __init__(self, left, right):
@@ -156,6 +196,21 @@ class Or(IRObject):
     def str_mongo(self):
         return "{$or: [%s, %s]}" % (self.left.str_mongo(), self.right.str_mongo())
 
+    def eval(self, log=None):
+        return self.left.eval(log) or self.right.eval(log)
+
+    def has_timestamp(self):
+        return self.left.has_timestamp() or self.right.has_timestamp()
+
+    def find_category_resolver(self):
+        left_res = self.left.find_category_resolver()
+        right_res = self.right.find_category_resolver()
+
+        if left_res is not None and right_res is not None:
+            raise ValueError("Multiple category resolver not supported")
+
+        return left_res if left_res is not None else right_res if right_res is not None else None
+
 
 class RelExp(IRObject):
     def __init__(self, property, value):
@@ -180,6 +235,38 @@ class RelExp(IRObject):
         # uklonicemo { i }
         return self.str_mongo()[1:-1]
 
+    def eval(self, log=None):
+        prop = self.property.eval(log)
+        val = self.value.eval(log)
+        if isinstance(prop, int) and isinstance(val, int):
+            return self.eval_int(prop, val)
+        elif isinstance(prop, str) and isinstance(val, str):
+            return self.eval_str(prop, val)
+        elif isinstance(prop, str) and isinstance(val, retype):
+            return self.eval_regex(prop, val)
+        elif isinstance(prop, datetime.datetime) and isinstance(val, datetime.datetime):
+            return self.eval_date(prop, val)
+
+    def eval_int(self, prop, val):
+        raise ValueError("Unsupported operation for type int")
+
+    def eval_str(self, prop, val):
+        raise ValueError("Unsupported operation for type str")
+
+    def eval_regex(self, prop, val):
+        raise ValueError("Unsupported operation for type regex")
+
+    def eval_date(self, prop, val):
+        raise ValueError("Unsupported operation for type date")
+
+    def has_timestamp(self):
+        return self.property.has_timestamp()
+
+    def find_category_resolver(self):
+        if self.property.name == 'msg':
+            return self.value.find_category_resolver()
+        return None
+
 
 class Lt(RelExp):
     def __init__(self, property=None, value=None):
@@ -193,6 +280,12 @@ class Lt(RelExp):
 
     def str_op(self):
         return "$lt"
+
+    def eval_int(self, prop, val):
+        return prop < val
+
+    def eval_date(self, prop, val):
+        return prop < val
 
 
 class Lte(RelExp):
@@ -208,6 +301,12 @@ class Lte(RelExp):
     def str_op(self):
         return "$lte"
 
+    def eval_int(self, prop, val):
+        return prop <= val
+
+    def eval_date(self, prop, val):
+        return prop <= val
+
 
 class Gt(RelExp):
     def __init__(self, property=None, value=None):
@@ -221,6 +320,12 @@ class Gt(RelExp):
 
     def str_op(self):
         return "$gt"
+
+    def eval_int(self, prop, val):
+        return prop > val
+
+    def eval_date(self, prop, val):
+        return prop > val
 
 
 class Gte(RelExp):
@@ -236,6 +341,12 @@ class Gte(RelExp):
     def str_op(self):
         return "$gte"
 
+    def eval_int(self, prop, val):
+        return prop >= val
+
+    def eval_date(self, prop, val):
+        return prop >= val
+
 
 class Eq(RelExp):
     def __init__(self, property=None, value=None):
@@ -249,6 +360,18 @@ class Eq(RelExp):
 
     def str_mongo(self):
         return "{%s: %s}" % (self.property, self.value)
+
+    def eval_int(self, prop, val):
+        return prop == val
+
+    def eval_str(self, prop, val):
+        return prop == val
+
+    def eval_regex(self, prop, val):
+        return re.match(val, prop) is not None
+
+    def eval_date(self, prop, val):
+        return prop == val
 
 
 class Ne(RelExp):
@@ -270,47 +393,120 @@ class Ne(RelExp):
         else:
             # klasicno ponasanje
             return super().str_mongo()
+
+    def eval_int(self, prop, val):
+        return prop != val
+
+    def eval_str(self, prop, val):
+        return prop != val
+
+    def eval_regex(self, prop, val):
+        return re.match(val, prop) is None
+
+    def eval_date(self, prop, val):
+        return prop != val
+
+
 # FIXME: vidi sta ces za NotEqual da odradis
 
 
-class IntVal(object):
+class Val(IRObject):
     def __init__(self, value):
         self.value = value
+
+    def eval(self, log=None):
+        return self.value
+
+
+class IntVal(Val):
+    def __init__(self, value):
+        super().__init__(value)
 
     def __str__(self):
         return "%s" % str(self.value)
 
+    def eval(self, log=None):
+        return int(self.value)
 
-class StrVal(object):
+
+class StrVal(Val):
     def __init__(self, value):
-        self.value = value
+        super().__init__(value)
 
     def __str__(self):
         return "%s" % str(self.value)
 
+    def eval(self, log=None):
+        return str(self.value)[1:-1]
 
-class RegVal(object):
+
+class RegVal(Val):
     def __init__(self, value):
-        self.value = value
+        super().__init__(value)
+        self.category_resolver = self.is_categorical()
 
     def __str__(self):
         return "%s" % str(self.value)
 
+    def eval(self, log=None):
+        return re.compile(self.value)
 
-class DateVal(object):
+    def is_categorical(self):
+        self.value = self.value[1:-1]
+
+        mark_begin = "${"
+        mark_end = "}"
+        begin_pos = self.value.find(mark_begin)
+        end_pos = self.value.find(mark_end)
+        if begin_pos >= end_pos:
+            return None
+
+        left_reg = self.value[:begin_pos]
+        category_reg = self.value[begin_pos + len(mark_begin):end_pos]
+        right_reg = self.value[end_pos + 1:]
+        self.value = "".join([left_reg, category_reg, right_reg])
+        return CategoryResolver(re.compile(left_reg), re.compile(category_reg), re.compile(right_reg))
+
+    def find_category_resolver(self):
+        return self.category_resolver
+
+
+class DateVal(Val):
     def __init__(self, value):
-        self.value = value
+        super().__init__(value)
 
     def __str__(self):
         return "ISODate(\"%s\")" % self.value
 
+    def eval(self, log=None):
+        return convert_rfc3339str_to_datetime(self.value)
 
-class Property(object):
+
+# class TimeOffsetVal(Val):
+#     def __init__(self, timedelta_value):
+#         super().__init__(timedelta_value)
+#
+#     def eval(self, log=None):
+#         # value je timedelta value
+#         return get_current_local_time() - self.value
+
+
+class Property(IRObject):
     def __init__(self, name):
         self.name = name
 
     def __str__(self):
         return "%s" % self.name
+
+    def eval(self, log=None):
+        # 2018-05-22T01:27:17+02:00
+        prop_value = getattr(log, self.name)
+        if self.name == "timestamp":
+            return convert_rfc3339str_to_datetime(prop_value)
+        return prop_value
+
+    def has_timestamp(self):
+        return self.name == 'timestamp'
 
 
 class CompoundExpr(IRObject):
@@ -368,11 +564,37 @@ class CompoundExpr(IRObject):
         string += "}"
         return string
 
+    def eval(self, log=None):
+        for k, v in self.prop_expressions.items():
+            # netacno
+            if not v.eval(log):
+                return False
+        return True
+
+    def has_timestamp(self):
+        for k, v in self.prop_expressions.items():
+            if v.has_timestamp():
+                return True
+        return False
+
+    def find_category_resolver(self):
+        cat_res_count = 0
+        cat_res = None
+        # da li neki expression ima categoric resolver u sebi
+        for k, v in self.prop_expressions.items():
+            curr_cat_res = v.find_category_resolver()
+            if curr_cat_res is not None:
+                cat_res_count += 1
+                cat_res = curr_cat_res
+        # dozvoljen je samo jedan za sada
+        if cat_res_count > 1:
+            raise ValueError("Multiple category resolver are not supported")
+        return cat_res
+
 
 # Header
 class SysQuery(IRObject):
     def __init__(self, query, header=None):
-        print("Ja sam breee")
         self.query = query
         self.header = header
 
@@ -502,6 +724,37 @@ class PageExpr(HeaderExpr):
 
     def str_mongo(self):
         return "page=%s" % self.page
+
+
+# # Deo koji se tice alarma
+# class Alarm(IRObject):
+#     def __init__(self, query, count=None):
+#         self.query = query
+#         self.count = count
+#         self.num_logs = self.count.count.eval() if self.count is not None else 0
+#         # TODO: ovde ostaje da se razresi kako cemo da hendlamo korisnicka imena i ip adrese
+#
+#
+# class CountExpr(IRObject):
+#     def __init__(self, count):
+#         self.count = count
+
+class CategoryResolver(object):
+    def __init__(self, left_reg, category_reg, right_reg):
+        self.left_reg = left_reg
+        self.category_reg = category_reg
+        self.right_reg = right_reg
+
+    def find_category(self, log):
+        msg = log.msg
+        # remove left
+        match_left = re.match(self.left_reg, msg)
+        msg = msg[match_left.end():]
+        # find category
+        match_category = re.match(self.category_reg, msg)
+        category = msg[match_category.start():match_category.end()]
+        # FIXME: osigurati se da ovi regularni izrazi imaju smisla
+        return category
 
 
 ir_actions = {
