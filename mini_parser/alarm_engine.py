@@ -4,6 +4,14 @@ from json import loads
 
 
 class AlarmEngine(object):
+    instance = None
+
+    @staticmethod
+    def get_instance():
+        if AlarmEngine.instance is None:
+            AlarmEngine.instance = AlarmEngine()
+        return AlarmEngine.instance
+
     def __init__(self):
         self.alarms = {}
         self.compiler = AlarmCompiler()
@@ -21,8 +29,7 @@ class AlarmEngine(object):
         else:
             raise KeyError("Alarm does not exist")
 
-    def add_log(self, log_str):
-        log = loads(log_str, object_hook=Log)
+    def add_log(self, log):
         # FIXME: trenutno se jako glupo resava
         for al in self.alarms.values():
             al.check_log(log)
@@ -43,12 +50,12 @@ def build_log():
 
 if __name__ == '__main__':
     ae = AlarmEngine()
-    # ae.add_alarm('severity = 1')
+    ae.add_alarm('severity = 1')
     # ae.add_alarm('severity = 2; count(2)')
-    # ae.add_alarm('last(10s) and msg=/.*cao.*/; count(3)')
+    ae.add_alarm('last(10s) and msg=/.*cao.*/; count(3)')
     ae.add_alarm('last(10s) and msg=/.*user:${\w+}.*/; count(3)')
 
-    # log1 = r'{"severity": 1}'
+    log1 = r'{"severity": 1}'
     # log2 = r'{"severity": 2}'
     # log3 = r'{"severity": 3}'
     # log4 = r'{"severity": 2}'
@@ -60,7 +67,7 @@ if __name__ == '__main__':
     # log9 = r'{"timestamp":"2018-05-22T01:27:17+02:00", "msg":"cao, kako si"}'
     # log10 = r'{"timestamp":"2018-05-22T01:27:17+02:00", "msg":"cao, kako si"}'
     #
-    # ae.add_log(log1)
+    ae.add_log(log1)
     # ae.add_log(log2)
     # ae.add_log(log3)
     # ae.add_log(log4)
@@ -73,7 +80,7 @@ if __name__ == '__main__':
     from time import sleep
     from sysqo_time_util import convert_rfc3339str_to_datetime
     logs = []
-    for i in range(5):
+    for i in range(10):
         l = build_log()
         # sleep(3)
         print("Adding: %s" % l)

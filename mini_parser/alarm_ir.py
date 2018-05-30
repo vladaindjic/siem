@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from sysqo_time_util import *
+from alarm_queue import AlarmQueue
 
 from ir import *
 
@@ -25,52 +26,28 @@ class Alarm(IRObject):
     def init(self):
         self.num_logs = self.count.count.eval() if self.count is not None else 0
         # TODO: ovde ostaje da se razresi kako cemo da hendlamo korisnicka imena i ip adrese
-        self.queue = [] if self.num_logs > 1 else None
+
         self.timestamp_prop_exist = self.has_timestamp()
+        self.queue = AlarmQueue(self, self.num_logs, self.timestamp_prop_exist) if self.num_logs > 1 else None
         self.categorical = self.find_category_resolver()
         self.category_queues = {}
 
     def check_log(self, log):
         try:
-            if self.query.eval(log):
+            if self.eval(log):
                 self._add_log(log)
         except:
             pass
 
     def _add_log(self, log):
-        queue = self.queue
-        if queue is not None:
-            if self.categorical:
-                category = self.categorical.find_category(log)
-                if category not in self.category_queues:
-                    print("Nova kategorija: %s" % category)
-                    self.category_queues[category] = []
-                queue = self.category_queues[category]
-
-            queue.append(log)
-            # da li treba da se sortira mozda po vremenu
-            if self.timestamp_prop_exist:
-                queue.sort(key=lambda l: convert_rfc3339str_to_datetime(l.timestamp), reverse=True)
-        self._check_fire_alarm(log, queue)
-
-    def _check_fire_alarm(self, log, queue):
-        # ako timestamp postoji, proveri da nije istekao iduci od nazad
-        # ako je istekao, brisi taj log iz reda
-        if self.timestamp_prop_exist:
-            while queue:
-                last = queue[-1]
-                # ako log zadovoljava uslov, ostaje u redu cekanje
-                if self.query.eval(last):
-                    break
-                # inace se brise
-                del queue[-1]
-
-        # ako je broj logova manji, nikom nista
-        if queue is not None:
-            if len(queue) < self.num_logs:
-                    return
-        # alarm se pali ako je potreban samo jedan log ili ako imamo dovoljan broj logova
-        self._fire_alarm(log, queue)
+        # ako samo jedan log treba, ispaljujemo ga
+        if not self._is_count_alarm():
+            self._fire_alarm(log, None)
+            return
+        queue = self._get_queue_for_log(log)
+        fired_logs = queue.add_log(log)
+        if fired_logs:
+            self._fire_alarm(log, fired_logs)
 
     def _fire_alarm(self, log, queue):
         if queue is not None:
@@ -79,11 +56,28 @@ class Alarm(IRObject):
         else:
             print("ALARM: %s" % log)
 
+    def _is_count_alarm(self):
+        return self.num_logs > 1
+
+    def _get_queue_for_log(self, log):
+        # ako nije kategoricki alarm, vracamo queue
+        if not self.categorical:
+            return self.queue
+        # inace vracamo red za odgovarajucu kategoriju, a po potrebi se red i kreira
+        category = self.categorical.find_category(log)
+        if category not in self.category_queues:
+            print("Nova kategorija: %s" % category)
+            self.category_queues[category] = AlarmQueue(self, self.num_logs, self.timestamp_prop_exist)
+        return self.category_queues[category]
+
     def has_timestamp(self):
         return self.query.has_timestamp()
 
     def find_category_resolver(self):
         return self.query.find_category_resolver()
+
+    def eval(self, log=None):
+        return self.query.eval(log)
 
 
 class CountExpr(IRObject):

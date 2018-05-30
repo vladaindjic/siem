@@ -3,9 +3,11 @@ security:
   cert: 'certs/agent_vlada.crt'
   ca: 'certs/ca.crt'
   interval: 1
-  API_ENDPOINT: 'https://172.20.10.3:8443/logger'
-  HOST: '172.20.10.3'
+  API_ENDPOINT: 'https://192.168.0.18:8443/logger'
+  HOST: '192.168.0.18'
+#  PORT: 33333
   PORT: 55555
+
   communication_protocol: 'TCP'
 general:
 #  patterns:
@@ -53,28 +55,28 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180522-012607.log'
+              path: 'web_app_log20180530-225023.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 
-    - directory:
-        path: '/home/vi3/Faks/Bezbednost/siem/center/log'
-        interval: 3
-        only_specified_files: True
-        files:
-          - file:
-              path: 'siem-application.log'
-              read_all: True
-              parser_type: 'LinuxStandardSyslogParser'
-    - directory:
-        path: '/var/log/mongodb/'
-        interval: 3
-        only_specified_files: True
-        files:
-          - file:
-              path: 'mongod.log'
-              read_all: True
-              parser_type: 'DummyParser'
+#    - directory:
+#        path: '/home/vi3/Faks/Bezbednost/siem/center/log'
+#        interval: 3
+#        only_specified_files: True
+#        files:
+#          - file:
+#              path: 'siem-application.log'
+#              read_all: True
+#              parser_type: 'LinuxStandardSyslogParser'
+#    - directory:
+#        path: '/var/log/mongodb/'
+#        interval: 3
+#        only_specified_files: True
+#        files:
+#          - file:
+#              path: 'mongod.log'
+#              read_all: True
+#              parser_type: 'DummyParser'
 
 
 os:
@@ -90,9 +92,9 @@ os:
 #                  path: 'tallylog'
 #              - file:
 #                  path: 'faillog'
-              - file:
-                  path: 'ufw.log.1'
-                  parser_type: 'LinuxStandardSyslogParser'
+#              - file:
+#                  path: 'ufw.log.1'
+#                  parser_type: 'LinuxStandardSyslogParser'
 #              - file:
 #                  path: 'syslog'
 #              - file:

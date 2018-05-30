@@ -33,6 +33,14 @@ class SysqlMongoParser(object):
 
 
 class SysqlMongoCompiler(object):
+    instance = None
+
+    @staticmethod
+    def get_instance():
+        if SysqlMongoCompiler.instance is None:
+            SysqlMongoCompiler.instance = SysqlMongoCompiler()
+        return SysqlMongoCompiler.instance
+
     def __init__(self):
         self.grammar = self.build_grammar('sysql.pg')
         self.parser = build_parser(self.grammar, ir_actions)
@@ -60,7 +68,8 @@ class SysqlMongoCompiler(object):
     def prepare_header(self, header):
         if header is None:
             return ""
-        return header.str_mongo()
+        # return header.str_mongo()
+        return header.get_dict()
 
     def compile(self, query):
         print("Sysql query      : %s" % query)
@@ -73,11 +82,20 @@ class SysqlMongoCompiler(object):
         optimized_ir = self.optimize(without_not_ir)
         print("Optimized IR     : %s" % optimized_ir)
         str_mongo_query = self.str_mongo(optimized_ir)
-        str_header = self.prepare_header(header)
+        header = self.prepare_header(header)
         print("Mongo query      : %s" % str_mongo_query)
-        full_query = str_mongo_query + ";" + str_header if str_header else str_mongo_query
-        print("Response: %s" % full_query)
-        return full_query
+        # full_query = str_mongo_query + ";" + str_header if str_header else str_mongo_query
+        compiled_query = {
+            'mongo_query': optimized_ir.get_dict(),
+            'limit': header['limit'] if 'limit' in header else None,
+            'page': header['page'] if 'page' in header else None,
+            'sort': header['sort'] if 'sort' in header else None,
+        }
+        print("Meni ovo treba: %s" % optimized_ir.get_dict())
+        # print("Response: %s" % full_query)
+        # return full_query
+        return compiled_query
+
 
 sysqo = SysqlMongoCompiler()
 brt = SysqlMongoParser()
@@ -113,6 +131,9 @@ brt = SysqlMongoParser()
 # query = "msg=/$from.*/"
 # query = r'appname="asda\"sd\"asd" and hostname="cao \" kako si" and appname=/\/\/asdasd\// and hostname=/ovo ide\/ovo ne ide/'
 query =r'not(severity!=1 or facility!=2) and hostname="machine1" and appname="app3"'
+
+
+query = 'severity > 1 and severity < 3 ; limit(10), page(2), sort(hostname:asc, appname:desc)'
 
 res = brt.parse(query)
 print(res)

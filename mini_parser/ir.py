@@ -9,6 +9,8 @@ class Log(object):
         vars(self).update(dictionary)
 
 
+
+
 # deo koji se tice Headera
 
 # Medjukod koji je potreban za Query
@@ -34,6 +36,8 @@ class IRObject(object):
     def find_category_resolver(self):
         return None
 
+    def get_dict(self):
+        return {}
 
 class Not(IRObject):
     def __init__(self, term):
@@ -56,6 +60,9 @@ class Not(IRObject):
 
     def find_category_resolver(self):
         return self.term.find_category_resolver()
+
+    def get_dict(self):
+        return {"$not": [self.term.get_dict()]}
 
 
 class And(IRObject):
@@ -171,6 +178,9 @@ class And(IRObject):
 
         return left_res if left_res is not None else right_res if right_res is not None else None
 
+    def get_dict(self):
+        return {"$and": [self.left.get_dict(), self.right.get_dict()]}
+
 
 class Or(IRObject):
     def __init__(self, left, right):
@@ -211,6 +221,9 @@ class Or(IRObject):
 
         return left_res if left_res is not None else right_res if right_res is not None else None
 
+    def get_dict(self):
+        return {"$or": [self.left.get_dict(), self.right.get_dict()]}
+
 
 class RelExp(IRObject):
     def __init__(self, property, value):
@@ -228,12 +241,21 @@ class RelExp(IRObject):
     def str_mongo(self):
         return "{%s: {%s: %s}}" % (self.property, self.str_op(), self.value)
 
+    def get_dict(self):
+        return {self.property.get_dict(): {self.get_dict_op(): self.value.get_dict()}}
+
     def str_op(self):
         return ""
+
+    def get_dict_op(self):
+        return self.str_op()
 
     def str_mongo_inside(self):
         # uklonicemo { i }
         return self.str_mongo()[1:-1]
+
+    def get_dict_inside(self):
+        return {self.get_dict_op(): self.value.get_dict()}
 
     def eval(self, log=None):
         prop = self.property.eval(log)
@@ -361,6 +383,12 @@ class Eq(RelExp):
     def str_mongo(self):
         return "{%s: %s}" % (self.property, self.value)
 
+    def get_dict(self):
+        return {self.property.get_dict(): self.value.get_dict()}
+
+    def get_dict_inside(self):
+        return self.value.get_dict()
+
     def eval_int(self, prop, val):
         return prop == val
 
@@ -393,6 +421,20 @@ class Ne(RelExp):
         else:
             # klasicno ponasanje
             return super().str_mongo()
+
+    def get_dict(self):
+        if isinstance(self.value, RegVal):
+            return {self.property.get_dict(): {"$not": self.value.get_dict()}}
+        else:
+            # klasicno ponasanje
+            return super().get_dict()
+
+    def get_dict_inside(self):
+        if isinstance(self.value, RegVal):
+            return {"$not": self.value.get_dict()}
+        else:
+            # klasicno ponasanje
+            return super().get_dict_inside()
 
     def eval_int(self, prop, val):
         return prop != val
@@ -428,6 +470,9 @@ class IntVal(Val):
     def eval(self, log=None):
         return int(self.value)
 
+    def get_dict(self):
+        return self.eval()
+
 
 class StrVal(Val):
     def __init__(self, value):
@@ -439,14 +484,23 @@ class StrVal(Val):
     def eval(self, log=None):
         return str(self.value)[1:-1]
 
+    def get_dict(self):
+        return self.eval()
+
 
 class RegVal(Val):
     def __init__(self, value):
+        self.orig_value = value
         super().__init__(value)
         self.category_resolver = self.is_categorical()
 
     def __str__(self):
-        return "%s" % str(self.value)
+        # FIXME: mozda jos negde
+        # return "%s" % str(self.value)
+        return "%s" % str(self.orig_value)
+
+    def get_dict(self):
+        return self.eval()
 
     def eval(self, log=None):
         return re.compile(self.value)
@@ -478,6 +532,9 @@ class DateVal(Val):
     def __str__(self):
         return "ISODate(\"%s\")" % self.value
 
+    def get_dict(self):
+        return self.eval()
+
     def eval(self, log=None):
         return convert_rfc3339str_to_datetime(self.value)
 
@@ -507,6 +564,9 @@ class Property(IRObject):
 
     def has_timestamp(self):
         return self.name == 'timestamp'
+
+    def get_dict(self):
+        return str(self)
 
 
 class CompoundExpr(IRObject):
@@ -554,6 +614,12 @@ class CompoundExpr(IRObject):
         string += "}"
         return string
 
+    def get_dict(self):
+        ret = {}
+        for k, v in self.prop_expressions.items():
+            ret[k] = v.get_dict_inside()
+        return ret
+
     def str_mongo(self):
         string = "{"
         for k, v in self.prop_expressions.items():
@@ -598,6 +664,9 @@ class SysQuery(IRObject):
         self.query = query
         self.header = header
 
+    def get_dict(self):
+        return {"query": self.query.get_dict()}
+
 
 class Header(IRObject):
     def __init__(self, first_header_expression=None):
@@ -640,6 +709,14 @@ class Header(IRObject):
             string += sort_str
         return string
 
+    def get_dict(self):
+        ret = {'limit': self.header_expressions["limit"].get_dict() if "limit" in self.header_expressions else None,
+               'page': self.header_expressions["page"].get_dict() if "page" in self.header_expressions else None,
+               'sort': self.header_expressions["sort"].get_dict() if "sort" in self.header_expressions else None
+               }
+
+        return ret
+
 
 class SortParam(IRObject):
     def __init__(self, property, sort_dir):
@@ -651,6 +728,9 @@ class SortParam(IRObject):
 
     def str_mongo(self):
         return str(self)
+
+    def get_dict(self):
+        return self.str_mongo()
 
 
 class SortParams(IRObject):
@@ -678,6 +758,9 @@ class SortParams(IRObject):
     def str_mongo(self):
         return str(self)
 
+    def get_dict(self):
+        return self.str_mongo()
+
 
 class HeaderExpr(IRObject):
     def get_type(self):
@@ -697,6 +780,9 @@ class SortExpr(HeaderExpr):
     def str_mongo(self):
         return "sort={%s}" % self.sort_params.str_mongo()
 
+    def get_dict(self):
+        return "{%s}" % self.sort_params.str_mongo()
+
 
 class LimitExpr(HeaderExpr):
     def __init__(self, limit):
@@ -711,6 +797,8 @@ class LimitExpr(HeaderExpr):
     def str_mongo(self):
         return "limit=%s" % self.limit
 
+    def get_dict(self):
+        return self.limit.eval()
 
 class PageExpr(HeaderExpr):
     def __init__(self, page):
@@ -724,6 +812,9 @@ class PageExpr(HeaderExpr):
 
     def str_mongo(self):
         return "page=%s" % self.page
+
+    def get_dict(self):
+        return self.page.eval()
 
 
 # # Deo koji se tice alarma
