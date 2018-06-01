@@ -1,6 +1,6 @@
 import pymongo
-from log_util import convert_log_to_dict
-from mongo_util import MongoUtil
+from .log_util import convert_log_to_dict
+from .mongo_util import MongoUtil
 
 
 class LogRepository(object):

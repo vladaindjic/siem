@@ -1,4 +1,4 @@
-from sysqo_time_util import *
+from .sysqo_time_util import *
 
 mongo_operators = {
     "=": "$eq",

@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from sysqo_time_util import *
+from .sysqo_time_util import *
 # FIXME: nedostaje tip za pattern
 retype = type(re.compile("pattern"))
 

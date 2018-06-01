@@ -1,8 +1,8 @@
 from collections import OrderedDict
-from sysqo_time_util import *
-from alarm_queue import AlarmQueue
+from .sysqo_time_util import *
+from .alarm_queue import AlarmQueue
 
-from ir import *
+from .ir import *
 
 
 class TimeOffsetVal(Val):

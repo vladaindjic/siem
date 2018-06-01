@@ -1,5 +1,5 @@
 from threading import Lock
-from sysqo_time_util import convert_rfc3339str_to_datetime
+from .sysqo_time_util import convert_rfc3339str_to_datetime
 
 
 class AlarmQueue(object):

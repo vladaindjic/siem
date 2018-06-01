@@ -38,6 +38,7 @@ export class AuthenticationComponent implements OnInit {
     const credentials: IUser = this.loginForm.value;
     this.autheticationService.authenticateUser(credentials).subscribe(
       data => {
+        console.log(JSON.stringify(data))
         localStorage.setItem('loggedUser', JSON.stringify(data)),
           this.router.navigate(['/home']);
 

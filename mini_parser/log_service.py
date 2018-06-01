@@ -1,7 +1,7 @@
-from log_util import convert_json_to_log
-from log_respository import LogRepository
-from alarm_engine import AlarmEngine
-from sysql import SysqlMongoCompiler
+from .log_util import convert_json_to_log
+from .log_respository import LogRepository
+from .alarm_engine import AlarmEngine
+from .sysql import SysqlMongoCompiler
 
 
 class LogService(object):

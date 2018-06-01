@@ -10,7 +10,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   authenticateUser(userLogin) {
-    return this.http.post('/api/users/login', userLogin);
+    return this.http.post('/api/center/login', userLogin);
   }
 
 }

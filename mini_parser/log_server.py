@@ -29,9 +29,8 @@ import socket
 # import thread module
 import ssl
 from concurrent.futures import ThreadPoolExecutor
-from log_service import LogService
-from alarm_engine import AlarmEngine
-from log_respository import LogRepository
+from .log_service import LogService
+from .alarm_engine import AlarmEngine
 
 MAX_MESSAGE_SIZE = 4096
 MAX_THREAD_IN_POOL = 10

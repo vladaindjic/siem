@@ -3,7 +3,7 @@ import socket
 import threading
 # import thread module
 from _thread import *
-from sysql import SysqlMongoCompiler
+from .sysql import SysqlMongoCompiler
 import ssl
 
 print_lock = threading.Lock()

@@ -11,7 +11,7 @@ export class TokenInterceptorService {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        'X-Auth-Token': LoggedUtils.getToken(),
+        'Authorization': "Token " + LoggedUtils.getToken(),
       },
     });
     console.log(request);
