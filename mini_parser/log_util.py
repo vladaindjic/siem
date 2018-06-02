@@ -1,4 +1,4 @@
-from ir import Log
+from dto.log_dto import Log
 from json import loads
 from json import dumps
 from sysqo_time_util import convert_rfc3339str_to_datetime

@@ -29,14 +29,15 @@ class LogService(object):
         print("Posle kompajliranja: %s" % compiled_query)
         self.log_repository.find(compiled_query['mongo_query'], compiled_query['limit'],
                                  compiled_query['page'], compiled_query['sort'])
+        # TODO: srediti limit, skip i sort da vracaju dictionary u kompajleru
 
 
 if __name__ == '__main__':
     # query = "severity > 1 and severity < 3 ; limit(10), page(2), sort(hostname:asc, appname:desc)"
-    query = "severity > 1 and facility!=1; limit(10), page(2), sort(hostname:asc, appname:desc)"
+    # query = "severity > 1 and facility!=1; limit(10), page(2), sort(hostname:asc, appname:desc)"
     # query = 'last(1Y) and severity > 3 and msg=/.*/ and hostname="192.168.1.1"'
 
-    query = 'last(1h) and appname="FakeWebApp"'
+    query = 'last(1Y) and appname="FakeWebApp"; limit(100), page(0), sort(severity:desc)'
     ls = LogService.get_instance()
     ls.find(query)
 

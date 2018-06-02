@@ -35,9 +35,16 @@ class LogRepository(object):
     def find(self, query, limit=None, page=None, sort=None):
         from json import loads
         print(query)
+
+        limit = limit if limit is not None else 0
+        page = page if page is not None else 0
+        sort = sort if sort is not None else None
+        print("Radi li ovo ista: %d" % limit)
+        res = self.log_collection.find(filter=query, limit=limit, skip=limit*page, sort=sort)
+
         # print(loads(query))
         print("Ima li te?")
-        for l in self.log_collection.find(filter=query):
+        for l in res:
             print(l)
         # self.log_collection.find(filter=loads(query), limit=limit, skip=limit*page, sort=sort)
         pass

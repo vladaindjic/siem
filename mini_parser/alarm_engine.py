@@ -1,5 +1,5 @@
 from alarm import AlarmCompiler
-from ir import Log
+from dto.log_dto import Log
 from json import loads
 
 
