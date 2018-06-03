@@ -66,6 +66,7 @@ class AlarmService(object):
         return self.alarm_repository.fire_alarm(alarm_fire)
 
 
+
 if __name__ == '__main__':
     als = AlarmService.get_instance()
     new = als.add_alarm("severity=1")

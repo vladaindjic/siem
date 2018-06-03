@@ -33,21 +33,68 @@ class LogRepository(object):
         return self.log_collection.insert_one(log_dict).inserted_id
 
     def find(self, query, limit=None, page=None, sort=None):
-        from json import loads
-        print(query)
-
         limit = limit if limit is not None else 0
         page = page if page is not None else 0
         sort = sort if sort is not None else None
-        print("Radi li ovo ista: %d" % limit)
         res = self.log_collection.find(filter=query, limit=limit, skip=limit*page, sort=sort)
+        return {
+            'logs': list(res),
+            'count': res.count()
+        }
 
-        # print(loads(query))
-        print("Ima li te?")
-        for l in res:
-            print(l)
-        # self.log_collection.find(filter=loads(query), limit=limit, skip=limit*page, sort=sort)
-        pass
+    def log_analytics(self, start_time, end_time, all_system, hosts):
+
+        # db.log.aggregate(
+        #     [
+        #
+        #         {
+        #           $match: {$ or: [{hostname: "192.168.1.1"}, {hostname: "123"}]}
+        #          },
+        #
+        #        {
+        #           $group:
+        #           {
+        #               _id: {hostname: '$hostname'},
+        #               logs: { $push: "$$ROOT"},
+        #               count: {$sum: 1}
+        #           }
+        #        }
+        #      ]
+        # ).pretty()
+
+        match_time = {"timestamp": {"$gte": start_time, "$lte": end_time}}
+        if all_system:
+            match = match_time
+        else:
+            or_list = [match_time]
+            for hostname in hosts:
+                or_list.append({"hostname": hostname})
+            match = {"$or":or_list}
+
+        group = {
+            "_id": {"hostname": "$hostname"},
+            "logs": {"$push": "$$ROOT"},
+            "count": {"$sum": 1}
+        }
+
+        aggregate_list = [
+            {
+                "$match": match
+            },
+            {
+                "$group": group
+            }
+        ]
+
+        print(aggregate_list)
+        aggregations = list(self.log_collection.aggregate(aggregate_list))
+        count = 0
+        for ag_item in aggregations:
+            count += ag_item['count']
+        return {
+            'agregations': aggregations,
+            'count': count
+        }
 
 
 if __name__ == '__main__':

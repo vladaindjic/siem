@@ -28,8 +28,18 @@ class LogService(object):
         print("Trazimo: %s" % syslog_query)
         compiled_query = self.sysql_compiler.compile(syslog_query)
         print("Posle kompajliranja: %s" % compiled_query)
-        self.log_repository.find(compiled_query['mongo_query'], compiled_query['limit'],
+        res = self.log_repository.find(compiled_query['mongo_query'], compiled_query['limit'],
                                  compiled_query['page'], compiled_query['sort'])
+        return res
+
+    def log_analytics(self, start_time=None, end_time=None, all_system=True, hosts=[]):
+        from sysqo_time_util import convert_rfc3339str_to_datetime
+        from datetime import datetime
+        # start_time i end_time su u rfc3339 formatu
+        start_time = convert_rfc3339str_to_datetime(start_time) if start_time is not None else datetime(1970, 1, 1)
+        end_time = convert_rfc3339str_to_datetime(end_time) if end_time is not None else datetime.now()
+        # FIXME: nadji pametniji nacin da ovo sredis
+        return self.log_repository.log_analytics(start_time, end_time, all_system, hosts)
 
 
 if __name__ == '__main__':
@@ -39,6 +49,8 @@ if __name__ == '__main__':
 
     query = 'last(1Y) and appname="FakeWebApp"; limit(100), page(0), sort(severity:desc)'
     ls = LogService.get_instance()
-    ls.find(query)
-
+    # res = ls.find(query)
+    # print(res)
+    res = ls.log_analytics()
+    print(res)
     # FIXME: Regex ne radi
