@@ -20,14 +20,18 @@ class AlarmEngine(object):
         if alarm_str in self.alarms:
             raise KeyError("The same alaram already exists")
         alarm = self.compiler.compile(alarm_str)
-        alarm.init()
+        alarm.set_alarm_str(alarm_str)
+        # alarm.init()
         self.alarms[alarm_str] = alarm
+        print("Trenutno imamo: %d" % len(self.alarms))
+        return alarm
 
     def remove_alarm(self, alarm_str):
         if alarm_str in self.alarms:
             del self.alarms[alarm_str]
         else:
             raise KeyError("Alarm does not exist")
+        print("Trenutno imamo: %d" % len(self.alarms))
 
     def add_log(self, log):
         # FIXME: trenutno se jako glupo resava

@@ -86,8 +86,7 @@ if __name__ == '__main__':
     #
     # mongo_query = sysqo.compile(query)
 
-
-    from ir import Log
+    from dto.log_dto import Log
     import json
     json_str = r'{"severity": 5, "msgid": "porukica", "timestamp":"2018-05-22T01:27:17+02:00"}'
 
@@ -99,7 +98,7 @@ if __name__ == '__main__':
     # query = r'at(2018)'
     # query = r'severity>3 and msgid="porukica" and before(2017) or after(2016)'
     query = r'severity>3 and msgid="porukica" and last(1d)'
-
+    query = r'severity=5'
 
     alarm = sysqo.compile(query)
     print(alarm.query.eval(l))
