@@ -66,10 +66,12 @@ class LogRepository(object):
         if all_system:
             match = match_time
         else:
-            or_list = [match_time]
+            or_list_hostnames = []
             for hostname in hosts:
-                or_list.append({"hostname": hostname})
-            match = {"$or":or_list}
+                or_list_hostnames.append({"hostname": hostname})
+            match_hostnames = {"$or": or_list_hostnames}
+            match = {"$and": [match_time, match_hostnames]}
+
 
         group = {
             "_id": {"hostname": "$hostname"},

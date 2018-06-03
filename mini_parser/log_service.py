@@ -51,6 +51,6 @@ if __name__ == '__main__':
     ls = LogService.get_instance()
     # res = ls.find(query)
     # print(res)
-    res = ls.log_analytics()
+    res = ls.log_analytics(all_system=False, hosts=['fake', '192.168.1.0'])
     print(res)
     # FIXME: Regex ne radi
