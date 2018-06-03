@@ -1,18 +1,14 @@
 from collections import OrderedDict
-from .sysqo_time_util import *
+# bez tacaka
+# from .sysqo_time_util import *
+
+# sa tackama
+from sysqo_time_util import *
+
 # FIXME: nedostaje tip za pattern
 retype = type(re.compile("pattern"))
 
-
-class Log(object):
-    def __init__(self, dictionary):
-        vars(self).update(dictionary)
-
-
-
-
 # deo koji se tice Headera
-
 # Medjukod koji je potreban za Query
 class IRObject(object):
     def inv(self):
@@ -38,6 +34,7 @@ class IRObject(object):
 
     def get_dict(self):
         return {}
+
 
 class Not(IRObject):
     def __init__(self, term):
@@ -710,12 +707,19 @@ class Header(IRObject):
         return string
 
     def get_dict(self):
-        ret = {'limit': self.header_expressions["limit"].get_dict() if "limit" in self.header_expressions else None,
-               'page': self.header_expressions["page"].get_dict() if "page" in self.header_expressions else None,
-               'sort': self.header_expressions["sort"].get_dict() if "sort" in self.header_expressions else None
-               }
-
-        return ret
+        limit = self.header_expressions["limit"].get_dict() if "limit" in self.header_expressions else None
+        page = self.header_expressions["page"].get_dict() if "page" in self.header_expressions else None
+        sort = self.header_expressions["sort"].get_dict() if "sort" in self.header_expressions else None
+        limit_exists = limit is not None
+        page_exists = page is not None
+        if (limit_exists and page_exists) or (not limit_exists and not page_exists):
+            ret = {
+                "limit": limit,
+                "page": page,
+                "sort": sort
+            }
+            return ret
+        raise ValueError("Both limit and page must be specified.")
 
 
 class SortParam(IRObject):
@@ -730,18 +734,21 @@ class SortParam(IRObject):
         return str(self)
 
     def get_dict(self):
-        return self.str_mongo()
+        from pymongo import ASCENDING, DESCENDING
+        return ASCENDING if self.sort_dir == 1 else DESCENDING
 
 
 class SortParams(IRObject):
     def __init__(self, first_param=None):
         self.sort_params = OrderedDict()
         if first_param is not None:
-            self.sort_params[first_param.property.name] = first_param
+            # self.sort_params[first_param.property.name] = first_param
+            self.sort_params[first_param.property.name.name] = first_param
 
     def add_param(self, param):
-        if param.property.name not in self.sort_params:
-            self.sort_params[param.property.name] = param
+        if param.property.name.name not in self.sort_params:
+            # self.sort_params[param.property.name] = param
+            self.sort_params[param.property.name.name] = param
             return self
         else:
             raise KeyError("Sort param for property: %s already specified" % param.property.name)
@@ -759,7 +766,10 @@ class SortParams(IRObject):
         return str(self)
 
     def get_dict(self):
-        return self.str_mongo()
+        ret = []
+        for k, v in self.sort_params.items():
+            ret.append((k, v.get_dict()))
+        return ret
 
 
 class HeaderExpr(IRObject):
@@ -781,7 +791,8 @@ class SortExpr(HeaderExpr):
         return "sort={%s}" % self.sort_params.str_mongo()
 
     def get_dict(self):
-        return "{%s}" % self.sort_params.str_mongo()
+        # return "{%s}" % self.sort_params.str_mongo()
+        return self.sort_params.get_dict()
 
 
 class LimitExpr(HeaderExpr):

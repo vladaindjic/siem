@@ -1,7 +1,13 @@
-from .ir import Log
+# sa tackama
+# from .dto.log_dto import Log
+# from .sysqo_time_util import convert_rfc3339str_to_datetime
+
+# bez tacaka
+from dto.log_dto import Log
+from sysqo_time_util import convert_rfc3339str_to_datetime
+
 from json import loads
 from json import dumps
-from .sysqo_time_util import convert_rfc3339str_to_datetime
 
 
 def convert_json_to_log(json_str):

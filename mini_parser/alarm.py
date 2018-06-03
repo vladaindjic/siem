@@ -1,10 +1,15 @@
 from parglare import Grammar, Parser
-from .alarm_ir import alarm_ir_actions
+# sa tackama
+# from .alarm_ir import alarm_ir_actions
+
+# bez tacaka
+from alarm_ir import alarm_ir_actions
 
 
 class AlarmCompiler(object):
     def __init__(self):
-        self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/alarm.pg')
+        # self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/alarm.pg')
+        self.grammar = self.build_grammar('alarm.pg')
         self.parser = self.build_parser(self.grammar, alarm_ir_actions)
 
     def build_grammar(self, grammar_file_path):
@@ -86,8 +91,7 @@ if __name__ == '__main__':
     #
     # mongo_query = sysqo.compile(query)
 
-
-    from ir import Log
+    from dto.log_dto import Log
     import json
     json_str = r'{"severity": 5, "msgid": "porukica", "timestamp":"2018-05-22T01:27:17+02:00"}'
 
@@ -99,7 +103,7 @@ if __name__ == '__main__':
     # query = r'at(2018)'
     # query = r'severity>3 and msgid="porukica" and before(2017) or after(2016)'
     query = r'severity>3 and msgid="porukica" and last(1d)'
-
+    query = r'severity=5'
 
     alarm = sysqo.compile(query)
     print(alarm.query.eval(l))

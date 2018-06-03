@@ -29,8 +29,13 @@ import socket
 # import thread module
 import ssl
 from concurrent.futures import ThreadPoolExecutor
-from .log_service import LogService
-from .alarm_engine import AlarmEngine
+# sa tackama
+# from .log_service import LogService
+# from .alarm_engine import AlarmEngine
+# bez tacaka
+from log_service import LogService
+from alarm_engine import AlarmEngine
+
 
 MAX_MESSAGE_SIZE = 4096
 MAX_THREAD_IN_POOL = 10
@@ -43,9 +48,6 @@ class LogServer(object):
         self.accept_logs_executor = ThreadPoolExecutor(MAX_THREAD_IN_POOL)
         self.alarm_engine = AlarmEngine.get_instance()
         self.log_service = LogService.get_instance()
-
-        self.add_alarm('severity=2')
-        self.add_alarm('severity=3')
 
     def accept_logs(self, c):
         while True:
@@ -74,16 +76,17 @@ class LogServer(object):
 
         # a forever loop until client wants to exit
         while True:
-            print("Samo jednom")
+            # print("Samo jednom")
             # establish connection with client
             c, addr = s.accept()
 
             # lock acquired by client
-            print('Connected to :', addr[0], ':', addr[1])
+            # print('Connected to :', addr[0], ':', addr[1])
 
             # Start a new thread and return its identifier
             # start_new_thread(radis_li, (c,))
             self.accept_logs_executor.submit(self.accept_logs, c)
+
         s.close()
 
     def add_alarm(self, alarm_str):
@@ -91,10 +94,19 @@ class LogServer(object):
 
 
 def main():
+    # dodaj par alarma
+    ls = AlarmService.get_instance()
+    ls.add_alarm('severity=2')
+    ls.add_alarm('severity=3')
+    ls.add_alarm('severity=3; count(3)')
+
+    # instanciraj server
     ls = LogServer()
     ls.start_server()
 
 
 if __name__ == '__main__':
+    from alarm_service import AlarmService
+    # primaj i vidi sta ce se desiti
     main()
 

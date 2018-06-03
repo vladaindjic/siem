@@ -1,8 +1,13 @@
 from collections import OrderedDict
-from .sysqo_time_util import *
-from .alarm_queue import AlarmQueue
+# sa tackama
+# from .sysqo_time_util import *
+# from .alarm_queue import AlarmQueue
+# from .ir import *
 
-from .ir import *
+# bez tacaka
+from sysqo_time_util import *
+from alarm_queue import AlarmQueue
+from ir import *
 
 
 class TimeOffsetVal(Val):
@@ -22,6 +27,11 @@ class Alarm(IRObject):
     def __init__(self, query, count=None):
         self.query = query
         self.count = count
+        # FIXME: da li si siguran da ovo ovako treba
+        self.init()
+
+        self.alarm_str = None
+        self.alarm_id = None
 
     def init(self):
         self.num_logs = self.count.count.eval() if self.count is not None else 0
@@ -33,11 +43,11 @@ class Alarm(IRObject):
         self.category_queues = {}
 
     def check_log(self, log):
-        try:
+        # try:
             if self.eval(log):
                 self._add_log(log)
-        except:
-            pass
+        # except:
+        #     pass
 
     def _add_log(self, log):
         # ako samo jedan log treba, ispaljujemo ga
@@ -50,11 +60,14 @@ class Alarm(IRObject):
             self._fire_alarm(log, fired_logs)
 
     def _fire_alarm(self, log, queue):
+        from alarm_service import AlarmService
         if queue is not None:
+            res = AlarmService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), queue)
             print("ALARMS: %s" % queue)
-            queue.clear()
         else:
+            res = AlarmService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), [log])
             print("ALARM: %s" % log)
+        print("EVO STA SAM DOBIO: %s" % res)
 
     def _is_count_alarm(self):
         return self.num_logs > 1
@@ -78,6 +91,12 @@ class Alarm(IRObject):
 
     def eval(self, log=None):
         return self.query.eval(log)
+
+    def set_alarm_str(self, alarm_str):
+        self.alarm_str = alarm_str
+
+    def set_alarm_id(self, alarm_id):
+        self.alarm_id = alarm_id
 
 
 class CountExpr(IRObject):
