@@ -5,8 +5,9 @@ export class LoggedUtils {
             return '';
         }
         console.log(JSON.parse(localStorage.getItem('loggedUser')));
-        return JSON.parse(localStorage.getItem('loggedUser')).token._text;
-    }
+        console.log(JSON.parse(localStorage.getItem('loggedUser')).token)
+        return JSON.parse(localStorage.getItem('loggedUser')).token;
+    }   
 
     static getRole() {
         if (this.isEmpty()) {

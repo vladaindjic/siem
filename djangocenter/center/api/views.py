@@ -42,7 +42,11 @@ def funkcija(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def find_logs(request):
+    print("**************************")
+    print(request)
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     logs = log_service.find(syslog_query="severity=3")
+    print(logs)
     return Response(logs)
 
 

@@ -11,7 +11,7 @@ export class TokenInterceptorService {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        'Authorization': "Token " + LoggedUtils.getToken(),
+        'Authorization': "JWT " + LoggedUtils.getToken(),
       },
     });
     console.log(request);

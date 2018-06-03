@@ -16,7 +16,6 @@ export class HomepageComponent implements OnInit {
 
 
   btnclicked(){
-    alert("JEBO SAM TI MATER")
     console.log(LoggedUtils.getRole());
   }
 }

@@ -7,8 +7,7 @@ export class LogService {
   constructor(private http: HttpClient) { }
 
   logSearch(text:string){
-    const url=`/api/logger?query=${text}`;
-    // const url=`/api/logger/all`;
+    const url=`/api/center/find_logs?query=${text}`;
     return this.http.get(url);
   }
 
