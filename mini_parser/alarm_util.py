@@ -16,8 +16,9 @@ def convert_alarm_fire_to_dict(alarm_fire_dto):
     ret = {
         'alarm_id': alarm_fire_dto.alarm_id,
         'alarm_str': alarm_fire_dto.alarm_str,
-        'time': alarm_fire_dto.time,
-        'logs': [convert_log_to_dict(log) for log in alarm_fire_dto.logs]
+        'timestamp': alarm_fire_dto.timestamp,
+        'logs': [convert_log_to_dict(log) for log in alarm_fire_dto.logs],
+        'hostname': alarm_fire_dto.hostname
     }
     if alarm_fire_dto._id is not None:
         ret['_id'] = alarm_fire_dto._id

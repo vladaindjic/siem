@@ -3,6 +3,7 @@ from parglare import Grammar, Parser
 from .ir import ir_actions
 from .mongo_backend import mongo_actions
 
+
 # bez tacaka
 # from ir import ir_actions
 # from mongo_backend import mongo_actions
@@ -30,8 +31,10 @@ def parse_sysql(sysql):
 
 class SysqlMongoParser(object):
     def __init__(self, actions=mongo_actions):
-        self.grammar = build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
+        # self.grammar = build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
         # self.grammar = build_grammar('sysql.pg')
+        self.grammar = build_grammar('../mini_parser/sysql.pg')
+
         self.parser = build_parser(self.grammar, actions)
 
     def parse(self, sysql_str):
@@ -51,8 +54,9 @@ class SysqlMongoCompiler(object):
         return SysqlMongoCompiler.instance
 
     def __init__(self):
-        self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
+        # self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
         # self.grammar = self.build_grammar('sysql.pg')
+        self.grammar = self.build_grammar('../mini_parser/sysql.pg')
         self.parser = build_parser(self.grammar, ir_actions)
 
     def build_grammar(self, grammar_file_path):
@@ -141,8 +145,7 @@ if __name__ == '__main__':
     # query = "last(1s) and appname=/.*Fa.*/; limit(5), page(0)"
     # query = "msg=/$from.*/"
     # query = r'appname="asda\"sd\"asd" and hostname="cao \" kako si" and appname=/\/\/asdasd\// and hostname=/ovo ide\/ovo ne ide/'
-    query =r'not(severity!=1 or facility!=2) and hostname="machine1" and appname="app3"'
-
+    query = r'not(severity!=1 or facility!=2) and hostname="machine1" and appname="app3"'
 
     query = 'severity > 1 and severity < 3 ; limit(10), page(2), sort(hostname:asc, appname:desc)'
 
@@ -151,7 +154,6 @@ if __name__ == '__main__':
 
     mongo_query = sysqo.compile(query)
 
-
-
 import re
+
 re.match(r'\"(\\\")*\"', "")

@@ -41,7 +41,7 @@ class LogService(object):
         return res
 
     def log_analytics(self, start_time=None, end_time=None, all_system=True, hosts=[]):
-        from sysqo_time_util import convert_rfc3339str_to_datetime
+        from .sysqo_time_util import convert_rfc3339str_to_datetime
         from datetime import datetime
         # start_time i end_time su u rfc3339 formatu
         start_time = convert_rfc3339str_to_datetime(start_time) if start_time is not None else datetime(1970, 1, 1)

@@ -98,7 +98,7 @@ class LogRepository(object):
         for ag_item in aggregations:
             count += ag_item['count']
         return {
-            'agregations': aggregations,
+            'aggregations': aggregations,
             'count': count
         }
 
