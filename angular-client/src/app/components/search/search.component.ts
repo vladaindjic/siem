@@ -9,20 +9,20 @@ import { LogService } from '../../services/log.service';
 })
 export class SearchComponent implements OnInit {
 
-  logs;
+  logovi;
 
   constructor(private route: ActivatedRoute, private logService: LogService, private router: Router) {
-    this.logs;
+    this.logovi;
   }
 
   ngOnInit() {
 
     this.route.queryParams.subscribe((params) => {
       let query = params['query'];
-      this.logs = []
       this.logService.logSearch(query).subscribe((data) => {
         console.log(data)
-        this.logs = data;
+        this.logovi = data;
+        this.logovi = JSON.parse(this.logovi)
       });
     })
   }

@@ -1,5 +1,6 @@
 import datetime
 from calendar import timegm
+from .permissions import is_in_group
 
 
 def jwt_payload_handler(user):
@@ -11,6 +12,8 @@ def jwt_payload_handler(user):
         'email': user.email,
         'username': user.username,
         'is_superuser': user.is_superuser,
+        'is_admin': is_in_group(user, "admins"),
+        'is_operator': is_in_group(user, "operators"),
     }
 
 
@@ -19,12 +22,13 @@ def jwt_response_payload_handler(token, user=None, request=None):
 
     This function controlls the custom payload after login or token refresh. This data is returned through the web API.
     """
-    print(user)
     return {
         'token': token,
         'user': {
             'email': user.email,
             'username': user.username,
             'is_superuser': user.is_superuser,
+            'is_admin': is_in_group(user, "admins"),
+            'is_operator': is_in_group(user, "operators"),
         }
     }

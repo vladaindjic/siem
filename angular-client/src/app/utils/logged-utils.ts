@@ -5,18 +5,17 @@ export class LoggedUtils {
             return '';
         }
         console.log(JSON.parse(localStorage.getItem('loggedUser')));
-        console.log(JSON.parse(localStorage.getItem('loggedUser')).token)
         return JSON.parse(localStorage.getItem('loggedUser')).token;
-    }   
+    }
 
     static getRole() {
         if (this.isEmpty()) {
             return null;
         }
         console.log(JSON.parse(localStorage.getItem('loggedUser')));
-        if (JSON.parse(localStorage.getItem('loggedUser')).user.is_superuser) {
+        if (JSON.parse(localStorage.getItem('loggedUser')).user.is_admin) {
             return '[ADMIN]'
-        } else if (!JSON.parse(localStorage.getItem('loggedUser')).user.is_superuser) {
+        } else if (JSON.parse(localStorage.getItem('loggedUser')).user.is_operator) {
             return '[OPERATOR]'
         }
         return null;

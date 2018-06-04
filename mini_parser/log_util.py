@@ -1,10 +1,10 @@
 # sa tackama
-# from .dto.log_dto import Log
-# from .sysqo_time_util import convert_rfc3339str_to_datetime
+from .dto.log_dto import Log
+from .sysqo_time_util import convert_rfc3339str_to_datetime
 
 # bez tacaka
-from dto.log_dto import Log
-from sysqo_time_util import convert_rfc3339str_to_datetime
+# from dto.log_dto import Log
+# from sysqo_time_util import convert_rfc3339str_to_datetime
 
 from json import loads
 from json import dumps

@@ -17,6 +17,8 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { OnlyLoggedInGuardGuard } from './guards/only-logged-in.guard';
+import { AlreadyLoggedInGuard } from './guards/already-logged-in.guard';
 
 const appRoutes: Routes = [
   {
@@ -24,9 +26,9 @@ const appRoutes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  { path: 'login', component: AuthenticationComponent },
-  { path: 'home', component: HomepageComponent },
-  { path: 'search', component: SearchComponent },
+  { path: 'login', component: AuthenticationComponent, canActivate: [AlreadyLoggedInGuard] },
+  { path: 'home', component: HomepageComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: '**', component: NotFoundPageComponent }
 
 
@@ -63,6 +65,8 @@ const appRoutes: Routes = [
       useClass: TokenInterceptorService,
       multi: true
     },
+    OnlyLoggedInGuardGuard,
+    AlreadyLoggedInGuard,
   ],
   bootstrap: [AppComponent]
 })

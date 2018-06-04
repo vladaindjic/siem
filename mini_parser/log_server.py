@@ -30,11 +30,11 @@ import socket
 import ssl
 from concurrent.futures import ThreadPoolExecutor
 # sa tackama
-# from .log_service import LogService
-# from .alarm_engine import AlarmEngine
+from .log_service import LogService
+from .alarm_engine import AlarmEngine
 # bez tacaka
-from log_service import LogService
-from alarm_engine import AlarmEngine
+# from log_service import LogService
+# from alarm_engine import AlarmEngine
 
 
 MAX_MESSAGE_SIZE = 4096

@@ -1,12 +1,25 @@
 import sys
-from django.shortcuts import render
-from django.views.generic import TemplateView
+import json
+from bson import json_util
+from django.db.models import fields
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.decorators import permission_required
+
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from django.contrib.auth.models import Permission, Group
+
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.status import (
-    HTTP_200_OK
+    HTTP_200_OK,
+    HTTP_204_NO_CONTENT,
+    HTTP_400_BAD_REQUEST,
+    HTTP_401_UNAUTHORIZED,
+
 )
+from ..permissions import *
+from rest_framework.serializers import Serializer
 
 from rest_framework.permissions import (
     AllowAny,
@@ -14,104 +27,130 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-from django.contrib.auth import (
-    authenticate,
-    get_user_model,
-    login,
-    logout,
-
-)
 
 sys.path.append("..")
 from mini_parser.log_service import LogService
 
 log_service = LogService.get_instance()
 
+decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func: decorator(func, *args, **kwargs)
+
+
+@decorator_with_arguments
+def custom_permission_required(function, perm):
+    def _function(request, *args, **kwargs):
+        if "center." + perm in request.user.get_group_permissions():
+            return function(request, *args, **kwargs)
+        else:
+            return Response(status=HTTP_401_UNAUTHORIZED)
+            # Return a response or redirect to referrer or some page of your choice
+
+    return _function
+
 
 @api_view(['GET'])
-@authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((IsAuthenticated,))
-def funkcija(request):
-    content = {
-        'user': str(request.user),  # `django.contrib.auth.User` instance.
-        'auth': str(request.auth),  # None
-    }
-    return Response(content)
-
-
-@api_view(['GET'])
-@permission_classes((IsAuthenticated,))
+@custom_permission_required("find_logs")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
 def find_logs(request):
-    print("**************************")
-    print(request)
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    logs = log_service.find(syslog_query="severity=3")
+    logs = log_service.find(syslog_query=request.query_params['query'])
     print(logs)
-    return Response(logs)
+
+    return Response(json.dumps(logs, default=json_util.default))
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated, IsAdminUser))
+@permission_required("create_alarm")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
 def create_alarm(request):
     log_service.alarm_engine.add_alarm(alarm_str="")
     return Response("")
 
 
 @api_view(['PUT'])
-@permission_classes((IsAuthenticated, IsAdminUser))
+@custom_permission_required("update_alarm")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
 def update_alarm(request):
     return Response("")
 
 
 @api_view(['DELETE'])
-@permission_classes((IsAuthenticated, IsAdminUser))
+@custom_permission_required("delete_alarm")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
 def delete_alarm(request):
     log_service.alarm_engine.remove_alarm(alarm_str="")
     return Response("")
 
 
 @api_view(['GET'])
-@permission_classes((IsAuthenticated,))
+@custom_permission_required("get_alarms")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarms(request):
     alarms = log_service.alarm_engine.alarms.items()
     return
 
 
 @api_view(['GET'])
-@permission_classes((IsAuthenticated,))
+@custom_permission_required("get_alarm_details")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarm_details(request):
     alarms = log_service.alarm_engine.alarms.get(kwargs="pk")
     return
 
 
 @api_view(['GET'])
-@permission_classes((IsAuthenticated,))
-def get_report_list(request):
+@custom_permission_required("get_alarm_analytics")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
+def get_alarm_analytics(request):
     return
 
 
 @api_view(['GET'])
-@permission_classes((IsAuthenticated,))
-def get_report(request):
+@custom_permission_required("get_log_analytics")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
+def get_log_analytics(request):
     return
 
-#
-# if __name__ == '__main__':
-#     print("Ovde sam 1")
-#     log_service_instance = LogService.get_instance()
-#     print("Ovde sam")
-#     print(log_service_instance)
-#     print("OVO JE TO")
-#     print(log_service_instance.find("severity=3"))
+
+@api_view(['GET'])
+def funkcija(request):
+    print("ovdi sam")
+    return Response(status=HTTP_200_OK)
 
 
-#
-# # Create your views here.
-# class HomePageView(TemplateView):
-#     def get(self, request, **kwargs):
-#         return render(request, 'index.html', context=None)
-#
-#
-# class LinksPageView(TemplateView):
-#     def get(self, request, **kwargs):
-#         return render(request, 'links.html', context=None)
+class UpdatePassword(APIView):
+    """
+    An endpoint for changing password.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def put(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            old_password = serializer.data.get("old_password")
+            if not self.object.check_password(old_password):
+                return Response({"old_password": ["Wrong password."]},
+                                status=HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response(status=HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+class ChangePasswordSerializer(Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = fields.CharField(max_length=20)
+    new_password = fields.CharField(max_length=20)
+
+    def validate_new_password(self, value):
+        validate_password(value)
+        return value

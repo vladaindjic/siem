@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     const perm = [];
-    //perm.push(LoggedUtils.getRole());
+    perm.push(LoggedUtils.getRole());
     this.permissionsService.loadPermissions(perm);
     this.permissionsService.permissions$.subscribe((permisios) => {
     });

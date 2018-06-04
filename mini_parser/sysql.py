@@ -1,11 +1,11 @@
 from parglare import Grammar, Parser
 # sa tackama
-# from .ir import ir_actions
-# from .mongo_backend import mongo_actions
+from .ir import ir_actions
+from .mongo_backend import mongo_actions
 
 # bez tacaka
-from ir import ir_actions
-from mongo_backend import mongo_actions
+# from ir import ir_actions
+# from mongo_backend import mongo_actions
 
 
 def build_grammar(file_path):
@@ -19,7 +19,9 @@ def build_parser(grammar, actions):
 
 
 def parse_sysql(sysql):
-    g = build_grammar('sysql.pg')
+    # g = build_grammar('sysql.pg')
+    g = build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
+
     p = build_parser(g, mongo_actions)
     template = "db.log.find(%s)"
     mongo_query = template % p.parse(sysql)
@@ -28,8 +30,8 @@ def parse_sysql(sysql):
 
 class SysqlMongoParser(object):
     def __init__(self, actions=mongo_actions):
-        # self.grammar = build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
-        self.grammar = build_grammar('sysql.pg')
+        self.grammar = build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
+        # self.grammar = build_grammar('sysql.pg')
         self.parser = build_parser(self.grammar, actions)
 
     def parse(self, sysql_str):
@@ -49,8 +51,8 @@ class SysqlMongoCompiler(object):
         return SysqlMongoCompiler.instance
 
     def __init__(self):
-        # self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
-        self.grammar = self.build_grammar('sysql.pg')
+        self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/sysql.pg')
+        # self.grammar = self.build_grammar('sysql.pg')
         self.parser = build_parser(self.grammar, ir_actions)
 
     def build_grammar(self, grammar_file_path):

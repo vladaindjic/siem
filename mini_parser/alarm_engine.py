@@ -1,10 +1,10 @@
 # sa tackama
-# from .alarm import AlarmCompiler
-# from dto.log_dto import Log
+from .alarm import AlarmCompiler
+from .dto.log_dto import Log
 
 # bez tacaka
-from alarm import AlarmCompiler
-from dto.log_dto import Log
+# from alarm import AlarmCompiler
+# from dto.log_dto import Log
 
 
 from json import loads

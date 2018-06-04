@@ -17,15 +17,15 @@ class MongoUtil(object):
         port = str(27017)
         database = "log-mongo"
         enabled = "true"
-        # ssl_certfile = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/sysqo.crt"
-        # ssl_keyfile = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/sysqo.key"
-        # ssl_pem_passphrase = "sysqo"
-        # ssl_ca_certs = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/ca.crt"
-
-        ssl_certfile = "certs/sysqo.crt"
-        ssl_keyfile = "certs/sysqo.key"
+        ssl_certfile = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/sysqo.crt"
+        ssl_keyfile = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/sysqo.key"
         ssl_pem_passphrase = "sysqo"
-        ssl_ca_certs = "certs/ca.crt"
+        ssl_ca_certs = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/ca.crt"
+
+        # ssl_certfile = "certs/sysqo.crt"
+        # ssl_keyfile = "certs/sysqo.key"
+        # ssl_pem_passphrase = "sysqo"
+        # ssl_ca_certs = "certs/ca.crt"
 
         self.client = pymongo.MongoClient("mongodb://" + username + ":" + password +
                                           "@" + host + ":" + port + "/?authSource=" + database

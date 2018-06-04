@@ -96,6 +96,12 @@ DATABASES = {
         'PASSWORD': 'sifra1',
         'HOST': 'localhost',
         'PORT': '3306',
+        # 'OPTIONS': {
+        #     'ssl': {'ca': '<PATH TO CA CERT>',
+        #             'cert': '<PATH TO CLIENT CERT>',
+        #             'key': '<PATH TO CLIENT KEY>'
+        #             }
+        # }
     }
 }
 

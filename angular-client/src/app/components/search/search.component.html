@@ -1,5 +1,5 @@
-<div *ngIf="logs" class="container" style="padding:3%">
-  <div *ngFor="let log of logs ; let i = index">
+<div *ngIf="logovi" class="container" style="padding:3%">
+  <div *ngFor="let log of logovi.logs ; let i = index">
     <div class="list-group-item list-group-item-info">
       <p>{{log.id}}</p>
       <p> {{log.line}}</p>
