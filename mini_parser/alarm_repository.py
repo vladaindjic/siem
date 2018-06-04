@@ -64,3 +64,39 @@ class AlarmRepository(object):
 
     def fire_alarm(self, alarm_fire):
         return self.alarm_fire_collection.insert_one(convert_alarm_fire_to_dict(alarm_fire))
+
+    def alarm_analytics(self, start_time, end_time, all_system, hosts):
+        match_time = {"timestamp": {"$gte": start_time, "$lte": end_time}}
+        if all_system:
+            match = match_time
+        else:
+            or_list_hostnames = []
+            for hostname in hosts:
+                or_list_hostnames.append({"hostname": hostname})
+            match_hostnames = {"$or": or_list_hostnames}
+            match = {"$and": [match_time, match_hostnames]}
+
+        group = {
+            "_id": {"hostname": "$hostname"},
+            "alarm_fires": {"$push": "$$ROOT"},
+            "count": {"$sum": 1}
+        }
+
+        aggregate_list = [
+            {
+                "$match": match
+            },
+            {
+                "$group": group
+            }
+        ]
+
+        print(aggregate_list)
+        aggregations = list(self.alarm_fire_collection.aggregate(aggregate_list))
+        count = 0
+        for ag_item in aggregations:
+            count += ag_item['count']
+        return {
+            'aggregations': aggregations,
+            'count': count
+        }
