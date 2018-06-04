@@ -17,6 +17,8 @@ export class LoggedUtils {
             return '[ADMIN]'
         } else if (JSON.parse(localStorage.getItem('loggedUser')).user.is_operator) {
             return '[OPERATOR]'
+        } else if (JSON.parse(localStorage.getItem('loggedUser')).user.is_superuser) {
+            return '[SUPERUSER]'
         }
         return null;
 
@@ -27,6 +29,7 @@ export class LoggedUtils {
     }
 
     static isEmpty() {
+        console.log(localStorage.getItem('loggedUser') === null)
         return localStorage.getItem('loggedUser') === null;
     }
 

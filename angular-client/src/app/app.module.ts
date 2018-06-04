@@ -54,7 +54,7 @@ const appRoutes: Routes = [
     ),
     ToastrModule.forRoot(),
     NgxPermissionsModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     LogService,
