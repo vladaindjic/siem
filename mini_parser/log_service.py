@@ -49,6 +49,9 @@ class LogService(object):
         # FIXME: nadji pametniji nacin da ovo sredis
         return self.log_repository.log_analytics(start_time, end_time, all_system, hosts)
 
+    def get_hostnames(self):
+        return self.log_repository.get_hostnames()
+
 
 if __name__ == '__main__':
     # query = "severity > 1 and severity < 3 ; limit(10), page(2), sort(hostname:asc, appname:desc)"
