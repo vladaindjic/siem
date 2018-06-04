@@ -22,10 +22,15 @@ class MongoUtil(object):
         # ssl_pem_passphrase = "sysqo"
         # ssl_ca_certs = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/ca.crt"
 
-        ssl_certfile = "certs/sysqo.crt"
-        ssl_keyfile = "certs/sysqo.key"
+        # ssl_certfile = "certs/sysqo.crt"
+        # ssl_keyfile = "certs/sysqo.key"
+        # ssl_pem_passphrase = "sysqo"
+        # ssl_ca_certs = "certs/ca.crt"
+
+        ssl_certfile = "../mini_parser/certs/sysqo.crt"
+        ssl_keyfile = "../mini_parser/certs/sysqo.key"
         ssl_pem_passphrase = "sysqo"
-        ssl_ca_certs = "certs/ca.crt"
+        ssl_ca_certs = "../mini_parser/certs/ca.crt"
 
         self.client = pymongo.MongoClient("mongodb://" + username + ":" + password +
                                           "@" + host + ":" + port + "/?authSource=" + database

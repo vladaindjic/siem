@@ -1,7 +1,17 @@
-from alarm_engine import AlarmEngine
-from dto.alarm_dto import AlarmDto
-from dto.alarm_fire import AlarmFireDto
-from alarm_repository import AlarmRepository
+# sa tackama
+from .alarm_engine import AlarmEngine
+from .dto.alarm_dto import AlarmDto
+from .dto.alarm_fire import AlarmFireDto
+from .alarm_repository import AlarmRepository
+
+
+# bez tacaka
+# from alarm_engine import AlarmEngine
+# from dto.alarm_dto import AlarmDto
+# from dto.alarm_fire import AlarmFireDto
+# from alarm_repository import AlarmRepository
+
+
 import re
 
 

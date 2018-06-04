@@ -6,10 +6,10 @@ from _thread import *
 import ssl
 
 # sa tackama
-# from .sysql import SysqlMongoCompiler
+from .sysql import SysqlMongoCompiler
 
 # bez tacaka
-from sysql import SysqlMongoCompiler
+# from sysql import SysqlMongoCompiler
 
 
 print_lock = threading.Lock()

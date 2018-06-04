@@ -1,15 +1,17 @@
 from parglare import Grammar, Parser
 # sa tackama
-# from .alarm_ir import alarm_ir_actions
+from .alarm_ir import alarm_ir_actions
 
 # bez tacaka
-from alarm_ir import alarm_ir_actions
+# from alarm_ir import alarm_ir_actions
 
 
 class AlarmCompiler(object):
     def __init__(self):
         # self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/alarm.pg')
-        self.grammar = self.build_grammar('alarm.pg')
+        # self.grammar = self.build_grammar('alarm.pg')
+        self.grammar = self.build_grammar('../mini_parser/alarm.pg')
+
         self.parser = self.build_parser(self.grammar, alarm_ir_actions)
 
     def build_grammar(self, grammar_file_path):

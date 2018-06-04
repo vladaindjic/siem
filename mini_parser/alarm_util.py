@@ -1,8 +1,8 @@
 # sa tackama
-# from .log_util import convert_log_to_dict
+from .log_util import convert_log_to_dict
 
 # bez tacaka
-from log_util import convert_log_to_dict
+# from log_util import convert_log_to_dict
 
 
 def convert_alarm_to_dict(alarm_dto):
