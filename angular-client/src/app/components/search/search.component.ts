@@ -20,7 +20,6 @@ export class SearchComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       let query = params['query'];
       this.logService.logSearch(query).subscribe((data) => {
-        console.log(data)
         this.logovi = data;
         this.logovi = JSON.parse(this.logovi)
       });

@@ -13,4 +13,8 @@ export class AuthenticationService {
     return this.http.post('/api/center/login', userLogin);
   }
 
+  changeUserPass(passWord){
+    return this.http.put('/api/center/change_password', passWord);
+  }
+
 }

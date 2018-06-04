@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { OnlyLoggedInGuardGuard } from './guards/only-logged-in.guard';
 import { AlreadyLoggedInGuard } from './guards/already-logged-in.guard';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const appRoutes: Routes = [
   {
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
   { path: 'login', component: AuthenticationComponent, canActivate: [AlreadyLoggedInGuard] },
   { path: 'home', component: HomepageComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'search', component: SearchComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'change_password', component: ChangePasswordComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: '**', component: NotFoundPageComponent }
 
 
@@ -42,6 +44,7 @@ const appRoutes: Routes = [
     HomepageComponent,
     NavbarComponent,
     SearchComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,

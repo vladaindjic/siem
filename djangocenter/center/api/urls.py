@@ -4,7 +4,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     url(r'^center/login$', obtain_jwt_token),
-    url(r'^center/change_password', views.UpdatePassword.as_view(), name="change_password"),
+    url(r'^center/change_password$', views.UpdatePassword.as_view(), name="change_password"),
     url(r'^center/find_logs', views.find_logs, name='find_logs'),
     url(r'^center/create_alarm', views.create_alarm, name='create_alarm'),
     url(r'^center/update_alarm', views.update_alarm, name='update_alarm'),

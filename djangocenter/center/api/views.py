@@ -128,29 +128,19 @@ class UpdatePassword(APIView):
 
     def put(self, request, *args, **kwargs):
         self.object = self.get_object()
-        serializer = ChangePasswordSerializer(data=request.data)
 
-        if serializer.is_valid():
-            # Check old password
-            old_password = serializer.data.get("old_password")
-            if not self.object.check_password(old_password):
-                return Response({"old_password": ["Wrong password."]},
-                                status=HTTP_400_BAD_REQUEST)
+        old_password = request.data.get("old_password")
+        new_password = request.data.get("new_password")
+        repeated_password = request.data.get("repeat_new_password")
+        if not self.object.check_password(old_password):
+            return Response({"old_password": ["Wrong password."]},
+                            status=HTTP_400_BAD_REQUEST)
             # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
-            return Response(status=HTTP_204_NO_CONTENT)
 
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+        if not new_password == repeated_password:
+            return Response({"old_password": ["Repeated Password doesn't match."]},
+                            status=HTTP_400_BAD_REQUEST)
 
-
-class ChangePasswordSerializer(Serializer):
-    """
-    Serializer for password change endpoint.
-    """
-    old_password = fields.CharField(max_length=20)
-    new_password = fields.CharField(max_length=20)
-
-    def validate_new_password(self, value):
-        validate_password(value)
-        return value
+        self.object.set_password(new_password)
+        self.object.save()
+        return Response('', status=HTTP_204_NO_CONTENT)

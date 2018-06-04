@@ -1,7 +1,46 @@
 <div *ngIf="logovi" class="container" style="padding:3%">
   <div *ngFor="let log of logovi.logs ; let i = index">
     <div class="list-group-item list-group-item-info">
-      <p>{{log.id}}</p>
-      <p> {{log.line}}</p>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Log {{log.id}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hostname: </td>
+            <td>{{log.hostname}}</td>
+          </tr>
+          <tr>
+            <td>appname: </td>
+            <td>{{log.appname}}</td>
+          </tr>
+          <tr>
+            <td>procid: </td>
+            <td>{{log.procid}}</td>
+          </tr>
+          <tr>
+            <td>msgid: </td>
+            <td>{{log.msgid}}</td>
+          </tr>
+          <tr>
+            <td>facility: </td>
+            <td>{{log.facility}}</td>
+          </tr>
+          <tr>
+            <td>severity: </td>
+            <td>{{log.severity}}</td>
+          </tr>
+          <tr>
+            <td>version: </td>
+            <td>{{log.version}}</td>
+          </tr>
+          <tr>
+            <td>msg: </td>
+            <td>{{log.msg}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
