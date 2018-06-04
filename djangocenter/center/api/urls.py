@@ -14,3 +14,7 @@ urlpatterns = [
     url(r'^center/get_report_list', views.get_report_list, name='get_report_list'),
     url(r'^center/get_report', views.get_report, name='get_report'),
 ]
+
+from mini_parser.log_server import LogServer
+from threading import Thread
+Thread(target=LogServer.get_instance().start_server).start()

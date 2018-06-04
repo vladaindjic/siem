@@ -43,6 +43,14 @@ MAX_THREAD_IN_POOL = 10
 
 
 class LogServer(object):
+    instance = None
+
+    @staticmethod
+    def get_instance():
+        if LogServer.instance is None:
+            LogServer.instance = LogServer()
+        return LogServer.instance
+
     def __init__(self,  host="", port=55555):
         self.host = host
         self.port = port
@@ -65,8 +73,8 @@ class LogServer(object):
         # in our case it is 12345 but it
         # can be anything
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s = ssl.wrap_socket(s, keyfile="certs/sysqo2.key", certfile="certs/sysqo.crt",
-                            server_side=True, cert_reqs=ssl.CERT_REQUIRED, ca_certs="certs/ca.crt",
+        s = ssl.wrap_socket(s, keyfile="../mini_parser/certs/sysqo2.key", certfile="../mini_parser/certs/sysqo.crt",
+                            server_side=True, cert_reqs=ssl.CERT_REQUIRED, ca_certs="../mini_parser/certs/ca.crt",
                             ssl_version=ssl.PROTOCOL_TLSv1_2)
         s.bind((self.host, self.port))
         print("socket binded to post", self.port)
@@ -107,7 +115,4 @@ def main():
 
 
 if __name__ == '__main__':
-    from alarm_service import AlarmService
-    # primaj i vidi sta ce se desiti
-    main()
-
+    LogServer.get_instance().start_server()
