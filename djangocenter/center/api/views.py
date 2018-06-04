@@ -30,8 +30,10 @@ from rest_framework.permissions import (
 
 sys.path.append("..")
 from mini_parser.log_service import LogService
+from mini_parser.alarm_service import AlarmService
 
 log_service = LogService.get_instance()
+alarm_service = AlarmService.get_instance()
 
 decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func: decorator(func, *args, **kwargs)
 
@@ -62,39 +64,35 @@ def find_logs(request):
 @permission_required("create_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def create_alarm(request):
-    log_service.alarm_engine.add_alarm(alarm_str="")
-    return Response("")
+    return alarm_service.add_alarm(alarm_str=request.data['query'])
 
 
 @api_view(['PUT'])
 @custom_permission_required("update_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def update_alarm(request):
-    return Response("")
+    return alarm_service.update_alarm(alarm_id=request.query_params['id'], alarm_str=request.data['query'])
 
 
 @api_view(['DELETE'])
 @custom_permission_required("delete_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def delete_alarm(request):
-    log_service.alarm_engine.remove_alarm(alarm_str="")
-    return Response("")
+    return alarm_service.delete_alarm(alarm_id=request.query_params['id'])
 
 
 @api_view(['GET'])
 @custom_permission_required("get_alarms")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarms(request):
-    alarms = log_service.alarm_engine.alarms.items()
-    return
+    return alarm_service.get_alarms()
 
 
 @api_view(['GET'])
 @custom_permission_required("get_alarm_details")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarm_details(request):
-    alarms = log_service.alarm_engine.alarms.get(kwargs="pk")
-    return
+    return alarm_service.get_alarm(alarm_id=request.query_params['id'])
 
 
 @api_view(['GET'])

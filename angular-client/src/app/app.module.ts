@@ -20,6 +20,9 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { OnlyLoggedInGuardGuard } from './guards/only-logged-in.guard';
 import { AlreadyLoggedInGuard } from './guards/already-logged-in.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AlarmsComponent } from './components/alarms/alarms.component';
+import { AlarmDetailsComponent } from './components/alarm-details/alarm-details.component';
+import { AlarmFormComponent } from './components/alarm-form/alarm-form.component';
 
 const appRoutes: Routes = [
   {
@@ -31,6 +34,9 @@ const appRoutes: Routes = [
   { path: 'home', component: HomepageComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'search', component: SearchComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'change_password', component: ChangePasswordComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'alarms', component: ChangePasswordComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'alarms/:idA', component: ChangePasswordComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'alarms/form', component: ChangePasswordComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: '**', component: NotFoundPageComponent }
 
 
@@ -45,6 +51,9 @@ const appRoutes: Routes = [
     NavbarComponent,
     SearchComponent,
     ChangePasswordComponent,
+    AlarmsComponent,
+    AlarmDetailsComponent,
+    AlarmFormComponent,
   ],
   imports: [
     BrowserModule,
