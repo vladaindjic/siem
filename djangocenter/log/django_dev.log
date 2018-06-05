@@ -60,3 +60,7 @@
 -- 2018-06-05T12:41:20.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
 -- 2018-06-05T12:41:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 6813
 -- 2018-06-05T12:41:38.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity=6 HTTP/1.1" 200 415654
+-- 2018-06-05T12:44:03.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T12:44:17.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 697172
+-- 2018-06-05T12:44:52.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T12:45:00.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 697172

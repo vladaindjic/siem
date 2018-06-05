@@ -10,6 +10,7 @@
 
 <div class="container" *ngIf="report" >
   <button class="btn btn-primary" style="margin: 3px" (click)='savePDF()'>Save Report As PDF</button>
+  <p>Ukupan broj logova za ovaj izvestaj: {{report.count}}</p>
     <table class="table">
         <thead>
           <tr>
