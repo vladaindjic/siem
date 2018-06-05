@@ -4,20 +4,20 @@ export class LoggedUtils {
         if (this.isEmpty()) {
             return '';
         }
-        console.log(JSON.parse(localStorage.getItem('loggedUser')));
-        return JSON.parse(localStorage.getItem('loggedUser')).token;
+        console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
+        return JSON.parse(sessionStorage.getItem('loggedUser')).token;
     }
 
     static getRole() {
         if (this.isEmpty()) {
             return null;
         }
-        console.log(JSON.parse(localStorage.getItem('loggedUser')));
-        if (JSON.parse(localStorage.getItem('loggedUser')).user.is_admin) {
+        console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
+        if (JSON.parse(sessionStorage.getItem('loggedUser')).user.is_admin) {
             return '[ADMIN]'
-        } else if (JSON.parse(localStorage.getItem('loggedUser')).user.is_operator) {
+        } else if (JSON.parse(sessionStorage.getItem('loggedUser')).user.is_operator) {
             return '[OPERATOR]'
-        } else if (JSON.parse(localStorage.getItem('loggedUser')).user.is_superuser) {
+        } else if (JSON.parse(sessionStorage.getItem('loggedUser')).user.is_superuser) {
             return '[SUPERUSER]'
         }
         return null;
@@ -25,24 +25,24 @@ export class LoggedUtils {
     }
 
     static clearLocalStorage() {
-        localStorage.clear();
+      sessionStorage.clear();
     }
 
     static isEmpty() {
-        console.log(localStorage.getItem('loggedUser') === null)
-        return localStorage.getItem('loggedUser') === null;
+        console.log(sessionStorage.getItem('loggedUser') === null)
+        return sessionStorage.getItem('loggedUser') === null;
     }
 
     static getUsername() {
-        return JSON.parse(localStorage.getItem('loggedUser')).user.username._text;
+        return JSON.parse(sessionStorage.getItem('loggedUser')).user.username._text;
     }
 
     static getUser() {
-        return JSON.parse(localStorage.getItem('loggedUser'));
+        return JSON.parse(sessionStorage.getItem('loggedUser'));
     }
 
     static getLoggedUser() {
-        return localStorage.getItem('loggedUser');
+        return sessionStorage.getItem('loggedUser');
 
     }
 

@@ -1,0 +1,96 @@
+-- 2018-06-05T02:39:03.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T02:40:00.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 460
+-- 2018-06-05T02:40:14.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 946
+-- 2018-06-05T02:40:40.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 1432
+-- 2018-06-05T02:40:44.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 1920
+-- 2018-06-05T02:41:02.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 2408
+-- 2018-06-05T02:42:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 2896
+-- 2018-06-05T02:42:39.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 3384
+-- 2018-06-05T02:42:49.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 3872
+-- 2018-06-05T02:43:00.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 4360
+-- 2018-06-05T02:43:07.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 4849
+-- 2018-06-05T02:43:11.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 5337
+-- 2018-06-05T02:43:17.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 5825
+-- 2018-06-05T02:43:36.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 6313
+-- 2018-06-05T02:45:09.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 6801
+-- 2018-06-05T02:49:58.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 7289
+-- 2018-06-05T02:51:03.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 7777
+-- 2018-06-05T02:52:08.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=hostname=/%5Evi3/ HTTP/1.1" 200 8265
+-- 2018-06-05T02:57:20.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T02:57:32.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity=2 HTTP/1.1" 200 30
+-- 2018-06-05T02:58:09.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity=3 HTTP/1.1" 200 30
+-- 2018-06-05T02:58:33.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity=6 HTTP/1.1" 200 8753
+-- 2018-06-05T02:58:59.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:01:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:01:38.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:05:35.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:06:51.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:07:12.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:07:54.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:08:35.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:09:20.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:09:46.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:10:32.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:10:49.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:11:29.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 58, in find_logs
+    logs = log_service.find(syslog_query=request.query_params['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 103, in compile
+    'mongo_query': optimized_ir.get_dict(),
+  File "../mini_parser/ir.py", line 384, in get_dict
+    return {self.property.get_dict(): self.value.get_dict()}
+  File "../mini_parser/ir.py", line 500, in get_dict
+    return self.eval()
+  File "../mini_parser/ir.py", line 503, in eval
+    return re.compile(self.value)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/re.py", line 224, in compile
+    return _compile(pattern, flags)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/re.py", line 293, in _compile
+    p = sre_compile.compile(pattern, flags)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_compile.py", line 536, in compile
+    p = sre_parse.parse(p, flags)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_parse.py", line 829, in parse
+    p = _parse_sub(source, pattern, 0)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_parse.py", line 437, in _parse_sub
+    itemsappend(_parse(source, state))
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_parse.py", line 545, in _parse
+    source.tell() - here)
+sre_constants.error: unterminated character set at position 2
+-- 2018-06-05T03:11:29.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5B.*/ HTTP/1.1" 500 22461
+-- 2018-06-05T03:11:32.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5C%5B.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:12:26.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5C%5B.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:12:52.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5C%5B.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:14:31.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5C%5B.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:14:53.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5C%5B.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:15:01.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*%5C%5B.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:15:14.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:15:31.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:15:54.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:16:18.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:16:59.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:17:13.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*/ HTTP/1.1" 200 8753
+-- 2018-06-05T03:29:59.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T03:30:14.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity=6 HTTP/1.1" 200 8753

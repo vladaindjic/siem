@@ -56,7 +56,7 @@ def custom_permission_required(function, perm):
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def find_logs(request):
     logs = log_service.find(syslog_query=request.query_params['query'])
-    print(logs)
+    print(logs) 
 
     return Response(json.dumps(logs, default=json_util.default))
 

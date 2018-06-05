@@ -240,3 +240,83 @@ JWT_AUTH = {
     'JWT_AUTH_COOKIE': None,
 
 }
+
+
+
+
+# Part for loggin
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%Y-%m-%dT%H:%M:%S.000+02:00'
+        },
+        'verbose': {
+
+            'format': '-- %(asctime)s vi3-Inspiron-5737 siem-center: <%(levelname)s>'
+                      ' [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
+            # 'format': '%(asctime)s %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
+            'datefmt': '%Y-%m-%dT%H:%M:%S.000+02:00'   # FIXME: not have support for timezone
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'development_logfile': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'log/django_dev.log', # Ovaj je sasvim dovoljan za sada
+            'formatter': 'verbose'
+        },
+        'production_logfile': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',  # TODO: pip install concurrent-log-handler
+            'filename': 'log/django_production.log',
+            'maxBytes': 1024*1024*100, # 100MB
+            'backupCount' : 5,
+            'formatter': 'simple'
+        },
+        'dba_logfile': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_false','require_debug_true'],
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': 'log/django_dba.log',
+            'formatter': 'simple'
+        },
+    },
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console'],
+    },
+    'loggers': {
+        'coffeehouse': {
+            'handlers': ['development_logfile','production_logfile'],
+         },
+        'dba': {
+            'handlers': ['dba_logfile'],
+        },
+        'django': {
+            'handlers': ['development_logfile','production_logfile'],
+        },
+        'py.warnings': {
+            'handlers': ['development_logfile'],
+        },
+    }
+}
+
