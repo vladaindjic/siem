@@ -30,8 +30,10 @@ from rest_framework.permissions import (
 
 sys.path.append("..")
 from mini_parser.log_service import LogService
+from mini_parser.alarm_service import AlarmService
 
 log_service = LogService.get_instance()
+alarm_service = AlarmService.get_instance()
 
 decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func: decorator(func, *args, **kwargs)
 
@@ -39,6 +41,7 @@ decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func
 @decorator_with_arguments
 def custom_permission_required(function, perm):
     def _function(request, *args, **kwargs):
+        print(request.user.get_group_permissions())
         if "center." + perm in request.user.get_group_permissions():
             return function(request, *args, **kwargs)
         else:
@@ -59,42 +62,37 @@ def find_logs(request):
 
 
 @api_view(['POST'])
-@permission_required("create_alarm")
+@custom_permission_required("create_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def create_alarm(request):
-    log_service.alarm_engine.add_alarm(alarm_str="")
-    return Response("")
+    from mini_parser.alarm_util import convert_alarm_to_dict
+    alarm = alarm_service.add_alarm(alarm_str=request.data['query'])
+    return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)
 
 
 @api_view(['PUT'])
 @custom_permission_required("update_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
-def update_alarm(request):
-    return Response("")
+def update_alarm(request, idA):
+    from mini_parser.dto.alarm_dto import AlarmDto
+    from mini_parser.alarm_util import convert_alarm_to_dict
+    alarm = alarm_service.update_alarm(alarm_dto=AlarmDto(query=request.data['query']), alarm_id=idA)
+    return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)
 
 
 @api_view(['DELETE'])
 @custom_permission_required("delete_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
-def delete_alarm(request):
-    log_service.alarm_engine.remove_alarm(alarm_str="")
-    return Response("")
+def delete_alarm(request, idA):
+    alarm_service.delete_alarm(alarm_id=idA)
+    return Response('', HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
 @custom_permission_required("get_alarms")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarms(request):
-    alarms = log_service.alarm_engine.alarms.items()
-    return
-
-
-@api_view(['GET'])
-@custom_permission_required("get_alarm_details")
-@permission_classes((IsAuthenticated, HasGroupPermission,))
-def get_alarm_details(request):
-    alarms = log_service.alarm_engine.alarms.get(kwargs="pk")
-    return
+    return Response(json.dumps(alarm_service.get_alarms(), default=json_util.default), HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -128,29 +126,19 @@ class UpdatePassword(APIView):
 
     def put(self, request, *args, **kwargs):
         self.object = self.get_object()
-        serializer = ChangePasswordSerializer(data=request.data)
 
-        if serializer.is_valid():
-            # Check old password
-            old_password = serializer.data.get("old_password")
-            if not self.object.check_password(old_password):
-                return Response({"old_password": ["Wrong password."]},
-                                status=HTTP_400_BAD_REQUEST)
+        old_password = request.data.get("old_password")
+        new_password = request.data.get("new_password")
+        repeated_password = request.data.get("repeat_new_password")
+        if not self.object.check_password(old_password):
+            return Response({"old_password": ["Wrong password."]},
+                            status=HTTP_400_BAD_REQUEST)
             # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
-            return Response(status=HTTP_204_NO_CONTENT)
 
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+        if not new_password == repeated_password:
+            return Response({"old_password": ["Repeated Password doesn't match."]},
+                            status=HTTP_400_BAD_REQUEST)
 
-
-class ChangePasswordSerializer(Serializer):
-    """
-    Serializer for password change endpoint.
-    """
-    old_password = fields.CharField(max_length=20)
-    new_password = fields.CharField(max_length=20)
-
-    def validate_new_password(self, value):
-        validate_password(value)
-        return value
+        self.object.set_password(new_password)
+        self.object.save()
+        return Response('', status=HTTP_204_NO_CONTENT)

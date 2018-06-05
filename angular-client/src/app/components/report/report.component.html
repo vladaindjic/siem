@@ -1,0 +1,20 @@
+<div class="card text-center" style="margin-top: 3%">
+    <div class="card-header">
+      <ul class="nav nav-pills card-header-pills">
+        <li class="nav-item">
+          <a class="nav-link" (click)="togleReports('logReports')">Log Report</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="togleReports('alarmReports')">Alarm Report</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  (click)="togleReports('customReports')">Custom Report</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <app-log-report *ngIf="show=='logReports'"></app-log-report>
+      <app-alarm-report *ngIf="show=='alarmReports'"></app-alarm-report>
+      <app-custom-report *ngIf="show=='customReports'"></app-custom-report>
+    </div>
+  </div>
