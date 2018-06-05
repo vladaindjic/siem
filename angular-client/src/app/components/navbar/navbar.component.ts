@@ -41,8 +41,8 @@ export class NavbarComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       let query = params['query'];
-      console.log("EVO STA SAM PROCITAO", query);
       this.searchService.setQuery(query);
+      this.searchForm.controls['query'].setValue(query);
     })
 
   }
