@@ -118,10 +118,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
         'OPTIONS': {
-            'ssl': {'ca': '../mini_parser/certs/ca.crt',
-                    'cert': '../mini_parser/certs/sysqo.crt',
-                    'key': '../mini_parser/certs/sysqo2.key'
-                    }
+             'sslmode': 'require',
         }
     }
 }

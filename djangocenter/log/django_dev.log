@@ -1,0 +1,1291 @@
+-- 2018-06-05T11:49:42.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/login
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/postgresql/base.py", line 168, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/psycopg2/__init__.py", line 129, in connect
+    dsn = _ext.make_dsn(dsn, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/psycopg2/extensions.py", line 177, in make_dsn
+    parse_dsn(dsn)
+psycopg2.ProgrammingError: invalid dsn: invalid connection option "ssl"
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework_jwt/views.py", line 57, in post
+    if serializer.is_valid():
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/serializers.py", line 236, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/serializers.py", line 437, in run_validation
+    value = self.validate(value)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework_jwt/serializers.py", line 50, in validate
+    user = authenticate(**credentials)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 70, in authenticate
+    user = _authenticate_with_backend(backend, backend_path, request, credentials)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 116, in _authenticate_with_backend
+    return backend.authenticate(*args, **credentials)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/contrib/auth/backends.py", line 16, in authenticate
+    user = UserModel._default_manager.get_by_natural_key(username)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/contrib/auth/base_user.py", line 44, in get_by_natural_key
+    return self.get(**{self.model.USERNAME_FIELD: username})
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/models/query.py", line 397, in get
+    num = len(clone)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/models/query.py", line 254, in __len__
+    self._fetch_all()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/models/query.py", line 1179, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/models/query.py", line 53, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/models/sql/compiler.py", line 1066, in execute_sql
+    cursor = self.connection.cursor()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/db/backends/postgresql/base.py", line 168, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/psycopg2/__init__.py", line 129, in connect
+    dsn = _ext.make_dsn(dsn, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/psycopg2/extensions.py", line 177, in make_dsn
+    parse_dsn(dsn)
+django.db.utils.ProgrammingError: invalid dsn: invalid connection option "ssl"
+
+-- 2018-06-05T11:49:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "POST /center/login HTTP/1.1" 500 25926
+-- 2018-06-05T11:52:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T11:52:45.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 4
+-- 2018-06-05T11:52:52.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/create_alarm HTTP/1.1" 200 82
+-- 2018-06-05T11:52:52.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T11:53:07.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T11:53:09.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T11:53:24.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/change_password HTTP/1.1" 204 2
+-- 2018-06-05T11:53:35.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T11:53:37.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T11:53:44.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity=3 HTTP/1.1" 200 30
+-- 2018-06-05T11:57:47.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T11:57:48.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 401 0
+-- 2018-06-05T11:57:49.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 500 59
+-- 2018-06-05T11:57:51.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 401 0
+-- 2018-06-05T11:57:51.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 500 59
+-- 2018-06-05T11:58:01.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_alarm_analytics HTTP/1.1" 200 6852
+-- 2018-06-05T11:58:43.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 401 0
+-- 2018-06-05T11:58:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 500 59
+-- 2018-06-05T11:58:59.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 126172
+-- 2018-06-05T11:59:15.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 401 0
+-- 2018-06-05T11:59:15.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 500 59
+-- 2018-06-05T11:59:23.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_alarm_analytics HTTP/1.1" 200 15282
+-- 2018-06-05T12:00:30.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "POST /center/login HTTP/1.1" 400 68
+-- 2018-06-05T12:00:36.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T12:00:44.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 401 0
+-- 2018-06-05T12:00:44.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 500 59
+-- 2018-06-05T12:03:31.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 401 5101
+-- 2018-06-05T12:07:22.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "POST /center/login HTTP/1.1" 400 68
+-- 2018-06-05T12:07:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T12:07:29.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T12:07:31.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T12:07:42.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 7612
+-- 2018-06-05T12:08:05.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T12:08:11.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T12:08:14.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 533414
+-- 2018-06-05T12:08:15.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 533414
+-- 2018-06-05T12:08:15.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 533414
+-- 2018-06-05T12:08:18.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T12:08:25.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T12:08:32.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T12:08:46.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T12:09:13.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 540989
+-- 2018-06-05T14:36:19.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T14:37:09.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T14:38:10.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T14:38:12.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T14:38:15.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T14:38:25.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_alarm_analytics HTTP/1.1" 200 48625
+-- 2018-06-05T14:38:47.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T14:38:51.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T14:38:58.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from.*/ HTTP/1.1" 200 610370
+-- 2018-06-05T14:39:52.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cd+%5C.%5Cd+%5C.%5Cd+%5C.%5Cd+%5C..*/ HTTP/1.1" 200 30
+-- 2018-06-05T14:40:09.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from%5C:%5Cd+%5C.%5Cd+%5C.%5Cd+%5C.%5Cd+%5C..*/ HTTP/1.1" 200 30
+-- 2018-06-05T14:40:26.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from.*/ HTTP/1.1" 200 754029
+-- 2018-06-05T14:40:43.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from%5C:%5Cd+.*/ HTTP/1.1" 200 30
+-- 2018-06-05T14:41:22.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from%5C:%5Cw+.*/ HTTP/1.1" 200 30
+-- 2018-06-05T14:42:15.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cw+.*/ HTTP/1.1" 200 30
+-- 2018-06-05T14:43:12.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cw%5C+.*/ HTTP/1.1" 200 30
+-- 2018-06-05T14:43:24.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cw*.*/ HTTP/1.1" 200 1024603
+-- 2018-06-05T14:44:15.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T14:44:16.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "DELETE /center/delete_alarm/5b165d74ece47a20161476d8 HTTP/1.1" 204 2
+-- 2018-06-05T14:44:19.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cw*.*/ HTTP/1.1" 200 1113643
+-- 2018-06-05T14:44:36.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/%5Cw+/ HTTP/1.1" 200 1162545
+-- 2018-06-05T14:44:46.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/asdasdads%5Cw+/ HTTP/1.1" 200 30
+-- 2018-06-05T14:46:10.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/%5Cs+/ HTTP/1.1" 200 30
+-- 2018-06-05T14:46:49.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/%5Cs+/ HTTP/1.1" 200 30
+-- 2018-06-05T14:50:30.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/%5Cs*/ HTTP/1.1" 200 1286499
+-- 2018-06-05T14:50:38.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/%5Cs+/ HTTP/1.1" 200 30
+-- 2018-06-05T14:53:22.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/%5Cs*/ HTTP/1.1" 200 1286499
+-- 2018-06-05T14:53:50.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.from:%5B0-9%5D/ HTTP/1.1" 200 30
+-- 2018-06-05T14:54:03.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D/ HTTP/1.1" 200 1269389
+-- 2018-06-05T14:54:11.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D+/ HTTP/1.1" 200 30
+-- 2018-06-05T14:54:22.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 58, in find_logs
+    logs = log_service.find(syslog_query=request.query_params['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 348, in parse
+    result = self._call_shift_action(symbol, ntok.value, context)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 579, in _call_shift_action
+    result = sem_action(context, matched_str)
+  File "../mini_parser/ir.py", line 938, in <lambda>
+    "REG_EXPR": lambda _, value: RegVal(value),
+  File "../mini_parser/ir.py", line 492, in __init__
+    self.category_resolver = self.is_categorical()
+  File "../mini_parser/ir.py", line 519, in is_categorical
+    return CategoryResolver(re.compile(left_reg), re.compile(category_reg), re.compile(right_reg))
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/re.py", line 224, in compile
+    return _compile(pattern, flags)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/re.py", line 293, in _compile
+    p = sre_compile.compile(pattern, flags)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_compile.py", line 536, in compile
+    p = sre_parse.parse(p, flags)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_parse.py", line 829, in parse
+    p = _parse_sub(source, pattern, 0)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_parse.py", line 437, in _parse_sub
+    itemsappend(_parse(source, state))
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/sre_parse.py", line 638, in _parse
+    source.tell() - here + len(this))
+sre_constants.error: nothing to repeat at position 0
+-- 2018-06-05T14:54:22.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%7B1,%203%7D/ HTTP/1.1" 500 23600
+-- 2018-06-05T14:55:35.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%5B0-9%5D?%5B0-9%5D?/ HTTP/1.1" 200 1269389
+-- 2018-06-05T15:32:35.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T15:32:39.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%5B0-9%5D?%5B0-9%5D?/ HTTP/1.1" 200 1269389
+-- 2018-06-05T15:32:52.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%7B1,%202%7D/ HTTP/1.1" 200 30
+-- 2018-06-05T15:33:02.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%7B1,%202%7D/ HTTP/1.1" 200 30
+-- 2018-06-05T15:33:22.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%7B1,3%7D.*/ HTTP/1.1" 200 1269389
+-- 2018-06-05T15:33:42.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5B0-9%5D%7B1,3%7D%5C.%5B0-9%5D%7B1,3%7D%5C.%5B0-9%5D%7B1,3%7D%5C.%5B0-9%5D%7B1,3%7D.*/ HTTP/1.1" 200 1269389
+-- 2018-06-05T15:33:59.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 4
+-- 2018-06-05T15:34:06.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T15:34:06.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 4
+-- 2018-06-05T15:34:21.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T15:34:23.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 4
+-- 2018-06-05T15:34:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/create_alarm HTTP/1.1" 200 145
+-- 2018-06-05T15:34:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 147
+-- 2018-06-05T15:34:43.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/update_alarm/5b169164ece47a30c4c5c6f5 HTTP/1.1" 200 156
+-- 2018-06-05T15:37:06.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/update_alarm/5b169164ece47a30c4c5c6f5 HTTP/1.1" 200 155
+-- 2018-06-05T15:38:03.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T15:38:11.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_log_analytics HTTP/1.1" 200 1537412
+-- 2018-06-05T15:39:34.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T15:39:42.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_alarm_analytics HTTP/1.1" 200 85453
+-- 2018-06-05T15:40:57.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_alarm_analytics HTTP/1.1" 200 38
+-- 2018-06-05T15:43:03.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T15:43:06.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 4
+-- 2018-06-05T15:43:13.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/create_alarm HTTP/1.1" 200 145
+-- 2018-06-05T15:43:13.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 147
+-- 2018-06-05T15:43:30.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/update_alarm/5b169371ece47a338b8e9eab HTTP/1.1" 200 155
+-- 2018-06-05T15:55:36.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/update_alarm/undefined
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 79, in update_alarm
+    alarm = alarm_service.update_alarm(alarm_dto=AlarmDto(query=request.data['query']), alarm_id=idA)
+  File "../mini_parser/alarm_service.py", line 72, in update_alarm
+    old_alarm_dict, updated_value = self.alarm_repository.update_alarm(alarm_id, alarm_dto)
+  File "../mini_parser/alarm_repository.py", line 55, in update_alarm
+    alarm_dto_old = self.get_alarm(alarm_id)
+  File "../mini_parser/alarm_repository.py", line 30, in get_alarm
+    return self.alarm_collection.find_one(filter={'_id': ObjectId(alarm_id)})
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/bson/objectid.py", line 110, in __init__
+    self.__validate(oid)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/bson/objectid.py", line 206, in __validate
+    _raise_invalid_id(oid)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/bson/objectid.py", line 52, in _raise_invalid_id
+    " or a 24-character hex string" % oid)
+bson.errors.InvalidId: 'undefined' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string
+-- 2018-06-05T15:55:36.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/update_alarm/undefined HTTP/1.1" 500 22731
+-- 2018-06-05T15:55:44.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T15:55:47.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 157
+-- 2018-06-05T15:55:49.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "DELETE /center/delete_alarm/5b169371ece47a338b8e9eab HTTP/1.1" 204 2
+-- 2018-06-05T15:55:55.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/create_alarm
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 69, in create_alarm
+    alarm = alarm_service.add_alarm(alarm_str=request.data['query'])
+  File "../mini_parser/alarm_service.py", line 42, in add_alarm
+    alarm_in_engine = self.alarm_engine.add_alarm(alarm_str)
+  File "../mini_parser/alarm_engine.py", line 28, in add_alarm
+    raise KeyError("The same alaram already exists")
+KeyError: 'The same alaram already exists'
+-- 2018-06-05T15:55:55.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "POST /center/create_alarm HTTP/1.1" 500 21894
+-- 2018-06-05T15:58:11.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T15:58:13.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 4
+-- 2018-06-05T15:58:19.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/create_alarm HTTP/1.1" 200 82
+-- 2018-06-05T15:58:19.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T15:58:32.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/update_alarm/5b1696fbece47a3677c37527 HTTP/1.1" 200 92
+-- 2018-06-05T15:58:33.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "DELETE /center/delete_alarm/5b1696fbece47a3677c37527 HTTP/1.1" 204 2
+-- 2018-06-05T15:58:41.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/create_alarm HTTP/1.1" 200 82
+-- 2018-06-05T15:58:41.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T15:59:09.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 15
+-- 2018-06-05T15:59:18.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_hosts HTTP/1.1" 200 35
+-- 2018-06-05T15:59:27.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/get_alarm_analytics HTTP/1.1" 200 3797
+-- 2018-06-05T16:00:17.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=severity%20=%203 HTTP/1.1" 200 4816
+-- 2018-06-05T16:01:06.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 84
+-- 2018-06-05T19:25:36.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T19:25:54.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:25:55.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from.*/ HTTP/1.1" 500 91923
+-- 2018-06-05T19:26:49.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:26:49.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cd+.*/ HTTP/1.1" 500 91984
+-- 2018-06-05T19:30:07.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:30:07.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cd+.*/ HTTP/1.1" 500 91984
+-- 2018-06-05T19:30:53.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:30:53.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cd+.*/ HTTP/1.1" 500 91984
+-- 2018-06-05T19:31:21.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'query'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 60, in find_logs
+    print(request.query_params['query'])
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'query'
+-- 2018-06-05T19:31:21.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 22002
+-- 2018-06-05T19:32:41.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'query'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 60, in find_logs
+    print(request.query_params['query'])
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'query'
+-- 2018-06-05T19:32:41.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 22002
+-- 2018-06-05T19:34:34.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'query'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 60, in find_logs
+    print(request.query_params['query'])
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'query'
+-- 2018-06-05T19:34:35.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 22002
+-- 2018-06-05T19:35:01.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:35:02.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 91466
+-- 2018-06-05T19:38:39.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:38:39.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 91466
+-- 2018-06-05T19:44:12.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:44:12.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 91466
+-- 2018-06-05T19:47:02.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 485, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 400, in finalize_response
+    % type(response)
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+-- 2018-06-05T19:47:03.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 91466
+-- 2018-06-05T19:49:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 60, in find_logs
+    print(request.META['sysqlQuery'])
+KeyError: 'sysqlQuery'
+-- 2018-06-05T19:49:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs HTTP/1.1" 500 21543
+-- 2018-06-05T20:12:23.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T20:12:27.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from.*/ HTTP/1.1" 200 30
+-- 2018-06-05T20:12:50.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T20:13:17.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from:%5Cd+.*/ HTTP/1.1" 200 30
+-- 2018-06-05T20:14:10.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=msg=/.*from.*/ HTTP/1.1" 200 58413
+-- 2018-06-05T20:14:17.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 58, in find_logs
+    logs = log_service.find(syslog_query=request.query_params['query'])
+  File "../mini_parser/log_service.py", line 38, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:14:17.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "GET /center/find_logs?query= HTTP/1.1" 500 22404
+-- 2018-06-05T20:21:47.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:21:47.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22431
+-- 2018-06-05T20:22:02.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 86716
+-- 2018-06-05T20:22:12.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 86716
+-- 2018-06-05T20:22:27.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 86716
+-- 2018-06-05T20:22:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,25 => "\..*/ and *hostanme=/". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:22:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22521
+-- 2018-06-05T20:23:04.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 86716
+-- 2018-06-05T20:23:41.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 111380
+-- 2018-06-05T20:23:45.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 117380
+-- 2018-06-05T20:24:22.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:24:22.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22479
+-- 2018-06-05T20:27:51.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:27:52.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22479
+-- 2018-06-05T20:28:48.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:28:48.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22479
+-- 2018-06-05T20:29:29.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 58, in find_logs
+    print("OVO MI JE STIGLOOOOOOOOO: %s" % request.data['query'])
+KeyError: 'query'
+-- 2018-06-05T20:29:29.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 21650
+-- 2018-06-05T20:29:34.000+02:00 vi3-Inspiron-5737 siem-center: <WARNING> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 415 62
+-- 2018-06-05T20:30:10.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:30:10.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22431
+-- 2018-06-05T20:30:20.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 677005
+-- 2018-06-05T20:30:39.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:30:39.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22432
+-- 2018-06-05T20:31:34.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:31:34.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22432
+-- 2018-06-05T20:32:03.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:32:03.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22432
+-- 2018-06-05T20:32:22.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 40810
+-- 2018-06-05T20:32:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:32:43.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:33:51.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:33:51.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:35:05.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:35:05.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:35:09.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:35:09.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:36:48.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:36:48.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:37:00.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:37:00.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:37:08.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 690429
+-- 2018-06-05T20:37:13.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:37:13.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22431
+-- 2018-06-05T20:38:51.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:38:51.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22431
+-- 2018-06-05T20:39:01.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 40810
+-- 2018-06-05T20:39:06.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.request.handle_uncaught_exception:118] Internal Server Error: /center/find_logs
+Traceback (most recent call last):
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 483, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 443, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/views.py", line 480, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 46, in _function
+    return function(request, *args, **kwargs)
+  File "/home/vi3/Faks/Bezbednost/siem/djangocenter/center/api/views.py", line 59, in find_logs
+    logs = log_service.find(syslog_query=request.data['query'])
+  File "../mini_parser/log_service.py", line 37, in find
+    compiled_query = self.sysql_compiler.compile(syslog_query)
+  File "../mini_parser/sysql.py", line 90, in compile
+    ir_representation_and_header = self.parse(query)
+  File "../mini_parser/sysql.py", line 71, in parse
+    return self.parser.parse(query)
+  File "/home/vi3/Faks/Bezbednost/python3_virtual/lib/python3.5/site-packages/parglare/parser.py", line 295, in parse
+    nomatch_error(actions.keys()))
+parglare.exceptions.ParseError: Error at position 1,0 => "*". Expected: AFTER or APPNAME or AT or BEFORE or FACILITY or HOSTNAME or LAST or LPAREN or MSG or MSGID or PROCID or SEVERITY or VERSION or not_op
+-- 2018-06-05T20:39:06.000+02:00 vi3-Inspiron-5737 siem-center: <ERROR> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 500 22423
+-- 2018-06-05T20:48:01.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 40810
+-- 2018-06-05T20:48:17.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 40810
+-- 2018-06-05T20:48:33.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 5444
+-- 2018-06-05T20:48:39.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 5444
+-- 2018-06-05T20:48:43.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 5444
+-- 2018-06-05T20:48:51.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 5444
+-- 2018-06-05T20:49:04.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 689945
+-- 2018-06-05T20:49:11.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/find_logs HTTP/1.1" 200 689945

@@ -51,13 +51,12 @@ def custom_permission_required(function, perm):
     return _function
 
 
-@api_view(['GET'])
+@api_view(['PUT'])
 @custom_permission_required("find_logs")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def find_logs(request):
-    logs = log_service.find(syslog_query=request.query_params['query'])
-    print(logs) 
-
+    print("OVO MI JE STIGLOOOOOOOOO: %s" % request.data['query'])
+    logs = log_service.find(syslog_query=request.data['query'])
     return Response(json.dumps(logs, default=json_util.default))
 
 
