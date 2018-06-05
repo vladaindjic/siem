@@ -41,6 +41,7 @@ decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func
 @decorator_with_arguments
 def custom_permission_required(function, perm):
     def _function(request, *args, **kwargs):
+        print(request.user.get_group_permissions())
         if "center." + perm in request.user.get_group_permissions():
             return function(request, *args, **kwargs)
         else:
@@ -61,38 +62,37 @@ def find_logs(request):
 
 
 @api_view(['POST'])
-@permission_required("create_alarm")
+@custom_permission_required("create_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def create_alarm(request):
-    return alarm_service.add_alarm(alarm_str=request.data['query'])
+    from mini_parser.alarm_util import convert_alarm_to_dict
+    alarm = alarm_service.add_alarm(alarm_str=request.data['query'])
+    return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)
 
 
 @api_view(['PUT'])
 @custom_permission_required("update_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
-def update_alarm(request):
-    return alarm_service.update_alarm(alarm_id=request.query_params['id'], alarm_str=request.data['query'])
+def update_alarm(request, idA):
+    from mini_parser.dto.alarm_dto import AlarmDto
+    from mini_parser.alarm_util import convert_alarm_to_dict
+    alarm = alarm_service.update_alarm(alarm_dto=AlarmDto(query=request.data['query']), alarm_id=idA)
+    return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)
 
 
 @api_view(['DELETE'])
 @custom_permission_required("delete_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
-def delete_alarm(request):
-    return alarm_service.delete_alarm(alarm_id=request.query_params['id'])
+def delete_alarm(request, idA):
+    alarm_service.delete_alarm(alarm_id=idA)
+    return Response('', HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
 @custom_permission_required("get_alarms")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarms(request):
-    return alarm_service.get_alarms()
-
-
-@api_view(['GET'])
-@custom_permission_required("get_alarm_details")
-@permission_classes((IsAuthenticated, HasGroupPermission,))
-def get_alarm_details(request):
-    return alarm_service.get_alarm(alarm_id=request.query_params['id'])
+    return Response(json.dumps(alarm_service.get_alarms(), default=json_util.default), HTTP_200_OK)
 
 
 @api_view(['GET'])

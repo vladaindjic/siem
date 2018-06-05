@@ -35,7 +35,9 @@ class AlarmService(object):
         alarm_in_db = self.alarm_repository.add_alarm(alarm_dto)
         alarm_in_engine.set_alarm_str(alarm_str)
         alarm_in_engine.set_alarm_id(alarm_in_db.inserted_id)
-        return alarm_in_db
+        # vrac objekat
+        alarm_dto._id = alarm_in_db.inserted_id
+        return alarm_dto
 
     def get_alarm(self, alarm_id):
         return self.alarm_repository.get_alarm(alarm_id)
@@ -52,6 +54,8 @@ class AlarmService(object):
         self.alarm_engine.remove_alarm(old_alarm_dict['query'])
 
     def update_alarm(self, alarm_id, alarm_dto):
+        print("JEBEM LI TI OCA: %s" % alarm_dto.query)
+        alarm_dto.query = re.sub("\s+", " ", alarm_dto.query)
         # update alarma bi znacilo njegovo brisanje, pa ponovno dodavanjem
         # dodamo novi u engine
         self.alarm_engine.add_alarm(alarm_dto.query)
