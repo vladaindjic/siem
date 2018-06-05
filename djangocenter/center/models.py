@@ -13,5 +13,5 @@ class Permisije(models.Model):
             ('get_alarm_details', 'Get Alarm Details'),
             ('get_log_analytics', 'Get Log Analytics'),
             ('get_alarm_analytics', 'Get Alarm Analytics'),
-
+            ('get_hosts', 'Get Hosts'),
         )

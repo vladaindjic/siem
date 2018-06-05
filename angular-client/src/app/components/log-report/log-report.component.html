@@ -29,3 +29,29 @@
   </span>
   <button type="button" class="btn btn-primary" (click)="getReport()">Get Report</button>
   </div>
+
+  <div class="container" *ngIf="report" style="width: 100%">
+        <button class="btn btn-primary" style="margin: 3px" (click)='savePDF()'>Save Report As PDF</button>
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">appname</th>
+                  <th scope="col">facility</th>
+                  <th scope="col">hostname</th>
+                  <th scope="col">severity</th>
+                  <th scope="col">timestamp</th>
+                  <th scope="col">msg</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let log of report.logs">
+                  <td>{{log.appname}}</td>
+                  <td>{{log.facility}}</td>
+                  <td>{{log.hostname}}</td>
+                  <td>{{log.severity}}</td>
+                  <td>{{log.timestamp.$date|date: "yyyy-MM-ddTHH:mm:ss.SSSZZZZZ"}}</td>
+                  <td>{{log.msg}}</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>

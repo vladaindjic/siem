@@ -95,19 +95,36 @@ def get_alarms(request):
     return Response(json.dumps(alarm_service.get_alarms(), default=json_util.default), HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['PUT'])
 @custom_permission_required("get_alarm_analytics")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_alarm_analytics(request):
-    return
+    data = request.data
+    startTime = data['startTime']
+    endTime = data['endTime']
+    all = data['all']
+    hosts = data['hosts']
+    print(startTime)
+    return Response(json.dumps(alarm_service.alarm_analytics(startTime,endTime,all,hosts), default=json_util.default),HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['PUT'])
 @custom_permission_required("get_log_analytics")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def get_log_analytics(request):
-    return
+    data = request.data
+    startTime = data['startTime']
+    endTime = data['endTime']
+    all = data['all']
+    hosts = data['hosts']
+    # print(data)
+    return Response(json.dumps(log_service.log_analytics(startTime, endTime, all, hosts), default=json_util.default),HTTP_200_OK)
 
+@api_view(['GET'])
+@custom_permission_required("get_hosts")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
+def get_hosts(request):
+    return Response(log_service.get_hostnames())
 
 @api_view(['GET'])
 def funkcija(request):

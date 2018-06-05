@@ -13,4 +13,20 @@ export class LogService {
     return this.http.get(url,{params:params});
   }
 
+  getHosts(){
+    const url = '/api/center/get_hosts';
+    return this.http.get(url);
+  }
+
+
+  getAlarmAnalytics(data){
+    const url = 'api/center/get_alarm_analytics';
+    return this.http.put(url,data); 
+  }
+
+  getLogAnalytics(data){
+    const url = 'api/center/get_log_analytics';
+    return this.http.put(url,data); 
+  }
+
 }

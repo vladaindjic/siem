@@ -53,12 +53,13 @@ class Command(BaseCommand):
         get_alarm_details = Permission.objects.get(name="Get Alarm Details")
         get_log_analytics = Permission.objects.get(name="Get Log Analytics")
         get_alarm_analytics = Permission.objects.get(name="Get Alarm Analytics")
+        get_hosts = Permission.objects.get(name="Get Hosts")
 
         admins.permissions.add(get_logs, create_alarm, update_alarm, delete_alarm, get_alarms, get_alarm_details,
-                               get_alarm_analytics, get_log_analytics)
+                               get_alarm_analytics, get_log_analytics, get_hosts)
 
         operators.permissions.add(get_logs, get_alarms, get_alarm_details,
-                                  get_alarm_analytics, get_log_analytics)
+                                  get_alarm_analytics, get_log_analytics, get_hosts)
 
     def handle(self, *args, **options):
         self.create_users()

@@ -1,4 +1,4 @@
-<div class="card text-center" style="margin-top: 3%">
+<div *ngIf="noReportToShow" class="card text-center" style="margin-top: 3%">
     <div class="card-header">
       <ul class="nav nav-pills card-header-pills">
         <li class="nav-item">
@@ -16,5 +16,6 @@
       <app-log-report *ngIf="show=='logReports'"></app-log-report>
       <app-alarm-report *ngIf="show=='alarmReports'"></app-alarm-report>
       <app-custom-report *ngIf="show=='customReports'"></app-custom-report>
+      <br>
     </div>
-  </div>
+</div>
