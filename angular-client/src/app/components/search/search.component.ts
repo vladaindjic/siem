@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '../../services/log.service';
 import {ILog} from "../../model/ILog";
 import {IFindLogsResult} from "../../model/IFindLogsResult";
+import {IQueryDto} from "../../model/IQueryDto";
 
 @Component({
   selector: 'app-search',
@@ -14,9 +15,12 @@ export class SearchComponent implements OnInit {
   logs: ILog[];
   count: number;
 
+  queryDto: IQueryDto;
+
   constructor(private route: ActivatedRoute, private logService: LogService, private router: Router) {
     this.logs = [];
     this.count = 0;
+    this.queryDto = {'query': ''};
   }
 
   ngOnInit() {

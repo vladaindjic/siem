@@ -91,40 +91,37 @@ WSGI_APPLICATION = 'djangocenter.wsgi.application'
 
 
 # Password validation
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'siem',
-        'USER': 'root',
-        'PASSWORD': 'sifra1',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        # 'OPTIONS': {
-        #     'ssl': {'ca': '../mini_parser/certs/ca.crt',
-        #             'cert': '../mini_parser/certs/sysqo.crt',
-        #             'key': '../mini_parser/certs/sysqo2.key'
-        #             }
-        # }
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'siem_center_db',
-#         'USER': 'siem_django',
-#         'PASSWORD': 'siem_django_123',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'siem',
+#         'USER': 'django_siem',
+#         'PASSWORD': 'django_siem_123',
 #         'HOST': 'localhost',
-#         'PORT': '',
-#         'OPTIONS': {
-#             'ssl': {'ca': '../mini_parser/certs/ca.crt',
-#                     'cert': '../mini_parser/certs/sysqo.crt',
-#                     'key': '../mini_parser/certs/sysqo2.key'
-#                     }
-#         }
+#         'PORT': '3306',
+#         # 'OPTIONS': {
+#         #     'ssl': {'ca': '../mini_parser/certs/ca.crt',
+#         #             'cert': '../mini_parser/certs/sysqo.crt',
+#         #             'key': '../mini_parser/certs/sysqo2.key'
+#         #             }
+#         # }
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'siem_center_db',
+        'USER': 'siem_django',
+        'PASSWORD': 'siem_django_123',
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {
+             'sslmode': 'require',
+        }
+    }
+}
 
 
 

@@ -488,6 +488,9 @@ class StrVal(Val):
 class RegVal(Val):
     def __init__(self, value):
         self.orig_value = value
+        print(self.orig_value)
+        for i in self.orig_value:
+            print(ord(i))
         super().__init__(value)
         self.category_resolver = self.is_categorical()
 
@@ -504,9 +507,9 @@ class RegVal(Val):
 
     def is_categorical(self):
         self.value = self.value[1:-1]
-
-        mark_begin = "${"
-        mark_end = "}"
+        # FIXME: e ako neko ovo usere, onda stvarno
+        mark_begin = "${{"
+        mark_end = "}}$"
         begin_pos = self.value.find(mark_begin)
         end_pos = self.value.find(mark_end)
         if begin_pos >= end_pos:
@@ -514,7 +517,7 @@ class RegVal(Val):
 
         left_reg = self.value[:begin_pos]
         category_reg = self.value[begin_pos + len(mark_begin):end_pos]
-        right_reg = self.value[end_pos + 1:]
+        right_reg = self.value[end_pos + len(mark_end):]
         self.value = "".join([left_reg, category_reg, right_reg])
         return CategoryResolver(re.compile(left_reg), re.compile(category_reg), re.compile(right_reg))
 
@@ -850,10 +853,12 @@ class CategoryResolver(object):
     def find_category(self, log):
         msg = log.msg
         # remove left
+        print(self.left_reg)
         match_left = re.match(self.left_reg, msg)
         msg = msg[match_left.end():]
         # find category
         match_category = re.match(self.category_reg, msg)
+        print(self.category_reg)
         category = msg[match_category.start():match_category.end()]
         # FIXME: osigurati se da ovi regularni izrazi imaju smisla
         return category

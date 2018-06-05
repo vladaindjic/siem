@@ -56,12 +56,12 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180605-123226.log'
+              path: 'web_app_log20180605-153505.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 
     - directory:
-        path: '/home/milan/Faks/Bezbednost/Projekat/siem/djangocenter/log'
+        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
 #        patterns:
 #          - '.*POST.*'
 #          - '.*DELETE.*'

@@ -63,7 +63,6 @@ class AlarmService(object):
         self.alarm_engine.remove_alarm(old_alarm_dict['query'])
 
     def update_alarm(self, alarm_id, alarm_dto):
-        print("JEBEM LI TI OCA: %s" % alarm_dto.query)
         alarm_dto.query = re.sub("\s+", " ", alarm_dto.query)
         # update alarma bi znacilo njegovo brisanje, pa ponovno dodavanjem
         # dodamo novi u engine
