@@ -89,6 +89,8 @@ class AlarmService(object):
             hostname = 'multiple_hosts'
 
         alarm_fire = AlarmFireDto.create_instance(alarm_id, alarm_str, time, logs, hostname)
+        from djangocenter.center import consumers
+        consumers.alarm_happend(alarm_fire)
         return self.alarm_repository.fire_alarm(alarm_fire)
 
     def alarm_analytics(self, start_time=None, end_time=None, all_system=True, hosts=[]):

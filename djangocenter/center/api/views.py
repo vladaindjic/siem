@@ -27,10 +27,10 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-
 sys.path.append("..")
 from mini_parser.log_service import LogService
 from mini_parser.alarm_service import AlarmService
+
 
 log_service = LogService.get_instance()
 alarm_service = AlarmService.get_instance()

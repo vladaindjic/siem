@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
 import datetime
+import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     'center',
-    'sslserver'
+    'corsheaders',
+    'sslserver',
+
 ]
 
 MIDDLEWARE = [
@@ -56,7 +58,11 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:4200',
-    'localhost:8000'
+    'localhost:8000',
+    'ws://192.168.0.16:8000',
+    'ws://192.168.0.16:4200',
+    'wss://192.168.0.16:8000',
+    'wss://192.168.0.16:4200',
 )
 
 ROOT_URLCONF = 'djangocenter.urls'
@@ -89,13 +95,15 @@ WSGI_APPLICATION = 'djangocenter.wsgi.application'
 #     }
 # }
 
+
+# Password validation
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'siem',
         'USER': 'root',
         'PASSWORD': 'sifra1',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
             'ssl': {'ca': '../mini_parser/certs/ca.crt',
@@ -105,8 +113,6 @@ DATABASES = {
         }
     }
 }
-
-# Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -155,6 +161,43 @@ REST_FRAMEWORK = {
     ),
 }
 
+"""
+    Zbog problema sa importom kod je ubacen ovde
+"""
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+
+# FIXME: store passwords somewhere
+import yaml
+
+
+def read_private_key(private_key_pem, passphrase=None):
+    with open(private_key_pem, "rb") as key_file:
+        private_key = serialization.load_pem_private_key(
+            key_file.read(),
+            password=bytes(passphrase, encoding='utf-8') if passphrase is not None else None,
+            backend=default_backend()
+        )
+    return private_key
+
+
+def read_public_key(public_key_pem):
+    with open(public_key_pem, "rb") as key_file:
+        private_key = serialization.load_pem_public_key(
+            key_file.read(),
+            backend=default_backend()
+        )
+    return private_key
+
+
+with open('jwt-config.yaml') as stream:
+    jwt_config = yaml.load(stream)
+
+jwt_keys = {
+    'private-key': read_private_key(jwt_config['private-key'], jwt_config['passphrase']),
+    'public-key': read_public_key(jwt_config['public-key'])
+}
+
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
         'rest_framework_jwt.utils.jwt_encode_handler',
@@ -174,11 +217,16 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'center.views.jwt_response_payload_handler',
     'JWT_PAYLOAD_HANDLER': 'center.views.jwt_payload_handler',
 
-    'JWT_SECRET_KEY': "Shhhhhhh",
+    # 'JWT_SECRET_KEY': "Shhhhhhh",
+    'JWT_SECRET_KEY': None,
     'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_PUBLIC_KEY': None,
-    'JWT_PRIVATE_KEY': None,
-    'JWT_ALGORITHM': 'HS256',
+    # 'JWT_ALGORITHM': 'HS256',
+
+    # RSA
+    'JWT_PUBLIC_KEY': jwt_keys['public-key'],
+    'JWT_PRIVATE_KEY': jwt_keys['private-key'],
+    'JWT_ALGORITHM': 'RS256',
+
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
@@ -192,4 +240,14 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
     'JWT_AUTH_COOKIE': None,
 
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'djangocenter.routing.channel_routing',
+    }
 }

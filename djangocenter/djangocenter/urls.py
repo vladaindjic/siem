@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^', include('center.api.urls')),
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
+
 ]

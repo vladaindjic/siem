@@ -53,7 +53,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180604-234515.log'
+              path: 'web_app_log20180605-103745.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 

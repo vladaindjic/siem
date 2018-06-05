@@ -28,7 +28,6 @@ export class NavbarComponent implements OnInit {
     this.permissionsService.loadPermissions(perm);
     this.permissionsService.permissions$.subscribe((permisios) => {
     });
-
     this.searchForm = this.fb.group({
       query: new FormControl('', [Validators.required])
     }, { updateOn: 'submit' });
