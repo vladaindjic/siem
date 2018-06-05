@@ -1,5 +1,5 @@
-<div *ngIf="logovi" class="container" style="padding:3%">
-  <div *ngFor="let log of logovi.logs ; let i = index">
+<div *ngIf="logs" class="container" style="padding:3%">
+  <div *ngFor="let log of logs ; let i = index">
     <div class="list-group-item list-group-item-info">
       <table class="table table-dark table-striped">
         <thead>
@@ -8,6 +8,11 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>Timestamp: </td>
+            <td>{{log.timestamp['$date'] | date: "yyyy-MM-ddTHH:mm:ss.SSSZZZZZ"}}</td>
+          </tr>
+
           <tr>
             <td>Hostname: </td>
             <td>{{log.hostname}}</td>

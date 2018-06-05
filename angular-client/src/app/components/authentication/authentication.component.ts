@@ -38,8 +38,9 @@ export class AuthenticationComponent implements OnInit {
     const credentials: IUser = this.loginForm.value;
     this.autheticationService.authenticateUser(credentials).subscribe(
       data => {
-        console.log(JSON.stringify(data))
-        localStorage.setItem('loggedUser', JSON.stringify(data)),
+        console.log(JSON.stringify(data));
+        sessionStorage.setItem('loggedUser', JSON.stringify(data)),
+
           this.router.navigate(['/home']);
 
         const perm = [];
@@ -50,7 +51,8 @@ export class AuthenticationComponent implements OnInit {
         this.toastr.success('You are loged in', 'Welcome!');
       },
       error => this.toastr.error('Incorrect username and/or password'),
-      () => console.log(JSON.parse(localStorage.getItem('loggedUser')))
+      () => console.log(JSON.parse(sessionStorage.getItem('loggedUser')))
+
     );
   }
 

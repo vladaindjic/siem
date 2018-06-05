@@ -44,6 +44,9 @@ specific:
 #                - 'l+$'
 #                - '^\.+'
 #              interval: 4
+
+
+  # Generator skripta
     - directory:
         path: '../logGeneratorAgent'
         patterns:
@@ -53,9 +56,23 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180605-080529.log'
+              path: 'web_app_log20180604-234515.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
+
+#    - directory:
+#        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
+##        patterns:
+##          - '.*POST.*'
+##          - '.*DELETE.*'
+#        interval: 3
+#        only_specified_files: True
+#        files:
+#          - file:
+#              path: 'django_dev.log'
+#              read_all: True
+#              parser_type: 'LinuxStandardSyslogParser'
+
 
 #    - directory:
 #        path: '/home/vi3/Faks/Bezbednost/siem/center/log'

@@ -1,0 +1,9 @@
+-- 2018-06-05T05:50:04.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=last(1D) HTTP/1.1" 200 30
+-- 2018-06-05T05:50:18.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/find_logs?query=last(1m) HTTP/1.1" 200 494
+-- 2018-06-05T05:59:28.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "POST /center/login HTTP/1.1" 200 615
+-- 2018-06-05T05:59:30.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 252
+-- 2018-06-05T05:59:36.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "PUT /center/update_alarm/5b1498cdece47a2ee31ae4be HTTP/1.1" 200 82
+-- 2018-06-05T05:59:38.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "DELETE /center/delete_alarm/5b1498cdece47a2ee31ae4be HTTP/1.1" 204 2
+-- 2018-06-05T05:59:39.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "DELETE /center/delete_alarm/5b1498cdece47a2ee31ae4bf HTTP/1.1" 204 2
+-- 2018-06-05T05:59:43.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 92
+-- 2018-06-05T06:00:07.000+02:00 vi3-Inspiron-5737 siem-center: <INFO> [django.server.log_message:124] "GET /center/get_alarms HTTP/1.1" 200 92
