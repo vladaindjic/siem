@@ -26,6 +26,15 @@ class AlarmService(object):
     def __init__(self):
         self.alarm_engine = AlarmEngine.get_instance()
         self.alarm_repository = AlarmRepository.get_instance()
+        self.init_alarms()
+
+    def init_alarms(self):
+        for al in self.get_alarms():
+            alarm_str = re.sub("\s+", " ", al['query'])
+            alarm_in_engine = self.alarm_engine.add_alarm(alarm_str)
+            alarm_in_engine.set_alarm_str(alarm_str)
+            alarm_in_engine.set_alarm_id(al['_id'])
+            print(alarm_in_engine.alarm_id)
 
     def add_alarm(self, alarm_str):
         # izbaciti vise whitespaceova na jedan

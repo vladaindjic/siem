@@ -1,9 +1,35 @@
-<div style="margin: 2%">
-<form class="form-inline">
-    <div class="form-group">
+<div style="margin: 2%;align-content: center">
+<form class="form-inline" (submit)="getReport()" >
+    <div class="form-group" style="width: 80%">
       <label class="sr-only">Report Query</label>
-      <input type="text" class="form-control" placeholder="Report Query">
+      <input [(ngModel)]='query' style="width:100%" name="query" type="text" class="form-control" placeholder="Report Query">
     </div>
-    <button type="submit" class="btn btn-primary" >Get Report</button>
+    <button type="submit" class="btn btn-primary" style="margin-left: 5px">Get Report</button>
   </form>
+</div>
+
+<div class="container" *ngIf="report" >
+  <button class="btn btn-primary" style="margin: 3px" (click)='savePDF()'>Save Report As PDF</button>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">appname</th>
+            <th scope="col">facility</th>
+            <th scope="col">hostname</th>
+            <th scope="col">severity</th>
+            <th scope="col">timestamp</th>
+            <th scope="col">msg</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let log of report.logs">
+            <td>{{log.appname}}</td>
+            <td>{{log.facility}}</td>
+            <td>{{log.hostname}}</td>
+            <td>{{log.severity}}</td>
+            <td>{{log.timestamp.$date|date: "yyyy-MM-ddTHH:mm:ss.SSSZZZZZ"}}</td>
+            <td>{{log.msg}}</td>
+          </tr>
+        </tbody>
+      </table>
 </div>

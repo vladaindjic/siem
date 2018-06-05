@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { LogService } from '../../services/log.service';
+
 @Component({
   selector: 'app-alarm-report',
   templateUrl: './alarm-report.component.html',
@@ -8,28 +9,37 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AlarmReportComponent implements OnInit {
   
- 
   public selectedMoments = [];
   public selectedHost;
-  public hosts =['All','host1','host2','host3','host4'];
-  form:FormGroup;
-
-  constructor(private fb:FormBuilder) {
+  public hosts =['All'];
+  public report;
+  constructor(private logService:LogService) {
    }
  
   ngOnInit() {
-    
-    this.form = this.fb.group({
-      hosts: this.fb.array([])
+    this.logService.getHosts().subscribe((data)=>{
+      console.log(data);
+      this.hosts = this.hosts.concat(data as Array<any>);
     })
   }
 
 
   getReport(){
-    console.log(this.selectedHost);
-    console.log(moment(this.selectedMoments[1]).format());
+    let data = {};
+    data['startTime'] = moment(this.selectedMoments[0]).format();
+    data['endTime'] = moment(this.selectedMoments[1]).format();
+    if(this.selectedHost.includes('All')){
+      data['all'] = true;
+    }else{
+      data['all'] = false;
+    }
+    data['hosts'] = this.selectedHost;
+    //console.log(data);
+    this.logService.getAlarmAnalytics(data).subscribe((data)=>{
+      data = JSON.parse(data as string);
+      console.log(data);
+      this.report = data;
+    })
   }
-
-  
 
 }
