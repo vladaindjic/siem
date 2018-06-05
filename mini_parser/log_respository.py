@@ -102,8 +102,13 @@ class LogRepository(object):
             'count': count
         }
 
+    def get_hostnames(self):
+        return self.log_collection.distinct("hostname")
+
 
 if __name__ == '__main__':
     l = LogRepository.get_instance()
-    id = l.log_collection.insert_one({"vlada": "doktor"}).inserted_id
-    print(id)
+    # id = l.log_collection.insert_one({"vlada": "doktor"}).inserted_id
+    # print(id)
+
+    print(l.get_hostnames())
