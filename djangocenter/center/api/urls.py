@@ -15,6 +15,3 @@ urlpatterns = [
     url(r'^center/get_alarm_analytics', views.get_alarm_analytics, name='get_alarm_analytics'),
 ]
 
-from mini_parser.log_server import LogServer
-from threading import Thread
-Thread(target=LogServer.get_instance().start_server).start()

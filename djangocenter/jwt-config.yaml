@@ -1,0 +1,3 @@
+public-key: '../mini_parser/certs/public-sysqo.key'
+private-key: '../mini_parser/certs/sysqo.key'
+passphrase: 'sysqo'
