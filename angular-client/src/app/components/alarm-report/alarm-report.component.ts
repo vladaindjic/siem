@@ -9,14 +9,10 @@ import { LogService } from '../../services/log.service';
 })
 export class AlarmReportComponent implements OnInit {
   
-  @Input() showReport:boolean;
-  @Output() showReportEvent :EventEmitter<any> = new EventEmitter();
-
-
   public selectedMoments = [];
   public selectedHost;
   public hosts =['All'];
-
+  public report;
   constructor(private logService:LogService) {
    }
  
@@ -40,7 +36,9 @@ export class AlarmReportComponent implements OnInit {
     data['hosts'] = this.selectedHost;
     //console.log(data);
     this.logService.getAlarmAnalytics(data).subscribe((data)=>{
+      data = JSON.parse(data as string);
       console.log(data);
+      this.report = data;
     })
   }
 
