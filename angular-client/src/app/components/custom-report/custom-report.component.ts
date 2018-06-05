@@ -12,48 +12,52 @@ declare let jsPDF;
 })
 export class CustomReportComponent implements OnInit {
 
-  constructor(private logService:LogService,private toastr: ToastrService) { }
+  constructor(private logService: LogService, private toastr: ToastrService) { }
 
-  public query:string;
+  public query: string;
   public report;
+  public logs;
   ngOnInit() {
   }
 
-  getReport(){
+  getReport() {
     // console.log(this.query);
-    this.logService.logSearch(this.query).subscribe((data)=>{
+    this.logService.logSearch(this.query).subscribe((data) => {
       data = JSON.parse(data as string);
       console.log(data);
-      if(data['count']===0){
+      if (data['count'] === 0) {
         this.toastr.error('0 results for this query')
-      }else{
+      } else {
         this.report = data;
+        for (let aggregation of data['aggregations']) {
+          this.logs = this.logs.concat(aggregation.logs);
+        }
       }
     },
-    (error) => {
-      this.toastr.error('Incorrect use of query');
-    });
-  }
-  
-  savePDF(){
-        var doc = new jsPDF('1', 'pt','a4');
-        var col = ["appname", "facility","hostname","severity","timestamp","msg"];
-        var rows = [];
-    
-        for(var log of this.report['logs']){
-            var temp = [log['appname'],log['facility'],log['hostname'],log['severity'],moment(log['timestamp']).format(),log['msg']];
-            rows.push(temp);
-        }
-        console.log(col)
-        console.log(rows)
-        doc.autoTable(col, rows,{
-          tableWidth: 'auto',
-          headerStyles:{columnWidth:'auto'},
-          bodyStyles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {text: {columnWidth: 'wrap'}},
+      (error) => {
+        this.toastr.error('Incorrect use of query');
       });
-      let name = "repot_"+  moment(new Date).format();
-      doc.save(name+'.pdf');
-      return doc;
+  }
+
+  savePDF() {
+    var doc = new jsPDF('1', 'pt', 'a4');
+    var col = ["appname", "facility", "hostname", "severity", "timestamp", "msg"];
+    var rows = [];
+
+    for (var log of this.logs) {
+      var temp = [log['appname'], log['facility'], log['hostname'], log['severity'], moment(log['timestamp']).format(), log['msg']];
+      rows.push(temp);
+    }
+    console.log(col)
+    console.log(rows)
+    doc.autoTable(col, rows, {
+      tableWidth: 'auto',
+      headerStyles: { columnWidth: 'auto' },
+      bodyStyles: { overflow: 'linebreak', columnWidth: 'wrap' },
+      columnStyles: { text: { columnWidth: 'wrap' } },
+    });
+    let name = "repot_" + moment(new Date).format();
+    doc.save(name + '.pdf');
+    return doc;
   }
 }

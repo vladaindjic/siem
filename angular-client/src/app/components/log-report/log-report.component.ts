@@ -17,6 +17,7 @@ export class LogReportComponent implements OnInit {
   public selectedHost;
   public hosts =['All'];
   public report;
+  public logs = [];
   constructor(private logService:LogService,private toastr:ToastrService) { }
 
   ngOnInit() {
@@ -43,7 +44,11 @@ export class LogReportComponent implements OnInit {
       if(data['count']===0){
         this.toastr.error('0 results for this query')
       }else{
-        this.report = data['aggregations'][0];
+        this.report = data;
+        for(let aggregation of data['aggregations']){
+            this.logs = this.logs.concat(aggregation.logs);
+        }
+        console.log(this.logs);
       }
     },
     (error) => {
@@ -56,7 +61,7 @@ export class LogReportComponent implements OnInit {
     var col = ["appname", "facility","hostname","severity","timestamp","msg"];
     var rows = [];
 
-    for(var log of this.report['logs']){
+    for(var log of this.logs){
         var temp = [log['appname'],log['facility'],log['hostname'],log['severity'],moment(log['timestamp']).format(),log['msg']];
         rows.push(temp);
     }
