@@ -44,8 +44,6 @@ specific:
 #                - 'l+$'
 #                - '^\.+'
 #              interval: 4
-
-
     - directory:
         path: '../logGeneratorAgent'
         patterns:

@@ -22,7 +22,12 @@ import { AlreadyLoggedInGuard } from './guards/already-logged-in.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AlarmsComponent } from './components/alarms/alarms.component';
 import { AlarmsService } from './services/alarms/alarms.service';
-
+import { LogReportComponent } from './components/log-report/log-report.component';
+import { AlarmReportComponent } from './components/alarm-report/alarm-report.component';
+import { CustomReportComponent } from './components/custom-report/custom-report.component';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ReportComponent } from './components/report/report.component';
 const appRoutes: Routes = [
   {
     path: '',
@@ -34,6 +39,10 @@ const appRoutes: Routes = [
   { path: 'search', component: SearchComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'change_password', component: ChangePasswordComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'alarms', component: AlarmsComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'reports', component: ReportComponent, canActivate: [OnlyLoggedInGuardGuard]},
+  { path: 'log_report', component: LogReportComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'alarm_report', component: AlarmReportComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'custom_report', component: CustomReportComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: '**', component: NotFoundPageComponent }
 
 ];
@@ -48,6 +57,10 @@ const appRoutes: Routes = [
     SearchComponent,
     ChangePasswordComponent,
     AlarmsComponent,
+    LogReportComponent,
+    AlarmReportComponent,
+    CustomReportComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,12 +68,15 @@ const appRoutes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
     RouterModule.forRoot(
       appRoutes,
     ),
     ToastrModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     HttpClientModule,
+    DlDateTimePickerDateModule,
   ],
   providers: [
     LogService,

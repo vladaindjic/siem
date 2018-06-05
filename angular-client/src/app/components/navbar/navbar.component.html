@@ -15,6 +15,9 @@
         <a id="alarms" class="nav-link" routerLink="/alarms" style="color: black" *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]', '[SUPERUSER]']">Alarms</a>
       </li>
       <li class="nav-item">
+          <a id="reports" class="nav-link" routerLink="/reports" *ngxPermissionsOnly="['[ADMIN]','[OPERATOR]', '[SUPERUSER]']" style="color: black">Reports</a>
+        </li>
+      <li class="nav-item">
         <a id="logout" class="nav-link" routerLink="/change_password" style="color: black" *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]', '[SUPERUSER]']">Change Password</a>
       </li>
       <li class="nav-item">
