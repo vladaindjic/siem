@@ -29,9 +29,9 @@ export class CustomReportComponent implements OnInit {
         this.toastr.error('0 results for this query')
       } else {
         this.report = data;
-        for (let aggregation of data['aggregations']) {
-          this.logs = this.logs.concat(aggregation.logs);
-        }
+        // for (let aggregation of data['aggregations']) {
+        //   this.logs = this.logs.concat(aggregation.logs);
+        // }
       }
     },
       (error) => {
@@ -44,7 +44,7 @@ export class CustomReportComponent implements OnInit {
     var col = ["appname", "facility", "hostname", "severity", "timestamp", "msg"];
     var rows = [];
 
-    for (var log of this.logs) {
+    for (var log of this.report.logs) {
       var temp = [log['appname'], log['facility'], log['hostname'], log['severity'], moment(log['timestamp']).format(), log['msg']];
       rows.push(temp);
     }
