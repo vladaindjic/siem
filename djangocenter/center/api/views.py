@@ -142,3 +142,9 @@ class UpdatePassword(APIView):
         self.object.set_password(new_password)
         self.object.save()
         return Response('', status=HTTP_204_NO_CONTENT)
+
+
+# ajde da pokrenemo i mini server
+from threading import Thread
+from mini_parser.log_server import LogServer
+Thread(target=LogServer.get_instance().start_server).start()
