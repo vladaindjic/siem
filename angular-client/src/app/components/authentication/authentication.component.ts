@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { LoggedUtils } from '../../utils/logged-utils';
 import { IUser } from '../../model/IUser';
+import {AlarmFireSocketService} from '../../services/socket/alarm-fire-socket.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class AuthenticationComponent implements OnInit {
   private password: string;
 
   constructor(private autheticationService: AuthenticationService, private permissionsService: NgxPermissionsService,
-    private router: Router, private toastr: ToastrService) {
+    private router: Router, private toastr: ToastrService, private alarmFireSocketService: AlarmFireSocketService) {
     this.username = '';
     this.password = '';
   }
@@ -49,6 +50,10 @@ export class AuthenticationComponent implements OnInit {
         this.permissionsService.permissions$.subscribe((item) => {
         });
         this.toastr.success('You are loged in', 'Welcome!');
+        // TODO: ovde dodaj otvaranje socketa
+        console.log('Ovo je jebeni korisnik' + LoggedUtils.getUsername());
+        console.log(data);
+        this.alarmFireSocketService.openSocket(data['user'].username);
       },
       error => this.toastr.error('Incorrect username and/or password'),
       () => console.log(JSON.parse(sessionStorage.getItem('loggedUser')))

@@ -37,6 +37,10 @@ from .alarm_engine import AlarmEngine
 # from alarm_engine import AlarmEngine
 
 
+
+import our_constants
+import os
+
 MAX_MESSAGE_SIZE = 4096
 MAX_THREAD_IN_POOL = 10
 
@@ -50,7 +54,7 @@ class LogServer(object):
             LogServer.instance = LogServer()
         return LogServer.instance
 
-    def __init__(self,  host="", port=55555):
+    def __init__(self,  host="", port=33333):
         self.host = host
         self.port = port
         self.accept_logs_executor = ThreadPoolExecutor(MAX_THREAD_IN_POOL)
@@ -63,6 +67,7 @@ class LogServer(object):
             if len(log_bytes) <= 0:
                 break
             log_str = log_bytes.decode('utf-8')
+            print('.')
             self.log_service.add_log(log_str)
 
         c.close()
@@ -72,8 +77,10 @@ class LogServer(object):
         # in our case it is 12345 but it
         # can be anything
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s = ssl.wrap_socket(s, keyfile="../mini_parser/certs/sysqo2.key", certfile="../mini_parser/certs/sysqo.crt",
-                            server_side=True, cert_reqs=ssl.CERT_REQUIRED, ca_certs="../mini_parser/certs/ca.crt",
+        s = ssl.wrap_socket(s, keyfile=os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, "sysqo2.key"),
+                            certfile=os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, "sysqo.crt"),
+                            server_side=True, cert_reqs=ssl.CERT_REQUIRED,
+                            ca_certs=os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, "ca.crt"),
                             ssl_version=ssl.PROTOCOL_TLSv1_2)
         s.bind((self.host, self.port))
         print("socket binded to post", self.port)

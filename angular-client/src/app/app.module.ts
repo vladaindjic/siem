@@ -28,6 +28,7 @@ import { CustomReportComponent } from './components/custom-report/custom-report.
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ReportComponent } from './components/report/report.component';
+import {AlarmFireSocketService} from './services/socket/alarm-fire-socket.service';
 const appRoutes: Routes = [
   {
     path: '',
@@ -68,7 +69,7 @@ const appRoutes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    OwlDateTimeModule, 
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
     RouterModule.forRoot(
       appRoutes,
@@ -90,6 +91,7 @@ const appRoutes: Routes = [
     AlarmsService,
     OnlyLoggedInGuardGuard,
     AlreadyLoggedInGuard,
+    AlarmFireSocketService,
   ],
   bootstrap: [AppComponent]
 })

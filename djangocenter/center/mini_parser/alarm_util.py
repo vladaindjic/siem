@@ -22,4 +22,7 @@ def convert_alarm_fire_to_dict(alarm_fire_dto):
     }
     if alarm_fire_dto._id is not None:
         ret['_id'] = alarm_fire_dto._id
+    print("Udjes li ti ovde ponov")
     return ret
+
+

@@ -1,4 +1,6 @@
 import pymongo
+import our_constants
+import os
 
 
 class MongoUtil(object):
@@ -27,10 +29,10 @@ class MongoUtil(object):
         # ssl_pem_passphrase = "sysqo"
         # ssl_ca_certs = "certs/ca.crt"
 
-        ssl_certfile = "../mini_parser/certs/sysqo.crt"
-        ssl_keyfile = "../mini_parser/certs/sysqo.key"
-        ssl_pem_passphrase = "sysqo"
-        ssl_ca_certs = "../mini_parser/certs/ca.crt"
+        ssl_certfile = os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo.crt')
+        ssl_keyfile = os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo.key')
+        ssl_pem_passphrase = "sysqo"  # FIXME: izdvoji ovo negde
+        ssl_ca_certs = os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'ca.crt')
 
         self.client = pymongo.MongoClient("mongodb://" + username + ":" + password +
                                           "@" + host + ":" + port + "/?authSource=" + database

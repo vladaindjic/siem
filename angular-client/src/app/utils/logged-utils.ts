@@ -29,12 +29,13 @@ export class LoggedUtils {
     }
 
     static isEmpty() {
-        console.log(sessionStorage.getItem('loggedUser') === null)
+        console.log(sessionStorage.getItem('loggedUser') === null);
         return sessionStorage.getItem('loggedUser') === null;
     }
 
     static getUsername() {
-        return JSON.parse(sessionStorage.getItem('loggedUser')).user.username._text;
+      // return JSON.parse(sessionStorage.getItem('loggedUser')).user.username._text;
+      return JSON.parse(sessionStorage.getItem('loggedUser')).user.username;
     }
 
     static getUser() {

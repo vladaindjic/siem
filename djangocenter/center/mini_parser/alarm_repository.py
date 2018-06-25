@@ -63,7 +63,9 @@ class AlarmRepository(object):
         return self.alarm_collection.find_one(filter={'query': alarm_str})
 
     def fire_alarm(self, alarm_fire):
-        return self.alarm_fire_collection.insert_one(convert_alarm_fire_to_dict(alarm_fire))
+        af = self.alarm_fire_collection.insert_one(convert_alarm_fire_to_dict(alarm_fire))
+        alarm_fire._id = af.inserted_id
+        return alarm_fire
 
     def alarm_analytics(self, start_time, end_time, all_system, hosts):
         match_time = {"timestamp": {"$gte": start_time, "$lte": end_time}}

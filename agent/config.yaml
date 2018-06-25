@@ -5,8 +5,8 @@ security:
   interval: 1
   API_ENDPOINT: 'https://192.168.0.18:8443/logger'
   HOST: 'localhost'
-#  PORT: 33333
-  PORT: 55555
+  PORT: 33333
+#  PORT: 55555
 
   communication_protocol: 'TCP'
 general:
@@ -56,22 +56,22 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180605-153505.log'
+              path: 'web_app_log20180625-173218.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 
-    - directory:
-        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
-#        patterns:
-#          - '.*POST.*'
-#          - '.*DELETE.*'
-        interval: 3
-        only_specified_files: True
-        files:
-          - file:
-              path: 'django_dev.log'
-              read_all: True
-              parser_type: 'LinuxStandardSyslogParser'
+#    - directory:
+#        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
+##        patterns:
+##          - '.*POST.*'
+##          - '.*DELETE.*'
+#        interval: 3
+#        only_specified_files: True
+#        files:
+#          - file:
+#              path: 'django_dev.log'
+#              read_all: True
+#              parser_type: 'LinuxStandardSyslogParser'
 
 
 #    - directory:

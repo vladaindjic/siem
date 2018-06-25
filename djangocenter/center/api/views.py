@@ -1,16 +1,12 @@
-import sys
 import json
+import sys
+
 from bson import json_util
-from django.db.models import fields
-from django.contrib.auth.password_validation import validate_password
-from django.contrib.auth.decorators import permission_required
-
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from django.contrib.auth.models import Permission, Group
-
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import (
+    IsAuthenticated,
+)
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_204_NO_CONTENT,
@@ -18,19 +14,15 @@ from rest_framework.status import (
     HTTP_401_UNAUTHORIZED,
 
 )
-from ..permissions import *
-from rest_framework.serializers import Serializer
+from rest_framework.views import APIView
 
-from rest_framework.permissions import (
-    AllowAny,
-    IsAdminUser,
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
+from ..permissions import *
 
 sys.path.append("..")
-from mini_parser.log_service import LogService
-from mini_parser.alarm_service import AlarmService
+
+from center.mini_parser.log_service import LogService
+from center.mini_parser.alarm_service import AlarmService
+
 
 log_service = LogService.get_instance()
 alarm_service = AlarmService.get_instance()
@@ -55,7 +47,6 @@ def custom_permission_required(function, perm):
 @custom_permission_required("find_logs")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def find_logs(request):
-    print("OVO MI JE STIGLOOOOOOOOO: %s" % request.data['query'])
     logs = log_service.find(syslog_query=request.data['query'])
     return Response(json.dumps(logs, default=json_util.default))
 
@@ -64,7 +55,7 @@ def find_logs(request):
 @custom_permission_required("create_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def create_alarm(request):
-    from mini_parser.alarm_util import convert_alarm_to_dict
+    from center.mini_parser.alarm_util import convert_alarm_to_dict
     alarm = alarm_service.add_alarm(alarm_str=request.data['query'])
     return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)
 
@@ -73,8 +64,8 @@ def create_alarm(request):
 @custom_permission_required("update_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def update_alarm(request, idA):
-    from mini_parser.dto.alarm_dto import AlarmDto
-    from mini_parser.alarm_util import convert_alarm_to_dict
+    from center.mini_parser.dto import AlarmDto
+    from center.mini_parser.alarm_util import convert_alarm_to_dict
     alarm = alarm_service.update_alarm(alarm_dto=AlarmDto(query=request.data['query']), alarm_id=idA)
     return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)
 
@@ -161,6 +152,6 @@ class UpdatePassword(APIView):
 
 
 # ajde da pokrenemo i mini server
-from threading import Thread
-from mini_parser.log_server import LogServer
-Thread(target=LogServer.get_instance().start_server).start()
+# from threading import Thread
+# from center.mini_parser.log_server import LogServer
+# Thread(target=LogServer.get_instance().start_server).start()

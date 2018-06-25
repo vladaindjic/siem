@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'center',
-    'sslserver'
+    'channels'
+    # 'djangocenter.center',
+    # 'sslserver'
 ]
 
 MIDDLEWARE = [
@@ -108,21 +110,27 @@ WSGI_APPLICATION = 'djangocenter.wsgi.application'
 #     }
 # }
 
-
+import our_constants
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'siem_center_db',
-        'USER': 'siem_django',
-        'PASSWORD': 'siem_django_123',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'siem',
+        'USER': 'django',
+        'PASSWORD': 'siem_django',
         'HOST': 'localhost',
         'PORT': '',
         'OPTIONS': {
+             'sslcert': os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo.crt'),
+             'sslkey': os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo2.key'),
+             'sslrootcert': os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'ca.crt'),
              'sslmode': 'require',
         }
     }
 }
 
+# TODO: dodati obavezno zbog pemisija
+# sudo chown www-data sysqo2.key
+# sudo chmod 0600 sysqo2.key
 
 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -202,7 +210,8 @@ def read_public_key(public_key_pem):
     return private_key
 
 
-with open('jwt-config.yaml') as stream:
+from our_constants import JWT_CONFIG_PATH
+with open(JWT_CONFIG_PATH) as stream:
     jwt_config = yaml.load(stream)
 
 jwt_keys = {
@@ -263,78 +272,88 @@ JWT_AUTH = {
 
 
 # Part for loggin
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'formatters': {
-        'simple': {
-            'format': '[%(asctime)s] %(levelname)s %(message)s',
-            'datefmt': '%Y-%m-%dT%H:%M:%S.000+02:00'
-        },
-        'verbose': {
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': True,
+#     'filters': {
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse',
+#         },
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     'formatters': {
+#         'simple': {
+#             'format': '[%(asctime)s] %(levelname)s %(message)s',
+#             'datefmt': '%Y-%m-%dT%H:%M:%S.000+02:00'
+#         },
+#         'verbose': {
+#
+#             'format': '-- %(asctime)s vi3-Inspiron-5737 siem-center: <%(levelname)s>'
+#                       ' [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
+#             # 'format': '%(asctime)s %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
+#             'datefmt': '%Y-%m-%dT%H:%M:%S.000+02:00'   # FIXME: not have support for timezone
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple'
+#         },
+#         'development_logfile': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.FileHandler',
+#             'filename': 'log/django_dev.log', # Ovaj je sasvim dovoljan za sada
+#             'formatter': 'verbose'
+#         },
+#         'production_logfile': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_false'],
+#             'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',  # TODO: pip install concurrent-log-handler
+#             'filename': 'log/django_production.log',
+#             'maxBytes': 1024*1024*100, # 100MB
+#             'backupCount' : 5,
+#             'formatter': 'simple'
+#         },
+#         'dba_logfile': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_false','require_debug_true'],
+#             'class': 'logging.handlers.WatchedFileHandler',
+#             'filename': 'log/django_dba.log',
+#             'formatter': 'simple'
+#         },
+#     },
+#     'root': {
+#         'level': 'DEBUG',
+#         'handlers': ['console'],
+#     },
+#     'loggers': {
+#         'coffeehouse': {
+#             'handlers': ['development_logfile','production_logfile'],
+#          },
+#         'dba': {
+#             'handlers': ['dba_logfile'],
+#         },
+#         'django': {
+#             'handlers': ['development_logfile','production_logfile'],
+#         },
+#         'py.warnings': {
+#             'handlers': ['development_logfile'],
+#         },
+#     }
+# }
 
-            'format': '-- %(asctime)s vi3-Inspiron-5737 siem-center: <%(levelname)s>'
-                      ' [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
-            # 'format': '%(asctime)s %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
-            'datefmt': '%Y-%m-%dT%H:%M:%S.000+02:00'   # FIXME: not have support for timezone
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
         },
+        "ROUTING": "djangocenter.routing.channel_routing",
     },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'development_logfile': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.FileHandler',
-            'filename': 'log/django_dev.log', # Ovaj je sasvim dovoljan za sada
-            'formatter': 'verbose'
-        },
-        'production_logfile': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',  # TODO: pip install concurrent-log-handler
-            'filename': 'log/django_production.log',
-            'maxBytes': 1024*1024*100, # 100MB
-            'backupCount' : 5,
-            'formatter': 'simple'
-        },
-        'dba_logfile': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_false','require_debug_true'],
-            'class': 'logging.handlers.WatchedFileHandler',
-            'filename': 'log/django_dba.log',
-            'formatter': 'simple'
-        },
-    },
-    'root': {
-        'level': 'DEBUG',
-        'handlers': ['console'],
-    },
-    'loggers': {
-        'coffeehouse': {
-            'handlers': ['development_logfile','production_logfile'],
-         },
-        'dba': {
-            'handlers': ['dba_logfile'],
-        },
-        'django': {
-            'handlers': ['development_logfile','production_logfile'],
-        },
-        'py.warnings': {
-            'handlers': ['development_logfile'],
-        },
-    }
 }
-

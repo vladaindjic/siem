@@ -29,7 +29,9 @@ class LogService(object):
 
     def add_log(self, log_str):
         log = convert_json_to_log(log_str)
+
         self.log_repository.add_log(log)
+
         self.alarm_service.check_log(log)
 
     def find(self, syslog_query):

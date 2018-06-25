@@ -1,3 +1,6 @@
+import os
+import our_constants
+
 from parglare import Grammar, Parser
 # sa tackama
 from .alarm_ir import alarm_ir_actions
@@ -10,7 +13,7 @@ class AlarmCompiler(object):
     def __init__(self):
         # self.grammar = self.build_grammar('/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/alarm.pg')
         # self.grammar = self.build_grammar('alarm.pg')
-        self.grammar = self.build_grammar('../mini_parser/alarm.pg')
+        self.grammar = self.build_grammar(os.path.join(our_constants.MINI_PARSER_PREFIX, 'alarm.pg'))
 
         self.parser = self.build_parser(self.grammar, alarm_ir_actions)
 

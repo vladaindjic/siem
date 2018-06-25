@@ -8,6 +8,7 @@ import { NgxPermission } from 'ngx-permissions/model/permission.model';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ToastrService } from 'ngx-toastr';
 import {LogService} from "../../services/log.service";
+import {AlarmFireSocketService} from '../../services/socket/alarm-fire-socket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private router: Router, private fb: FormBuilder,
     private permissionsService: NgxPermissionsService, private toastr: ToastrService,
-              private searchService: LogService, private route: ActivatedRoute) {
+              private searchService: LogService, private route: ActivatedRoute,
+              private alarmFireSocketService: AlarmFireSocketService) {
   }
 
   ngOnInit() {
@@ -55,6 +57,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    console.log("Ovo je username: " + LoggedUtils.getUsername());
+    this.alarmFireSocketService.closeSocket(LoggedUtils.getUsername());
     LoggedUtils.clearLocalStorage();
     this.router.navigate(['/login']);
     this.toastr.success('You are loged out!');

@@ -3,7 +3,7 @@ from .alarm_engine import AlarmEngine
 from .dto.alarm_dto import AlarmDto
 from .dto.alarm_fire import AlarmFireDto
 from .alarm_repository import AlarmRepository
-
+from djangocenter.consumers import send_message_alarm_fire
 
 # bez tacaka
 # from alarm_engine import AlarmEngine
@@ -77,28 +77,6 @@ class AlarmService(object):
         # ubacujemo log u engine ako treba
         self.alarm_engine.add_log(log)
 
-    def fire_alarm(self, alarm_id, alarm_str, time, logs):
-        # FIXME: ako kojim slucajem alarm_id nije postavljen zbog konkurentnosti, jako retko
-        # vraticemo ga iz baze
-        if alarm_id is None:
-            print("Sta me koji kurac jebes?: %s" % alarm_str)
-            # FIXME: da li moze ikada da bude None ovde
-            alarm_id = self.find_alarm_by_str(alarm_str)['_id']
-
-        # da li su svi isti hostname-ovi logova koji su izazvali alarm
-        # FIXME: Da li moze da se desi da log nema hostname?
-        hostname = logs[0].hostname
-        for i in range(1, len(logs)):
-            # razlicit hostname
-            if hostname != logs[i].hostname:
-                hostname = None
-                break
-        if hostname is None:
-            hostname = 'multiple_hosts'
-
-        alarm_fire = AlarmFireDto.create_instance(alarm_id, alarm_str, time, logs, hostname)
-        return self.alarm_repository.fire_alarm(alarm_fire)
-
     def alarm_analytics(self, start_time=None, end_time=None, all_system=True, hosts=[]):
         from .sysqo_time_util import convert_rfc3339str_to_datetime
         from datetime import datetime
@@ -121,6 +99,6 @@ if __name__ == '__main__':
 
     # import datetime
     # from dto.log_dto import Log
-    # als.fire_alarm(None, 'severity=1', datetime.datetime.now(), [Log({'severity':1, 'hostname': 'asd'})])
+    als.fire_alarm(None, 'severity=1', datetime.datetime.now(), [Log({'severity':1, 'hostname': 'asd'})])
 
     print(als.alarm_analytics())

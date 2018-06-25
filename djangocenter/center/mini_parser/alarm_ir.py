@@ -9,6 +9,8 @@ from .ir import *
 # from alarm_queue import AlarmQueue
 # from ir import *
 
+from .alarm_fire_service import AlarmFireService
+
 
 class TimeOffsetVal(Val):
     def __init__(self, timedelta_value):
@@ -60,12 +62,12 @@ class Alarm(IRObject):
             self._fire_alarm(log, fired_logs)
 
     def _fire_alarm(self, log, queue):
-        from .alarm_service import AlarmService
+        print("pali ser alarm")
         if queue is not None:
-            res = AlarmService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), queue)
+            res = AlarmFireService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), queue)
             print("ALARMS: %s" % queue)
         else:
-            res = AlarmService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), [log])
+            res = AlarmFireService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), [log])
             print("ALARM: %s" % log)
         print("EVO STA SAM DOBIO: %s" % res)
 

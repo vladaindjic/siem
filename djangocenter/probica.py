@@ -1,6 +1,6 @@
 if __name__ == '__main__':
-    from mini_parser.log_service import LogService
-    from mini_parser.alarm_service import AlarmService
+    from djangocenter.center.mini_parser.log_service import LogService
+    from djangocenter.center.mini_parser.alarm_service import AlarmService
     from json import dumps
     ls = LogService.get_instance()
     als = AlarmService.get_instance()
