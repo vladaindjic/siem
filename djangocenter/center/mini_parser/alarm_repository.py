@@ -102,3 +102,6 @@ class AlarmRepository(object):
             'aggregations': aggregations,
             'count': count
         }
+
+    def get_alarm_fire(self, id):
+        return self.alarm_fire_collection.find_one(filter={'_id': ObjectId(id)})

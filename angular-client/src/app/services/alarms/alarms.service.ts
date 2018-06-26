@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IAlarm } from '../../model/IAlarm'; 
+import { IAlarm } from '../../model/IAlarm';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -26,5 +26,9 @@ export class AlarmsService {
 
   getAlarm(idA) {
     return this.http.get(`/api/center/get_alarm_details?id=${idA}`);
+  }
+
+  getAlarmFireDetails(id: string): Observable<Object> {
+    return this.http.get<Object>(`/api/center/alarm_fire_details/${id}`);
   }
 }

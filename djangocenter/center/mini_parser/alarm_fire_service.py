@@ -26,6 +26,9 @@ class AlarmFireService(object):
     def find_alarm_by_str(self, alarm_str):
         return self.alarm_repository.find_alarm_by_str(alarm_str)
 
+    def get_alarm_fire_details(self, id):
+        return self.alarm_repository.get_alarm_fire(id)
+
     def fire_alarm(self, alarm_id, alarm_str, time, logs):
         # FIXME: ako kojim slucajem alarm_id nije postavljen zbog konkurentnosti, jako retko
         # vraticemo ga iz baze
@@ -53,18 +56,5 @@ class AlarmFireService(object):
 
 
 if __name__ == '__main__':
-    als = AlarmService.get_instance()
-    # new = als.add_alarm("severity=1")
-    # print("New: %s" % new.inserted_id)
-    # print(type(new.inserted_id))
-    # print(als.get_alarm("5b132b95ece47a0af32d9e46"))
-    # print(als.get_alarms())
-    # updated = als.update_alarm(new.inserted_id, AlarmDto(query="facility=1"))
-    # print(updated._id)
-    # print(als.find_alarm_by_str('facility=1')['_id'])
-
-    # import datetime
-    # from dto.log_dto import Log
-    als.fire_alarm(None, 'severity=1', datetime.datetime.now(), [Log({'severity':1, 'hostname': 'asd'})])
-
-    print(als.alarm_analytics())
+    afs = AlarmFireService.get_instance()
+    print(afs.get_alarm_fire_details('5b317940ece47a204410ee05'))

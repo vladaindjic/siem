@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
       query: new FormControl('', [Validators.required])
     }, { updateOn: 'submit' });
 
-    this.readQueryFromURL()
+    this.readQueryFromURL();
   }
   private readQueryFromURL(){
 

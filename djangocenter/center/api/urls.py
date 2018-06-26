@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^center/get_alarms', views.get_alarms, name='get_alarms'),
     url(r'^center/get_log_analytics', views.get_log_analytics, name='get_log_analytics'),
     url(r'^center/get_alarm_analytics', views.get_alarm_analytics, name='get_alarm_analytics'),
-    url(r'^center/get_hosts',views.get_hosts, name='get_hosts'),
+    url(r'^center/get_hosts', views.get_hosts, name='get_hosts'),
+    url(r'^center/alarm_fire_details/(?P<idA>\w{0,50})', views.alarm_fire_details, name='alarm_fire_details')
 ]
 

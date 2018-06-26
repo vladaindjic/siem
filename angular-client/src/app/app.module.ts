@@ -29,6 +29,7 @@ import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ReportComponent } from './components/report/report.component';
 import {AlarmFireSocketService} from './services/socket/alarm-fire-socket.service';
+import { AlarmFireDetailsComponent } from './components/alarm-fire-details/alarm-fire-details.component';
 const appRoutes: Routes = [
   {
     path: '',
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
   { path: 'log_report', component: LogReportComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'alarm_report', component: AlarmReportComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: 'custom_report', component: CustomReportComponent, canActivate: [OnlyLoggedInGuardGuard] },
+  { path: 'alarm_fire_details/:id', component: AlarmFireDetailsComponent, canActivate: [OnlyLoggedInGuardGuard] },
   { path: '**', component: NotFoundPageComponent }
 
 ];
@@ -62,6 +64,7 @@ const appRoutes: Routes = [
     AlarmReportComponent,
     CustomReportComponent,
     ReportComponent,
+    AlarmFireDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -22,10 +22,11 @@ sys.path.append("..")
 
 from center.mini_parser.log_service import LogService
 from center.mini_parser.alarm_service import AlarmService
-
+from center.mini_parser.alarm_fire_service import AlarmFireService
 
 log_service = LogService.get_instance()
 alarm_service = AlarmService.get_instance()
+alarm_fire_service = AlarmFireService.get_instance()
 
 decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func: decorator(func, *args, **kwargs)
 
@@ -122,6 +123,14 @@ def funkcija(request):
     return Response(status=HTTP_200_OK)
 
 
+@api_view(['GET'])
+@custom_permission_required("get_alarms")
+@permission_classes((IsAuthenticated, HasGroupPermission,))
+def alarm_fire_details(request, idA):
+    return Response(json.dumps(alarm_fire_service.get_alarm_fire_details(idA), default=json_util.default), HTTP_200_OK)
+
+
+
 class UpdatePassword(APIView):
     """
     An endpoint for changing password.
@@ -152,6 +161,6 @@ class UpdatePassword(APIView):
 
 
 # ajde da pokrenemo i mini server
-# from threading import Thread
-# from center.mini_parser.log_server import LogServer
-# Thread(target=LogServer.get_instance().start_server).start()
+from threading import Thread
+from center.mini_parser.log_server import LogServer
+Thread(target=LogServer.get_instance().start_server).start()
