@@ -1,5 +1,6 @@
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
+import {SharedLogService} from '../shared-log/shared-log.service';
 
 export class AlarmFireSocketClass {
   socketUrl: string;
@@ -7,11 +8,21 @@ export class AlarmFireSocketClass {
   toastr: ToastrService;
   router: Router;
 
-  constructor(socketUrl: string, toastr: ToastrService, router: Router) {
+  logSocketUrl: string;
+  logSocket: WebSocket;
+
+  sharedLogService: SharedLogService;
+
+  constructor(socketUrl: string, toastr: ToastrService, router: Router, logSocketUrl: string, sharedLogService: SharedLogService) {
     this.socketUrl = socketUrl;
     this.openSocket();
     this.toastr = toastr;
     this.router = router;
+
+    this.logSocketUrl = logSocketUrl;
+    this.openLogSocket();
+
+    this.sharedLogService = sharedLogService;
   }
 
   openSocket() {
@@ -38,8 +49,30 @@ export class AlarmFireSocketClass {
     };
   }
 
+  openLogSocket(){
+    this.logSocket = new WebSocket(this.logSocketUrl);
+
+    this.logSocket.onmessage = ev => {
+      // poruke da je otvoren ili zatvoren socket
+      if (ev.data === 'connected' || ev.data === 'disconnected') {
+        return;
+      }
+      // dodajemo log
+      this.sharedLogService.addLog(JSON.parse(ev.data));
+    };
+
+    this.logSocket.onopen = () => {
+      console.log('Log Socket opened');
+    };
+    this.logSocket.onclose = () => {
+      console.log('Log Socket closed');
+    };
+  }
+
+
   closeSocket() {
     this.socket.close();
+    this.logSocket.close();
   }
 
 }

@@ -11,4 +11,5 @@ export interface ILog {
   version?: number;
   severity?: number;
   facility?: number;
+  line?: number;
 }

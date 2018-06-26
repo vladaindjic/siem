@@ -128,7 +128,7 @@ faker = Faker()
 timestr = time.strftime("%Y%m%d-%H%M%S")
 otime = datetime.datetime.now()
 outFileName = 'web_app_log' + timestr + '.log'
-hostmachine = "192.168.1.1"
+hostmachine = "10.10.10.1"
 applicationName = "FakeWebApp"
 
 f = open(outFileName, 'w')

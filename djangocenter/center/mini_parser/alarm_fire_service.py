@@ -33,7 +33,6 @@ class AlarmFireService(object):
         # FIXME: ako kojim slucajem alarm_id nije postavljen zbog konkurentnosti, jako retko
         # vraticemo ga iz baze
         if alarm_id is None:
-            print("Sta me koji kurac jebes?: %s" % alarm_str)
             # FIXME: da li moze ikada da bude None ovde
             alarm_id = self.find_alarm_by_str(alarm_str)['_id']
         # da li su svi isti hostname-ovi logova koji su izazvali alarm

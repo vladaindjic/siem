@@ -34,7 +34,11 @@ class LogRepository(object):
     def add_log(self, log):
         log_dict = convert_log_to_dict(log)
         # FIXME: ovde izbaci : iz datuma
-        return self.log_collection.insert_one(log_dict).inserted_id
+        log_id = self.log_collection.insert_one(log_dict).inserted_id
+        print('Pokusavam da postavim id za log')
+        log._id = log_id
+        print('Postavio sam ga')
+        return log
 
     def find(self, query, limit=None, page=None, sort=None):
         limit = limit if limit is not None else 0

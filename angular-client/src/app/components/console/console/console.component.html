@@ -1,0 +1,6 @@
+<div style="overflow-y: scroll; height:150px; background-color: rgba(14, 13, 13, 1);">
+  <p *ngFor="let log of receivedLogs">{{log.line}}</p>
+</div>
+<footer *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]', '[SUPERUSER]']" id="footer"  style=" background-color: rgba(14, 13, 13, 1);">
+    <button class="btn btn-danger btn-sm d-flex justify-content-end" (click)="clearConsole()">clear</button>
+</footer>

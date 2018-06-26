@@ -12,6 +12,8 @@ from .alarm_service import AlarmService
 # from sysql import SysqlMongoCompiler
 # from alarm_service import AlarmService
 
+from djangocenter.consumers import send_message_log
+
 
 class LogService(object):
     instance = None
@@ -30,9 +32,12 @@ class LogService(object):
     def add_log(self, log_str):
         log = convert_json_to_log(log_str)
 
-        self.log_repository.add_log(log)
+        log = self.log_repository.add_log(log)
 
         self.alarm_service.check_log(log)
+
+        # poslati log kroz socket
+        send_message_log(log)
 
     def find(self, syslog_query):
         print("Trazimo: %s" % syslog_query)
