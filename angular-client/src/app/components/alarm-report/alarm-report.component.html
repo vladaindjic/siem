@@ -15,11 +15,14 @@
             <div>
                 <div class="form-group">
                     <label>Host:</label>
+                    <ngx-select-dropdown  (change)="selectionChanged($event)" [multiple]="true" [config]="config" [options]="hosts" [(value)]="selectedHost"></ngx-select-dropdown>
+                    <!--
                     <select multiple class="form-control" name="host" [(ngModel)]="selectedHost" style="height: 100px">
                         <option *ngFor="let host of hosts" [value]="host">
                             {{host}}
                         </option>
                     </select>
+                    -->
                 </div>
             </div>
         </span>

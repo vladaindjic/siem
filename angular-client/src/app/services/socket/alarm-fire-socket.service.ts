@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AlarmFireSocketService {
 
-  static socektLocation = 'wss://localhost:443/alarm-fire/';
+  static socektLocation = 'wss://192.168.0.17:433/alarm-fire/';
   // static socektLocation = 'ws://localhost/alarm-fire';
 
   sockets = {};

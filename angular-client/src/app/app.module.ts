@@ -30,6 +30,9 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ReportComponent } from './components/report/report.component';
 import {AlarmFireSocketService} from './services/socket/alarm-fire-socket.service';
 import { AlarmFireDetailsComponent } from './components/alarm-fire-details/alarm-fire-details.component';
+
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -81,6 +84,7 @@ const appRoutes: Routes = [
     NgxPermissionsModule.forRoot(),
     HttpClientModule,
     DlDateTimePickerDateModule,
+    SelectDropDownModule,
   ],
   providers: [
     LogService,
