@@ -40,6 +40,7 @@ class LogRepository(object):
         limit = limit if limit is not None else 0
         page = page if page is not None else 0
         sort = sort if sort is not None else None
+        print('(page, limit)=(%s, %s)' % (page, limit))
         res = self.log_collection.find(filter=query, limit=limit, skip=limit*page, sort=sort)
         return {
             'logs': list(res),

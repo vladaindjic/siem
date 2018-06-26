@@ -65,7 +65,7 @@ def create_alarm(request):
 @custom_permission_required("update_alarm")
 @permission_classes((IsAuthenticated, HasGroupPermission,))
 def update_alarm(request, idA):
-    from center.mini_parser.dto import AlarmDto
+    from center.mini_parser.dto.alarm_dto import AlarmDto
     from center.mini_parser.alarm_util import convert_alarm_to_dict
     alarm = alarm_service.update_alarm(alarm_dto=AlarmDto(query=request.data['query']), alarm_id=idA)
     return Response(json.dumps(convert_alarm_to_dict(alarm), default=json_util.default), HTTP_200_OK)

@@ -745,8 +745,8 @@ class SortParams(IRObject):
     def __init__(self, first_param=None):
         self.sort_params = OrderedDict()
         if first_param is not None:
-            # self.sort_params[first_param.property.name] = first_param
-            self.sort_params[first_param.property.name.name] = first_param
+            self.sort_params[first_param.property.name] = first_param
+            # self.sort_params[first_param.property.name.name] = first_param
 
     def add_param(self, param):
         if param.property.name.name not in self.sort_params:
