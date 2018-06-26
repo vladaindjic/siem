@@ -4,7 +4,7 @@ from security_communication import SecurityChannel
 
 sec_channel = SecurityChannel()
 
-API_ENDPOINT = "https://localhost:8443/logger"
+API_ENDPOINT = "https://192.168.0.17:8443/logger"
 
 line_num = 0
 lines = set()

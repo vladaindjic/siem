@@ -5,9 +5,10 @@ import time
 import datetime
 import yaml
 import platform
+from datetime import datetime
 from event import Event
 # from udp_communication import send_log_line
-from http_communication import send_log_line
+from http_communication import send_json_log
 
 
 class WinAgent(object):
@@ -33,35 +34,36 @@ class WinAgent(object):
             self._date = get_date()
             out = out.decode('utf-8')
             # print(out)
-            out = re.sub(r'\s+', ' ', out)
-            events = get_events(parse(out),out)
-            print(len(events))
-            #Ako postoje patterni za filtriranje onda cemo da fltriramo listu eventa inace saljemo citavu
-            if self._patterns:
-                send_events(self._filter_events(events))
-            else:
-                send_events(events)
-            # print("##############################################################")
-            p.kill()
-            time.sleep(60*self._interval)
+            if(len(out) > 0):
+                out = re.sub(r'\s+', ' ', out)
+                events = get_events(parse(out),out)
+                # print(len(events))
+                #Ako postoje patterni za filtriranje onda cemo da fltriramo listu eventa inace saljemo citavu
+                if self._patterns:
+                    send_events(self._filter_events(events))
+                else:
+                    send_events(events)
+                # print("##############################################################")
+                p.kill()
+                time.sleep(self._interval)
 
     def _filter_events(self,events_list):
         events = []
-        for pattern in self._patterns:
-            for event in events_list:
-                if(re.match(pattern,str(event))):
-                    events.append(event)
+        # for pattern in self._patterns:
+        #     for event in events_list:
+        #         if(re.match(pattern,str(event))):
+        #             events.append(event)
         #
-        # for event in events_list:
-        #     if any([[re.match(pattern, str(event)) for pattern in self._patterns]]):
-        #         events.append(event)
+        for event in events_list:
+            if any([[re.match(pattern, str(event)) for pattern in self._patterns]]):
+                events.append(event)
 
         # print("ovdije sam",len(events))
         return events
 
 
 def get_date():
-    now  = datetime.datetime.now()
+    now = datetime.now()
     now_str = now.strftime("%d%m%Y_%H%M%S")
     return now_str
 
@@ -79,9 +81,39 @@ def run_agents(agents_list):
 
 def send_events(events):
     for event in events:
-        print("Poslan log:",event)
-        send_log_line(str(event))
+        #print("Poslan log:",event)
+        send_json_log(to_json(event))
+        # time.sleep(1)
 
+def to_json(event):
+    json_dic = {}
+    if(event.entry_type == "Emergency"):
+        json_dic['severity'] = 0
+    elif(event.entry_type == "Alert"):
+        json_dic['severity'] = 1
+    elif (event.entry_type == "Critical"):
+        json_dic['severity'] = 2
+    elif (event.entry_type == "Error"):
+        json_dic['severity'] = 3
+    elif (event.entry_type == "Warning"):
+        json_dic['severity'] = 4
+    elif (event.entry_type == "Notice"):
+        json_dic['severity'] = 5
+    elif (event.entry_type == "Debug"):
+        json_dic['severity'] = 7
+    else:
+        json_dic['severity'] = 6
+
+    json_dic['facility'] = 5
+    json_dic['procid'] = event.instance_id.strip()
+    json_dic['appname'] = event.source.strip()
+    date = datetime.strptime(str(event.time_generated.strip()), "%m/%d/%Y %I:%M:%S %p")
+    # print(str(date.strftime("%Y-%m-%dT%H:%M:%S+02:00")))
+    json_dic['timestamp'] = str(date.strftime("%Y-%m-%dT%H:%M:%S+02:00"))
+    json_dic['hostname'] = event.machine_name.strip()
+    json_dic['msg'] = event.message.strip()
+    # '6/26/2018 10:02:05 PM
+    return json_dic
 
 def parse(string):
     ret_val = {}
