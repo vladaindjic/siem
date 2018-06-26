@@ -1,3 +1,7 @@
 <app-navbar></app-navbar>
 <router-outlet>
 </router-outlet>
+<footer *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]', '[SUPERUSER]']" id="footer" class="bar-positive foo">
+    <button class="btn btn-info btn-sm" (click)="toggleButton()">Console</button>
+    <app-console *ngIf="toggleBtn" style="height: 30%;"></app-console>
+</footer>
