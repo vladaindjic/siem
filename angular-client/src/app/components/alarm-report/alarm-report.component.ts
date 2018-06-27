@@ -13,6 +13,13 @@ export class AlarmReportComponent implements OnInit {
   public selectedHost;
   public hosts =['All'];
   public report;
+
+
+  public config = {
+    search:true //enables the search plugin to search in the list
+    };
+
+    
   constructor(private logService:LogService) {
    }
  
@@ -21,6 +28,10 @@ export class AlarmReportComponent implements OnInit {
       console.log(data);
       this.hosts = this.hosts.concat(data as Array<any>);
     })
+  }
+
+  selectionChanged(eventValue){
+    /*mozda nesto uradit*/
   }
 
 

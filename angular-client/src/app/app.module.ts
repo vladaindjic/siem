@@ -32,6 +32,8 @@ import {AlarmFireSocketService} from './services/socket/alarm-fire-socket.servic
 import { AlarmFireDetailsComponent } from './components/alarm-fire-details/alarm-fire-details.component';
 import { ConsoleComponent } from './components/console/console/console.component';
 import {SharedLogService} from './services/shared-log/shared-log.service';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -84,6 +86,7 @@ const appRoutes: Routes = [
     NgxPermissionsModule.forRoot(),
     HttpClientModule,
     DlDateTimePickerDateModule,
+    SelectDropDownModule,
   ],
   providers: [
     LogService,

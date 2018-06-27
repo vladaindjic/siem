@@ -10,7 +10,9 @@ export class SharedLogService {
   constructor() { }
 
   addLog(log: ILog){
+    console.log(log);
     this.logs.unshift(log);
+    console.log(this.logs.length);
   }
 
   clearLogs(){

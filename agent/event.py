@@ -14,7 +14,7 @@ class Event:
         self.message = message
         self.source = source
         self.replacement_strings = replacement_strings
-        self.instance_id  = instance_id
+        self.instance_id = instance_id
         self.time_generated = time_generated
         self.time_written = time_written
         self.user_name = user_name
