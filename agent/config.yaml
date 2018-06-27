@@ -46,19 +46,19 @@ specific:
 #              interval: 4
 
 
-  # Generator skripta
-#    - directory:
-#        path: '../logGeneratorAgent'
-#        patterns:
-#          - '.*POST.*'
-#          - '.*DELETE.*'
-#        interval: 3
-#        only_specified_files: True
-#        files:
-#          - file:
-#              path: 'web_app_log20180626-203833.log'
-#              read_all: False
-#              parser_type: 'SyslogRFC5424Parser'
+   #Generator skripta
+    - directory:
+        path: '../logGeneratorAgent'
+        patterns:
+          - '.*POST.*'
+          - '.*DELETE.*'
+        interval: 3
+        only_specified_files: True
+        files:
+          - file:
+              path: 'web_app_log20180627-023037.log'
+              read_all: False
+              parser_type: 'SyslogRFC5424Parser'
 
 #    - directory:
 #        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
@@ -136,17 +136,17 @@ os:
 #          files:
 #              - file:
 #                  path: 'utmp'
-  windows:
-    logs:
-    - log:
-        name: 'Application'
-        interval: 30
+#  windows:
+#    logs:
+#    - log:
+#        name: 'Application'
+#        interval: 30
 #        patterns:
 #          - '.*Disk.*'
 #          - '.*Battery.*'
-    - log:
-        name: 'System'
-        interval: 20
-    - log:
-        name: 'Security'
-        interval: 10
+#    - log:
+#        name: 'System'
+#        interval: 20
+#    - log:
+#        name: 'Security'
+#        interval: 10

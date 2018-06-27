@@ -19,6 +19,7 @@ export class AlarmFireDetailsComponent implements OnInit {
       let id: string = params['id'];
       this.alarmService.getAlarmFireDetails(id).subscribe(af => {
         this.alarmFire = JSON.parse(af as string);
+        console.log(this.alarmFire)
       });
     });
   }
