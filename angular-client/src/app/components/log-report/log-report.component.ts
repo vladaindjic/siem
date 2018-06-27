@@ -18,6 +18,11 @@ export class LogReportComponent implements OnInit {
   public hosts =['All'];
   public report;
   public logs = [];
+
+  public config = {
+    search:true //enables the search plugin to search in the list
+    };
+
   constructor(private logService:LogService,private toastr:ToastrService) { }
 
   ngOnInit() {
@@ -31,6 +36,8 @@ export class LogReportComponent implements OnInit {
     let data = {};
     data['startTime'] = moment(this.selectedMoments[0]).format();
     data['endTime'] = moment(this.selectedMoments[1]).format();
+    console.log(this.selectedHost);
+   
     if(this.selectedHost.includes('All')){
       data['all'] = true;
     }else{
@@ -56,8 +63,12 @@ export class LogReportComponent implements OnInit {
     })
   }
 
+  selectionChanged(eventValue){
+    /*mozda nesto uradit*/
+  }
+
   savePDF(){
-    var doc = new jsPDF('1', 'pt','a4');
+    var doc = new jsPDF('p', 'pt');
     var col = ["appname", "facility","hostname","severity","timestamp","msg"];
     var rows = [];
 
@@ -67,11 +78,11 @@ export class LogReportComponent implements OnInit {
     }
     console.log(col)
     console.log(rows)
-    doc.autoTable(col, rows,{
-      tableWidth: 'auto',
-      headerStyles:{columnWidth:'auto'},
-      bodyStyles: {overflow: 'linebreak', columnWidth: 'wrap'},
-      columnStyles: {text: {columnWidth: 'wrap'}},
+    doc.autoTable(col, rows,{ 
+      margin: {horizontal: 7},
+      bodyStyles: {valign: 'top'},
+      styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+      columnStyles: {text: {columnWidth: 'auto'}}
   });
   let name = "repot_"+  moment(new Date).format();
   doc.save(name+'.pdf');
