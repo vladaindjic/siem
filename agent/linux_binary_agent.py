@@ -123,7 +123,7 @@ class FailLogAgent(LinuxBinaryAgent):
 class TallyLogAgent(LinuxBinaryAgent):
     def __init__(self, agent):
         super().__init__(agent)
-        self.cmd = "sudo pam_tally2"
+        self.cmd = "pam_tally2"
         self.footer_lines_num = 0
         self.header_lines_num = 0
 

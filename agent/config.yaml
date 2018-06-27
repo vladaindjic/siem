@@ -56,7 +56,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180627-030027.log'
+              path: 'web_app_log20180627-051015.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 
@@ -75,15 +75,6 @@ specific:
 
 
 #    - directory:
-#        path: '/home/vi3/Faks/Bezbednost/siem/center/log'
-#        interval: 3
-#        only_specified_files: True
-#        files:
-#          - file:
-#              path: 'siem-application.log'
-#              read_all: True
-#              parser_type: 'LinuxStandardSyslogParser'
-#    - directory:
 #        path: '/var/log/mongodb/'
 #        interval: 3
 #        only_specified_files: True
@@ -98,55 +89,48 @@ os:
   linux:
     only_specified_files: True
     read_all: True
-    interval: 1
+    interval: 0.5
     directories:
       - directory:
           path: '/var/log/'
           files:
-#              - file:
-#                  path: 'tallylog'
-#              - file:
-#                  path: 'faillog'
-#              - file:
-#                  path: 'ufw.log.1'
-#                  parser_type: 'LinuxStandardSyslogParser'
-#              - file:
-#                  path: 'syslog'
-#              - file:
-#                  path: 'kern.log'
-#              - file:
-#                  path: 'alternatives.log'    --- da li uopste treba da se gleda
-#              - file:
-#                  path: 'alternatives.log.1'    --- da li uopste treba da se gleda
-#              - file:
-#                  path: 'apport.log'       ---- da li uopste treba da se gleda
-#              - file:
-#                  path: 'apport.log.1'       --- da li uopste treba da se gleda
-#              - file:
-#                  path: 'dpkg.log'         --- da li uopste treba da se gleda
-#              - file:
-#                  path: 'wtmp'
-#              - file:
-#                  path: 'lastlog'
-#              - file:
-#                  path: 'btmp'  # problem sa permission denied
-#      - directory:
-#          path: '/var/run/'
-#          only_specified_files: True
-#          files:
-#              - file:
-#                  path: 'utmp'
-#  windows:
-#    logs:
-#    - log:
-#        name: 'Application'
-#        interval: 30
-#        patterns:
-#          - '.*Disk.*'
-#          - '.*Battery.*'
-#    - log:
-#        name: 'System'
-#        interval: 20
-#    - log:
-#        name: 'Security'
-#        interval: 10
+              - file:
+                  path: 'tallylog'
+              - file:
+                  path: 'faillog'
+              - file:
+                  path: 'ufw.log'
+                  parser_type: 'LinuxStandardSyslogParser'
+              - file:
+                  path: 'syslog'
+              - file:
+                  path: 'kern.log'
+              - file:
+                  path: 'wtmp'
+              - file:
+                  path: 'lastlog'
+              - file:
+                  path: 'btmp'  # problem sa permission denied
+              - file:
+                  path: 'auth.log'
+                  parser_type: 'LinuxStandardSyslogParser'
+      - directory:
+          path: '/var/run/'
+          only_specified_files: True
+          files:
+              - file:
+                  path: 'utmp'
+  windows:
+    logs:
+    - log:
+        name: 'Application'
+        interval: 30
+        patterns:
+          - '.*Disk.*'
+          - '.*Battery.*'
+    - log:
+        name: 'System'
+        interval: 20
+    - log:
+        name: 'Security'
+        interval: 10

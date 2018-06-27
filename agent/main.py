@@ -12,6 +12,10 @@ from parse_log import LinuxStandardSyslogParser, SyslogRFC5424Parser, DummyParse
 
 from http_communication import sec_channel
 
+# da oprobamo redirekciju u fajl
+# import sys
+# sys.stdout = open('probica.txt', 'a')
+
 
 def initialize_parser(parser_type, file_path=""):
     if parser_type == 'SyslogRFC5424Parser':

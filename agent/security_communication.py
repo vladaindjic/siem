@@ -23,6 +23,11 @@ class SecurityChannel(object):
         self.port = PORT
         self.communication_protocol = communication_protocol
 
+        self.log_num = 0
+
+        # import sys
+        # sys.stdout = open('probica.txt', 'a')
+
     def initialize_communication(self, key_path, cert_path, ca_path, API_ENDPOINT, interval, HOST, PORT, communication_protocol):
         # postavljanje parametara
         self.set_key_path(key_path)
@@ -113,14 +118,15 @@ class SecurityChannel(object):
         for m in messages:
             # FIXME: check this new line character
             s.send((m + '\n').encode('utf-8'))
-            print('Sve ok!')
+            self.log_num += 1
+            print('Log num: %d' % self.log_num)
         s.close()
 
     def center_communication(self):
         while True:
             msgs = self.take_message()
             if not msgs:
-                print("Nema nista da se salje")
+                # print("Nema nista da se salje")
                 sleep(self.interval)
                 continue
             self.send_messages(msgs)
