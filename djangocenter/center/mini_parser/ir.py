@@ -559,7 +559,7 @@ class Property(IRObject):
         # 2018-05-22T01:27:17+02:00
         prop_value = getattr(log, self.name)
         if self.name == "timestamp":
-            return convert_rfc3339str_to_datetime(prop_value)
+            return convert_rfc3339str_to_datetime(rfc3339.rfc3339(prop_value))
         return prop_value
 
     def has_timestamp(self):

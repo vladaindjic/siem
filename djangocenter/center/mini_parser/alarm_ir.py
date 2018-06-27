@@ -10,6 +10,7 @@ from .ir import *
 # from ir import *
 
 from .alarm_fire_service import AlarmFireService
+import traceback
 
 
 class TimeOffsetVal(Val):
@@ -45,11 +46,11 @@ class Alarm(IRObject):
         self.category_queues = {}
 
     def check_log(self, log):
-        # try:
+        try:
             if self.eval(log):
                 self._add_log(log)
-        # except:
-        #     pass
+        except Exception as e:
+            traceback.print_exc()
 
     def _add_log(self, log):
         # ako samo jedan log treba, ispaljujemo ga

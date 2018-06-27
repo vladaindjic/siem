@@ -58,6 +58,7 @@ export class AlarmFireSocketClass {
         return;
       }
       // dodajemo log
+      console.log(JSON.parse(ev.data));
       this.sharedLogService.addLog(JSON.parse(ev.data));
     };
 

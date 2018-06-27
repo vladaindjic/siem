@@ -33,9 +33,9 @@ class LogService(object):
         log = convert_json_to_log(log_str)
 
         log = self.log_repository.add_log(log)
-
+        print("Pre cekiranja")
         self.alarm_service.check_log(log)
-
+        print("POSLE CEKIRANJA")
         # poslati log kroz socket
         send_message_log(log)
 
