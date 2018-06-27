@@ -19,6 +19,7 @@ class WinAgent(object):
         self._date = ""
         self._patterns = patterns
         self._thread = Thread(target=self.monitor_log)
+        self.sentLogs = 0
 
     def run(self):
         self._thread.start()
@@ -40,9 +41,9 @@ class WinAgent(object):
                 # print(len(events))
                 #Ako postoje patterni za filtriranje onda cemo da fltriramo listu eventa inace saljemo citavu
                 if self._patterns:
-                    send_events(self._filter_events(events))
+                    self.send_events(self._filter_events(events))
                 else:
-                    send_events(events)
+                    self.send_events(events)
                 # print("##############################################################")
                 p.kill()
                 time.sleep(self._interval)
@@ -60,6 +61,13 @@ class WinAgent(object):
 
         # print("ovdije sam",len(events))
         return events
+
+    def send_events(self,events):
+        for event in events:
+            # print("Poslan log:",event)
+            send_json_log(to_json(event))
+            self.sentLogs += 1
+            # time.sleep(1)
 
 
 def get_date():
@@ -79,11 +87,11 @@ def run_agents(agents_list):
         agent.run()
 
 
-def send_events(events):
-    for event in events:
-        #print("Poslan log:",event)
-        send_json_log(to_json(event))
-        # time.sleep(1)
+# def send_events(events):
+#     for event in events:
+#         #print("Poslan log:",event)
+#         send_json_log(to_json(event))
+#         # time.sleep(1)
 
 def to_json(event):
     json_dic = {}
