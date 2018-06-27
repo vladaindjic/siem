@@ -4,6 +4,8 @@ from .sysqo_time_util import convert_rfc3339str_to_datetime
 # bez tacaka
 # from sysqo_time_util import convert_rfc3339str_to_datetime
 
+import rfc3339
+
 
 class AlarmQueue(object):
     def __init__(self, alarm, num_logs, has_timestamp):
@@ -30,7 +32,7 @@ class AlarmQueue(object):
     def _sort(self):
         # ako ima timestamp, onda treba sortirati po njemu u opadajucem redosledu
         if self.has_timestamp:
-            self.logs.sort(key=lambda l: convert_rfc3339str_to_datetime(l.timestamp), reverse=True)
+            self.logs.sort(key=lambda l: convert_rfc3339str_to_datetime(rfc3339.rfc3339(l.timestamp)), reverse=True)
 
     def _clean(self):
         # ako nema timestampa, nema potrebe da se cisti
