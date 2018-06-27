@@ -1,3 +1,29 @@
-<h1 *ngIf="alarmFire">
-  Prikazi informacije za alarm fire: <span>{{alarmFire['_id']['$oid']}}</span>
-</h1>
+<div class="container" style="margin-top: 3%;">
+  <div *ngIf="alarmFire">
+    <div class="card">
+      <div class="card-header">Alarm Fired:{{alarmFire.alarm_str}} <br/> Alarm Id:{{alarmFire['_id']['$oid']}}</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">facility</th>
+              <th scope="col">severity</th>
+              <th scope="col">timestamp</th>
+              <th scope="col">hostname</th>
+              <th scope="col">msg</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of alarmFire.logs;">
+              <td>{{log.facility}}</td>
+              <td>{{log.severity}}</td>
+              <td>{{log.timestamp.$date|date: "yyyy-MM-ddTHH:mm:ss.SSSZZZZZ"}}</td>
+              <td>{{log.hostname}}</td>
+              <td>{{log.msg}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
