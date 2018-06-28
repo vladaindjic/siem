@@ -6,6 +6,8 @@ from .mongo_util import MongoUtil
 # from log_util import convert_log_to_dict
 # from mongo_util import MongoUtil
 
+import datetime
+
 
 class LogRepository(object):
     instance = None
@@ -35,17 +37,24 @@ class LogRepository(object):
         log_dict = convert_log_to_dict(log)
         # FIXME: ovde izbaci : iz datuma
         log_id = self.log_collection.insert_one(log_dict).inserted_id
-        print('Pokusavam da postavim id za log')
+        # print('Pokusavam da postavim id za log')
         log._id = log_id
-        print('Postavio sam ga')
+        # print('Postavio sam ga')
         return log
 
     def find(self, query, limit=None, page=None, sort=None):
         limit = limit if limit is not None else 0
         page = page if page is not None else 0
         sort = sort if sort is not None else None
-        print('(page, limit)=(%s, %s)' % (page, limit))
+        # print('(page, limit)=(%s, %s)' % (page, limit))
+
+        # TODO: start_time
+        start_time = datetime.datetime.now()
         res = self.log_collection.find(filter=query, limit=limit, skip=limit*page, sort=sort)
+        # TODO: end_time
+        end_time = datetime.datetime.now()
+        time_interval = end_time - start_time
+        print("Time passed: %s" % time_interval)
         return {
             'logs': list(res),
             'count': res.count()

@@ -42,7 +42,6 @@ class AlarmEngine(object):
 
     def add_log(self, log):
         # FIXME: trenutno se jako glupo resava
-        print("U ADD_LOG AlarmEngine")
         for al in self.alarms.values():
             al.check_log(log)
         return log

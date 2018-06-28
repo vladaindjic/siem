@@ -13,6 +13,7 @@ from .alarm_service import AlarmService
 # from alarm_service import AlarmService
 
 from djangocenter.consumers import send_message_log
+import datetime
 
 
 class LogService(object):
@@ -30,19 +31,23 @@ class LogService(object):
         self.alarm_service = AlarmService.get_instance()
 
     def add_log(self, log_str):
+        start_time = datetime.datetime.now()
         log = convert_json_to_log(log_str)
-
         log = self.log_repository.add_log(log)
-        print("Pre cekiranja")
         self.alarm_service.check_log(log)
-        print("POSLE CEKIRANJA")
+        end_time = datetime.datetime.now()
+
+        interval_time = end_time-start_time
+
+        print('TIME TO ADD LOG: %s' % interval_time)
+
         # poslati log kroz socket
         send_message_log(log)
 
     def find(self, syslog_query):
-        print("Trazimo: %s" % syslog_query)
+        # print("Trazimo: %s" % syslog_query)
         compiled_query = self.sysql_compiler.compile(syslog_query)
-        print("Posle kompajliranja: %s" % compiled_query)
+        # print("Posle kompajliranja: %s" % compiled_query)
         res = self.log_repository.find(compiled_query['mongo_query'], compiled_query['limit'],
                                  compiled_query['page'], compiled_query['sort'])
         return res
