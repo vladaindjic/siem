@@ -14,6 +14,10 @@ export class AlarmFireSocketClass {
   sharedLogService: SharedLogService;
 
   constructor(socketUrl: string, toastr: ToastrService, router: Router, logSocketUrl: string, sharedLogService: SharedLogService) {
+    this.sharedLogService = sharedLogService;
+    this.sharedLogService.clearLogs();
+    this.sharedLogService.clearAlarmFires();
+
     this.socketUrl = socketUrl;
     this.openSocket();
     this.toastr = toastr;
@@ -21,8 +25,6 @@ export class AlarmFireSocketClass {
 
     this.logSocketUrl = logSocketUrl;
     this.openLogSocket();
-
-    this.sharedLogService = sharedLogService;
   }
 
   openSocket() {
@@ -34,18 +36,15 @@ export class AlarmFireSocketClass {
         return;
       }
       // prikazivanje toastr-a
-      console.log('Ovo nam je iz socketa stiglo', ev.data);
-      this.toastr.show('New alarm with id: ' + ev.data + ' has been fired!').onTap.subscribe(() => {
-        this.router.navigate(['/alarm_fire_details/' + ev.data]);
-      });
+       this.sharedLogService.addAlarmFire(JSON.parse(ev.data));
 
     };
 
     this.socket.onopen = () => {
-      console.log('Socket opened');
+
     };
     this.socket.onclose = () => {
-      console.log('Socket closed');
+
     };
   }
 
@@ -58,15 +57,12 @@ export class AlarmFireSocketClass {
         return;
       }
       // dodajemo log
-      console.log(JSON.parse(ev.data));
       this.sharedLogService.addLog(JSON.parse(ev.data));
     };
 
     this.logSocket.onopen = () => {
-      console.log('Log Socket opened');
     };
     this.logSocket.onclose = () => {
-      console.log('Log Socket closed');
     };
   }
 

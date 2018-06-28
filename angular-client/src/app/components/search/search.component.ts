@@ -31,7 +31,6 @@ export class SearchComponent implements OnInit {
         let res: IFindLogsResult = JSON.parse(data as string) as IFindLogsResult;
         this.count = res.count;
         this.logs = res.logs;
-        console.log(this.count)
       });
     })
   }

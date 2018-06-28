@@ -38,8 +38,7 @@ export class ChangePasswordComponent implements OnInit {
     const pass_change = this.changePasswordForm.value;
     this.autheticationService.changeUserPass(pass_change).subscribe(
       data => {
-        console.log(JSON.stringify(data))
-        this.logout()
+        this.logout();
       },
       error => this.toastr.error('Passord changing failed')
     );

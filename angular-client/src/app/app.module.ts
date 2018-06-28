@@ -33,6 +33,7 @@ import { AlarmFireDetailsComponent } from './components/alarm-fire-details/alarm
 import { ConsoleComponent } from './components/console/console/console.component';
 import {SharedLogService} from './services/shared-log/shared-log.service';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { AlarmConsoleComponent } from './components/console/alarm-console/alarm-console.component';
 
 const appRoutes: Routes = [
   {
@@ -70,6 +71,7 @@ const appRoutes: Routes = [
     ReportComponent,
     AlarmFireDetailsComponent,
     ConsoleComponent,
+    AlarmConsoleComponent,
   ],
   imports: [
     BrowserModule,

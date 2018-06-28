@@ -6,17 +6,25 @@ import {ILog} from '../../model/ILog';
 export class SharedLogService {
 
   public logs: ILog[] = [];
+  public alarmFires: Object[] = [];
 
   constructor() { }
 
   addLog(log: ILog){
-    console.log(log);
     this.logs.unshift(log);
-    console.log(this.logs.length);
   }
 
   clearLogs(){
     this.logs = [];
+  }
+
+  addAlarmFire(alarmFire: Object){
+    this.alarmFires.unshift(alarmFire);
+
+  }
+
+  clearAlarmFires(){
+    this.alarmFires = [];
   }
 
 }

@@ -7,9 +7,9 @@ import {SharedLogService} from '../shared-log/shared-log.service';
 @Injectable()
 export class AlarmFireSocketService {
 
-  static socektLocation = 'wss://192.168.0.17/alarm-fire/';
+  static socektLocation = 'wss://192.168.0.17:443/alarm-fire/';
   // static socektLocation = 'ws://localhost/alarm-fire';
-  static logSocketLocation = 'wss://192.168.0.17/log/';
+  static logSocketLocation = 'wss://192.168.0.17:443/log/';
 
   sockets = {};
 

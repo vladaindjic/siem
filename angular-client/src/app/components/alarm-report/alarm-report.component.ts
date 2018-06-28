@@ -27,7 +27,6 @@ export class AlarmReportComponent implements OnInit {
 
   ngOnInit() {
     this.logService.getHosts().subscribe((data) => {
-      console.log(data);
       this.hosts = this.hosts.concat(data as Array<any>);
     })
   }
@@ -47,10 +46,8 @@ export class AlarmReportComponent implements OnInit {
       data['all'] = false;
     }
     data['hosts'] = this.selectedHost;
-    //console.log(data);
     this.logService.getAlarmAnalytics(data).subscribe((data) => {
       data = JSON.parse(data as string);
-      console.log(data);
       this.report = data;
     })
   }
@@ -64,7 +61,6 @@ export class AlarmReportComponent implements OnInit {
     let pageHeight = 842;
 
 
-    console.log(pageHeight);
     for (let aggregation of this.report.aggregations) {
 
       doc.setFontSize(12);
@@ -111,7 +107,8 @@ export class AlarmReportComponent implements OnInit {
 
 
     }
-    doc.save('pera.pdf');
+    let name = "alarm repot_" + moment(new Date).format();
+    doc.save(name + '.pdf');
   }
 
 }

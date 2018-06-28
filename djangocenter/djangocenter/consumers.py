@@ -10,7 +10,9 @@ from bson import json_util
 def send_message_alarm_fire(alarm_fire):
     af_dict = convert_alarm_fire_to_dict(alarm_fire)
     # saljemo id alarm-fire
-    Group('alarm-fire').send({'text': str(alarm_fire._id)})
+    af_json = json.dumps(af_dict, default=json_util.default)
+
+    Group('alarm-fire').send({'text': af_json})
     # print('Rezultat je: %s' % ret)
     print("Poslat alarm u socket")
 

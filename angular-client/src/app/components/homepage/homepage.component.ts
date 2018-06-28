@@ -11,11 +11,9 @@ export class HomepageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
 
-  btnclicked(){
-    console.log(LoggedUtils.getRole());
-  }
+
 }

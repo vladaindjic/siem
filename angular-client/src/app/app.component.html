@@ -2,6 +2,9 @@
 <router-outlet>
 </router-outlet>
 <footer *ngxPermissionsOnly="['[ADMIN]', '[OPERATOR]', '[SUPERUSER]']" id="footer" class="bar-positive foo">
-    <button class="btn btn-info btn-sm" (click)="toggleButton()">Console</button>
-    <app-console *ngIf="toggleBtn" style="height: 30%;"></app-console>
+    <button class="btn btn-info btn-sm" (click)="toggleConsoleButton()">Log Console</button>
+    <button class="btn btn-warning btn-sm" (click)="toggleAlarmConsoleButton()">Alarm Console</button>
+    <button class="btn btn-danger btn-sm" (click)="hideConsole()">hide</button>
+    <app-console *ngIf="consoleBtn" style="height: 30%;"></app-console>
+    <app-alarm-console *ngIf="alarmConsoleBtn" style="height: 30%;"></app-alarm-console>
 </footer>

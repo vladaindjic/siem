@@ -21,10 +21,9 @@ export class CustomReportComponent implements OnInit {
   }
 
   getReport() {
-    // console.log(this.query);
     this.logService.logSearch(this.query).subscribe((data) => {
       data = JSON.parse(data as string);
-      console.log(data);
+
       if (data['count'] === 0) {
         this.toastr.error('0 results for this query')
       } else {

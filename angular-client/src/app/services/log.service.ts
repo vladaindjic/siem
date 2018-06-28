@@ -16,7 +16,6 @@ export class LogService {
   }
 
   logSearch(text: string = this.queryDto.query): Observable<IFindLogsResult> {
-    console.log('Ovo trazimo: ', text);
     const url = `/api/center/find_logs`;
     // return this.http.get<IFindLogsResult>(url,{params:params});
     return this.http.put<IFindLogsResult>(url, {"query": text});

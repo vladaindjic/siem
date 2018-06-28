@@ -50,14 +50,12 @@ export class NavbarComponent implements OnInit {
   }
 
   search() {
-    console.log("Search");
     let query = this.searchForm.value.query;
     this.searchService.setQuery(query);
     this.router.navigate(['/search'], { queryParams: { query: query } });
   }
 
   logout() {
-    console.log("Ovo je username: " + LoggedUtils.getUsername());
     this.alarmFireSocketService.closeSocket(LoggedUtils.getUsername());
     LoggedUtils.clearLocalStorage();
     this.router.navigate(['/login']);

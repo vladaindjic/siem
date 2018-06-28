@@ -14,7 +14,6 @@ export class TokenInterceptorService {
         'Authorization': "JWT " + LoggedUtils.getToken(),
       },
     });
-    console.log(request);
     return next.handle(request);
   }
 

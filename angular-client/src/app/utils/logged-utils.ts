@@ -4,15 +4,13 @@ export class LoggedUtils {
         if (this.isEmpty()) {
             return '';
         }
-        console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
-        return JSON.parse(sessionStorage.getItem('loggedUser')).token;
+         return JSON.parse(sessionStorage.getItem('loggedUser')).token;
     }
 
     static getRole() {
         if (this.isEmpty()) {
             return null;
         }
-        console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
         if (JSON.parse(sessionStorage.getItem('loggedUser')).user.is_admin) {
             return '[ADMIN]'
         } else if (JSON.parse(sessionStorage.getItem('loggedUser')).user.is_operator) {
@@ -29,7 +27,6 @@ export class LoggedUtils {
     }
 
     static isEmpty() {
-        console.log(sessionStorage.getItem('loggedUser') === null);
         return sessionStorage.getItem('loggedUser') === null;
     }
 

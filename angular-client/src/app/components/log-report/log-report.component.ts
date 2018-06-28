@@ -29,7 +29,6 @@ export class LogReportComponent implements OnInit {
 
   ngOnInit() {
     this.logService.getHosts().subscribe((data) => {
-      console.log(data);
       this.hosts = this.hosts.concat(data as Array<any>);
     })
   }
@@ -38,7 +37,6 @@ export class LogReportComponent implements OnInit {
     let data = {};
     data['startTime'] = moment(this.selectedMoments[0]).format();
     data['endTime'] = moment(this.selectedMoments[1]).format();
-    console.log(this.selectedHost);
 
     if (this.selectedHost.includes('All')) {
       data['all'] = true;
@@ -46,10 +44,8 @@ export class LogReportComponent implements OnInit {
       data['all'] = false;
     }
     data['hosts'] = this.selectedHost;
-    console.log(data);
     this.logService.getLogAnalytics(data).subscribe((data) => {
       data = JSON.parse(data as string);
-      console.log(data);
       if (data['count'] === 0) {
         this.toastr.error('0 results for this query')
       } else {
@@ -58,7 +54,6 @@ export class LogReportComponent implements OnInit {
         for (let aggregation of data['aggregations']) {
           this.logs = this.logs.concat(aggregation.logs);
         }
-        console.log(this.logs);
       }
     },
       (error) => {
@@ -92,9 +87,9 @@ export class LogReportComponent implements OnInit {
     //   })
 
     //   html2canvas(("#canvas"), {
-    //     onrendered: function(canvas) {         
+    //     onrendered: function(canvas) {
     //         var imgData = canvas.toDataURL(
-    //             'image/png');              
+    //             'image/png');
     //         var doc = new jsPDF('p', 'mm');
     //         doc.addImage(imgData, 'PNG', 10, 10);
     //         doc.save('sample-file.pdf');

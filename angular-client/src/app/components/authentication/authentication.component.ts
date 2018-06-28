@@ -39,7 +39,7 @@ export class AuthenticationComponent implements OnInit {
     const credentials: IUser = this.loginForm.value;
     this.autheticationService.authenticateUser(credentials).subscribe(
       data => {
-        console.log(JSON.stringify(data));
+
         sessionStorage.setItem('loggedUser', JSON.stringify(data)),
 
           this.router.navigate(['/home']);
@@ -51,8 +51,7 @@ export class AuthenticationComponent implements OnInit {
         });
         this.toastr.success('You are loged in', 'Welcome!');
         // TODO: ovde dodaj otvaranje socketa
-        console.log('Ovo je jebeni korisnik' + LoggedUtils.getUsername());
-        console.log(data);
+
         this.alarmFireSocketService.openSocket(data['user'].username);
       },
       error => this.toastr.error('Incorrect username and/or password'),

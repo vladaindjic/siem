@@ -7,13 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  toggleBtn = false;
+  consoleBtn = false;
+  alarmConsoleBtn = false;
 
 
   ngOnInit(){
   }
 
-  toggleButton(){
-    this.toggleBtn = !this.toggleBtn;
+  toggleConsoleButton(){
+    this.alarmConsoleBtn = false;
+    this.consoleBtn = !this.consoleBtn;
+  }
+
+  toggleAlarmConsoleButton(){
+    this.consoleBtn = false;
+    this.alarmConsoleBtn = !this.alarmConsoleBtn;
+  }
+
+  hideConsole(){
+    this.consoleBtn = false;
+    this.alarmConsoleBtn = false;
   }
 }

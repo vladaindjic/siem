@@ -11,7 +11,7 @@ export class ReportComponent implements OnInit {
   public show;
   public noReportToShow;
   public report;
-  constructor() { 
+  constructor() {
     this.show = 'logReports';
     this.noReportToShow = true;
   }
@@ -21,7 +21,6 @@ export class ReportComponent implements OnInit {
   }
 
   onShowReport(data){
-    console.log(data);
     this.report = data;
     this.noReportToShow =false;
   }
@@ -29,6 +28,6 @@ export class ReportComponent implements OnInit {
   togleReports(reportsToShow){
     this.show = reportsToShow;
   }
- 
+
 
 }
