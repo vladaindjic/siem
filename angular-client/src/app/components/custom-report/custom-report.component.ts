@@ -40,22 +40,22 @@ export class CustomReportComponent implements OnInit {
   }
 
   savePDF() {
-    var doc = new jsPDF('1', 'pt', 'a4');
-    var col = ["appname", "facility", "hostname", "severity", "timestamp", "msg"];
+    var doc = new jsPDF('p', 'pt', 'a4');
+    var cols= ["appname", "facility", "hostname", "severity", "timestamp", "msg"];
     var rows = [];
 
     for (var log of this.report.logs) {
       var temp = [log['appname'], log['facility'], log['hostname'], log['severity'], moment(log['timestamp']).format(), log['msg']];
       rows.push(temp);
     }
-    console.log(col)
-    console.log(rows)
-    doc.autoTable(col, rows, {
-      tableWidth: 'auto',
-      headerStyles: { columnWidth: 'auto' },
-      bodyStyles: { overflow: 'linebreak', columnWidth: 'wrap' },
-      columnStyles: { text: { columnWidth: 'wrap' } },
-    });
+    doc.autoTable(cols, rows, {styles: {overflow: 'linebreak'},columnStyles: {
+      0: {columnWidth: 80},
+      1: {columnWidth: 50},
+      2: {columnWidth: 80},
+      3: {columnWidth: 50},
+      4: {columnWidth: 90},
+      5: {columnWidth: 180},
+  }});
     let name = "repot_" + moment(new Date).format();
     doc.save(name + '.pdf');
     return doc;

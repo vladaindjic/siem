@@ -59,6 +59,18 @@ specific:
               path: 'web_app_log20180627-061014.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
+#    - directory:
+#        path: '../logGeneratorAgent'
+#        patterns:
+#          - '.*POST.*'
+#          - '.*DELETE.*'
+#        interval: 3
+#        only_specified_files: True
+#        files:
+#          - file:
+#              path: 'web_app_log20180628-063736.log'
+#              read_all: False
+#              parser_type: 'SyslogRFC5424Parser'
 
 #    - directory:
 #        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
@@ -74,22 +86,22 @@ specific:
 #              parser_type: 'LinuxStandardSyslogParser'
 
 
-#    - directory:
-#        path: '/var/log/mongodb/'
-#        interval: 3
-#        only_specified_files: True
-#        files:
-#          - file:
-#              path: 'mongod.log'
-#              read_all: True
-#              parser_type: 'DummyParser'
+    - directory:
+        path: '/home/vi3/Faks/Bezbednost/siem/djangocenter/log'
+        interval: 1
+        only_specified_files: True
+        files:
+          - file:
+              path: 'daphne.log'
+              read_all: True
+              parser_type: 'DummyParser'
 
 
 os:
   linux:
     only_specified_files: True
     read_all: True
-    interval: 0.5
+    interval: 10
     directories:
       - directory:
           path: '/var/log/'
