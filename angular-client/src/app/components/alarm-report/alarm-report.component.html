@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="container" *ngIf="report" style="margin-top: 3%;">
-    <button (click)="getPDF()">Ajde</button>
+    <button type="button" class="btn btn-primary" (click)="getPDF()">Save Report As PDF</button>
     <div *ngFor="let aggregation of report.aggregations;">
         <div class="card" style="margin-top: 3px">
             <div class="card-header">On host: {{aggregation._id.hostname}} {{aggregation.count}} alarm fires</div>
