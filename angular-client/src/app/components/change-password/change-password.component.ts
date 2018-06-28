@@ -28,7 +28,8 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
     this.changePasswordForm = this.fb.group({
       old_password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
-      new_password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
+      new_password: new FormControl('', Validators.compose([Validators.required,
+      Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])),
       repeat_new_password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)]))
     }, { validator: [this.validateRepeatPass('new_password', 'repeat_new_password')] });
   }
