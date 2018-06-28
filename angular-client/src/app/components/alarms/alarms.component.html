@@ -1,7 +1,8 @@
 <div *ngIf="showAlarm" class="list-group-item list-group-item-success">
   <form *ngxPermissionsOnly="['[ADMIN]','[SUPERUSER]']" [formGroup]="createAlarmForm" (ngSubmit)="addNewAlarm()" style="width:100%">
     <div class="form-group" class="d-flex justify-content-around">
-      <textarea id="question" required rows="1" placeholder="Write new alarm here!" class="form-control pb-answer-textarea col-10 col" formControlName="query"></textarea>
+      <textarea id="question" required rows="1" placeholder="Write new alarm here!" class="form-control pb-answer-textarea col-10 col"
+        formControlName="query"></textarea>
       <button id="add-question" type="submit" class="btn btn-primary btn-sm ml-auto" [disabled]="!createAlarmForm.valid">
         Add Alarm
         <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -13,7 +14,8 @@
 <div *ngIf="!showAlarm" class="list-group-item list-group-item-success">
   <form *ngxPermissionsOnly="['[ADMIN]','[SUPERUSER]']" [formGroup]="updateAlarmForm" (ngSubmit)="updateAlarm()" style="width:80%">
     <div class="form-group" class="justify-content-around d-flex align-items-center">
-      <textarea id="question" required rows="1" placeholder="Write new alarm here!" class="form-control pb-answer-textarea col col-9" formControlName="query"></textarea>
+      <textarea id="question" required rows="1" placeholder="Write new alarm here!" class="form-control pb-answer-textarea col col-9"
+        formControlName="query"></textarea>
       <button id="add-question" type="submit" class="btn btn-primary btn-sm ml-auto col col-2" [disabled]="!updateAlarmForm.valid">
         Update Alarm
       </button>
@@ -26,8 +28,10 @@
   <div *ngFor="let alarm of alarmi; let i = index">
     <div class="list-group-item list-group-item-success">
       Alarm: {{alarm.query}}
-      <button *ngxPermissionsOnly="['[ADMIN]','[SUPERUSER]']" (click)="showUpdate(alarm,i)" class="btn btn-primary btn-md ml-auto">Update Alarm</button>
-      <button *ngxPermissionsOnly="['[ADMIN]','[SUPERUSER]']" (click)="deleteAlarm(alarm._id.$oid, i)" class="btn btn-danger btn-md ml-auto">Delete Alarm</button>
+    </div>
+    <div class="list-group-item list-group-item-info d-flex justify-content-end" style="margin-bottom: 2px">
+      <button *ngxPermissionsOnly="['[ADMIN]','[SUPERUSER]']" (click)="showUpdate(alarm,i)" class="btn btn-primary btn-sm" style="margin-right: 2%">Update Alarm</button>
+      <button *ngxPermissionsOnly="['[ADMIN]','[SUPERUSER]']" (click)="deleteAlarm(alarm._id.$oid, i)" class="btn btn-danger btn-sm">Delete Alarm</button>
     </div>
   </div>
 </div>

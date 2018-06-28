@@ -128,7 +128,7 @@ faker = Faker()
 timestr = time.strftime("%Y%m%d-%H%M%S")
 otime = datetime.datetime.now()
 outFileName = 'web_app_log' + timestr + '.log'
-hostmachine = "10.10.10.1"
+hostmachine = "12.12.12.1"
 applicationName = "FakeWebApp"
 
 f = open(outFileName, 'w')
@@ -161,7 +161,7 @@ while flag:
     numpy.random.choice(resources_and_scenarios, p=[0.05, 0.1, 0.05, 0.8])(f, dt, logLevel, ip, byt, useragent)
 
     if increment:
-        time.sleep(2)
+        time.sleep(10)
 
 # <%s(pri)>1 %s(time stamp) %s(hostname) %s(aplication name) - %s(messageid) - %s(poruka)
 

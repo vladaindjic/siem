@@ -56,7 +56,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180627-051015.log'
+              path: 'web_app_log20180627-061014.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
 
@@ -95,12 +95,7 @@ os:
           path: '/var/log/'
           files:
               - file:
-                  path: 'tallylog'
-              - file:
                   path: 'faillog'
-              - file:
-                  path: 'ufw.log'
-                  parser_type: 'LinuxStandardSyslogParser'
               - file:
                   path: 'syslog'
               - file:
