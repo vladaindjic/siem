@@ -33,6 +33,9 @@ class LogRepository(object):
                                          name="appname_ind", background=True)
         self.log_collection.create_index([("msg", pymongo.TEXT)])
 
+        # FIXME: ovde ide obican indeks
+
+
     def add_log(self, log):
         log_dict = convert_log_to_dict(log)
         # FIXME: ovde izbaci : iz datuma

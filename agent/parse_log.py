@@ -398,6 +398,9 @@ class DummyParser(SyslogParser):
         self.hostname = self.provide_hostname()
         self.message = self.line
         self.app_name = self.file_path
+        self.severity_code = 7
+        self.facility_code = 1
+        self.syslog_version = 1
 
 # TODO: resi sa Tallylog, ali prvo skontaj kako izgleda
 

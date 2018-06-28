@@ -26,7 +26,7 @@ def initialize_parser(parser_type, file_path=""):
         return LinuxStandardSyslogParser("")
     else:
         print('DummyParser')
-        return DummyParser("")
+        return DummyParser(full_line="", file_path=file_path)
 
 
 def read_configuration(config_path):
@@ -158,8 +158,8 @@ def read_linux_configuration(linux_conf, patterns, interval, read_all, only_spec
                 # eventualna promena parsera
                 parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
                 if parser_type:
-                    print("OVAJ TIP PARSERA ZA LINUX file %s: %s" % (file_path, parser_type))
-                    agent.syslog_parser = initialize_parser(parser_type, file_path)
+                    print("OVAJ TIP PARSERA ZA LINUX file %s: %s" % (os.path.join(dir_path, file_path), parser_type))
+                    agent.syslog_parser = initialize_parser(parser_type, os.path.join(dir_path, file_path))
 
         run_linux_agents(file_agents)
 
@@ -242,8 +242,8 @@ def read_specific_configuration(specific_conf, patterns, interval, read_all, onl
 
             parser_type = get_value_or_default_from_dict(file, 'parser_type', None)
             if parser_type:
-                print("OVAJ TIP PARSERA ZA SPECIFIC file %s: %s" % (file_path, parser_type))
-                agent.syslog_parser = initialize_parser(parser_type, file_path)
+                print("OVAJ TIP PARSERA ZA SPECIFIC file %s: %s" % (os.path.join(dir_path, file_path), parser_type))
+                agent.syslog_parser = initialize_parser(parser_type, os.path.join(dir_path, file_path))
 
         run_agents(file_agents)
 
