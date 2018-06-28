@@ -33,10 +33,10 @@ def ws_disconnect_alarm_fire(message):
 def send_message_log(log):
     log_dict = convert_log_to_dict(log)
     log_json = json.dumps(log_dict, default=json_util.default)
-    print('Evo kod je tipa log_json: %s' % type(log_json))
+    # print('Evo kod je tipa log_json: %s' % type(log_json))
     # saljemo json loga
     Group('log').send({'text': log_json})
-    print("Poslat log u socket")
+    # print("Poslat log u socket")
 
 
 # otvaranje socketa

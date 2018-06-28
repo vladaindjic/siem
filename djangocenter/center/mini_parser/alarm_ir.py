@@ -63,7 +63,6 @@ class Alarm(IRObject):
             self._fire_alarm(log, fired_logs)
 
     def _fire_alarm(self, log, queue):
-        print("pali ser alarm")
         if queue is not None:
             res = AlarmFireService.get_instance().fire_alarm(self.alarm_id, self.alarm_str, datetime.datetime.now(), queue)
             print("ALARMS: %s" % queue)

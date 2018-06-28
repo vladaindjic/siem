@@ -49,7 +49,7 @@ class AlarmFireService(object):
         af = self.alarm_repository.fire_alarm(alarm_fire)
         # TODO: ovde pozivamo socket
         # print("Iz servisa se salje u socket alarm fire " + af)
-        print("VRACAMO REZULTAT NAKON PUCANJA ALARMA %s" % af)
+        # print("VRACAMO REZULTAT NAKON PUCANJA ALARMA %s" % af)
         send_message_alarm_fire(af)
         return af
 
