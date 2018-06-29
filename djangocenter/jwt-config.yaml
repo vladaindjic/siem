@@ -1,3 +1,3 @@
-public-key: '/home/vi3/Faks/Bezbednost/siem/djangocenter/center/mini_parser/certs/public-sysqo.key'
-private-key: '/home/vi3/Faks/Bezbednost/siem/djangocenter/center/mini_parser/certs/sysqo.key'
-passphrase: 'sysqo'
+public-key: '/home/vi3/Faks/Bezbednost/siem/djangocenter/certs/siem-center.pub'
+private-key: '/home/vi3/Faks/Bezbednost/siem/djangocenter/certs/siem-center.key'
+passphrase: 'siem-center'

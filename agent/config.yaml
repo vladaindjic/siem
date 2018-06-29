@@ -1,6 +1,6 @@
 security:
-  key: 'certs/agent_vlada2.key'
-  cert: 'certs/agent_vlada.crt'
+  key: 'certs/linux-vlada2.key'
+  cert: 'certs/linux-vlada.crt'
   ca: 'certs/ca.crt'
   interval: 1
   API_ENDPOINT: 'https://192.168.0.18:8443/logger'
@@ -56,7 +56,7 @@ specific:
         only_specified_files: True
         files:
           - file:
-              path: 'web_app_log20180628-210408.log'
+              path: 'web_app_log20180629-030348.log'
               read_all: False
               parser_type: 'SyslogRFC5424Parser'
     # Django i daphne
