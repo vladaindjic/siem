@@ -1,6 +1,7 @@
 import pymongo
 import our_constants
 import os
+import yaml
 
 
 class MongoUtil(object):
@@ -19,20 +20,22 @@ class MongoUtil(object):
         port = str(27017)
         database = "log-mongo"
         enabled = "true"
-        # ssl_certfile = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/sysqo.crt"
-        # ssl_keyfile = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/sysqo.key"
-        # ssl_pem_passphrase = "sysqo"
-        # ssl_ca_certs = "/home/zarko/Fax/Bezbednost/Siem/siem/mini_parser/certs/ca.crt"
 
-        # ssl_certfile = "certs/sysqo.crt"
-        # ssl_keyfile = "certs/sysqo.key"
-        # ssl_pem_passphrase = "sysqo"
-        # ssl_ca_certs = "certs/ca.crt"
 
-        ssl_certfile = os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo.crt')
-        ssl_keyfile = os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo.key')
-        ssl_pem_passphrase = "sysqo"  # FIXME: izdvoji ovo negde
-        ssl_ca_certs = os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'ca.crt')
+        # ajde da iscitamo passphrase
+        from our_constants import JWT_CONFIG_PATH
+        with open(JWT_CONFIG_PATH) as stream:
+            jwt_config = yaml.load(stream)
+
+
+
+        ssl_certfile = os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, 'siem-center.crt')
+        ssl_keyfile = os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, 'siem-center.key')
+        # ssl_pem_passphrase = jwt_config['passphrase']  # FIXME: izdvoji ovo negde
+
+        ssl_pem_passphrase = 'siem-center'  # FIXME: izdvoji ovo negde
+
+        ssl_ca_certs = os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, 'ca.crt')
 
         self.client = pymongo.MongoClient("mongodb://" + username + ":" + password +
                                           "@" + host + ":" + port + "/?authSource=" + database

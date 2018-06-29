@@ -77,10 +77,10 @@ class LogServer(object):
         # in our case it is 12345 but it
         # can be anything
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s = ssl.wrap_socket(s, keyfile=os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, "sysqo2.key"),
-                            certfile=os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, "sysqo.crt"),
+        s = ssl.wrap_socket(s, keyfile=os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, "siem-center2.key"),
+                            certfile=os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, "siem-center.crt"),
                             server_side=True, cert_reqs=ssl.CERT_REQUIRED,
-                            ca_certs=os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, "ca.crt"),
+                            ca_certs=os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, "ca.crt"),
                             ssl_version=ssl.PROTOCOL_TLSv1_2)
         s.bind((self.host, self.port))
         print("socket binded to post", self.port)

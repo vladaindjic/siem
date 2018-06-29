@@ -1,0 +1,8 @@
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:TRUE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = angular-client.ftn.uns.ac.rs
+DNS.2 = angular-client.ftn.uns.ac.rs.192.168.0.17.xip.io

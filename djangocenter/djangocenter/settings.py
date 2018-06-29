@@ -92,24 +92,6 @@ WSGI_APPLICATION = 'djangocenter.wsgi.application'
 # }
 
 
-# Password validation
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'siem',
-#         'USER': 'django_siem',
-#         'PASSWORD': 'django_siem_123',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         # 'OPTIONS': {
-#         #     'ssl': {'ca': '../mini_parser/certs/ca.crt',
-#         #             'cert': '../mini_parser/certs/sysqo.crt',
-#         #             'key': '../mini_parser/certs/sysqo2.key'
-#         #             }
-#         # }
-#     }
-# }
-
 import our_constants
 DATABASES = {
     'default': {
@@ -120,9 +102,9 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
         'OPTIONS': {
-             'sslcert': os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo.crt'),
-             'sslkey': os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'sysqo2.key'),
-             'sslrootcert': os.path.join(our_constants.MINI_PARSER_CERTS_PREFIX, 'ca.crt'),
+             'sslcert': os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, 'siem-center.crt'),
+             'sslkey': os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, 'siem-center2.key'),
+             'sslrootcert': os.path.join(our_constants.DJANGOCENTER_CERTS_PREFIX, 'ca.crt'),
              'sslmode': 'require',
         }
     }
