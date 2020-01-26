@@ -1,2 +1,2 @@
-# siem
-Projekat iz Bezbodnosti u sistemima elektronskog poslovanja
+# Security Information and Event Management (SIEM)
+Secure distributed system which is used for collecting, storing, querying and analyzing huge amounts of logs implemented using Django web framework, MongoDB and PostgreSQL. For querying logs stored in MongoDB, this system uses [Syslog Query Language](https://github.com/vladaindjic/syslog_query_language). Realtime log analytics can be extended by integrating the [Distributed Log Alarm Engine](https://github.com/vladaindjic/DLAE).
