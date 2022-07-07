@@ -32,7 +32,7 @@
     "jquery": "^1.9.1",
     "jspdf": "^1.4.0",
     "jspdf-autotable": "^2.3.4",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "ng-pick-datetime": "^5.2.6",
     "ngx-permission": "0.2.1",
     "ngx-permissions": "^2.1.1",
